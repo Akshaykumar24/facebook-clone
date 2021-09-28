@@ -1,10 +1,12 @@
-import "./styles/App.css";
+import SignUp from "./components/Login-Signup/SignUp";
 
 import HomePage from "./routes/HomePage";
 function App() {
-  return <div className="App">
+  return (<div className="App">
     <HomePage/>
-  </div>;
+    <SignUp />
+  </div>);
+
 }
 
 export default App;
