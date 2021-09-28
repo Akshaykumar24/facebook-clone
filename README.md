@@ -1,70 +1,94 @@
-# Getting Started with Create React App
+# Facebook-Clone 
+![Logo](https://static.xx.fbcdn.net/rsrc.php/y8/r/dF5SId3UHWd.svg)
+# Facebook clone
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+In this project we made fully-functional clone of Facebook website that 
+generates donation and donate to needful for the hunt for their dreams.
 
-## Available Scripts
+## Deployment
 
-In the project directory, you can run:
+To deploy this project run
 
-### `npm start`
+- Open the git bash in yor system and run this command
+```bash
+  git clone https://github.com/Akshaykumar24/Catapooolt.git
+```
+  
+ - After cloning copy the project in existing  react app src folder then run this command    
+```bash
+  npm run start
+```
+- In case one Doesn't have existing react app then  run this command
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+```bash
+  npm install create-react-app
+```
+```bash
+   create-react-app <Name>
+```
+- After creating the react app copy the project in src folder then run this command
+```bash
+  npm run start
+```
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+-  then run this command
+```bash
+  npm install json-server
+```
+- create a new terminal and run this command 
+```bash
+  json-server --watch db.json --port 3001
+```
 
-### `npm test`
+## Tech Stack
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+**Client:** React 
 
-### `npm run build`
+**Server:** json server
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## Technologies Used
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+<p float="left">
+  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/61/HTML5_logo_and_wordmark.svg/1200px-HTML5_logo_and_wordmark.svg.png" height="144"/>
+  <img src="https://cdn.freebiesupply.com/logos/thumbs/2x/css3-logo.png"  height="144"/> 
+ <img src="https://img.icons8.com/color/144/000000/javascript--v1.png"/>
+  <img src="https://easybase.io/assets/images/posts_images/5-great-react-libraries-1.png" height="144"/>
+ <img src="https://img.icons8.com/color/144/000000/redux.png"/>
+<img src="https://img.icons8.com/color/144/000000/material-ui.png"/>
+</p>
 
-### `npm run eject`
+  
+## Libraries Used
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+ - Material-UI
+ - react-google-login
+ - react-date-range
+ - react-map-gl
+ - react-stripe-checkout
+ - styled-components
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+  
+## Features
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+- Google Auth for Log-In
+- Search for Hotel by location, landmark, hotel name
+- Location of the Hotels in Map 
+- Filter and sort feature for Hotels
+- All details with live comparison
+- Payment Gateway to book hotel
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+## ScreenShots
 
-## Learn More
+<h1>1.Landing Page</h1>
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+<h4>This is our landing page </h4>
+<img style="width:100%" src="https://i.ibb.co/8DFMCmk/landingpage1.png" width="400"/>
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## Authors
 
-### Code Splitting
+- [@Akshaykumar](https://github.com/Akshaykumar24)
+- [@Omkar Gavade](https://github.com/omkarvgavade)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+  
