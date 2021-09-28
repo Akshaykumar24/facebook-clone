@@ -37,7 +37,8 @@ grid-template-columns:1fr;
 grid-gap: 1rem;
 height: auto;
 padding: 15px;
-box-shadow: 1px 1px 13px var( --box-shadow-color);
+box-shadow: 1px 1px 13px var(--box-shadow-color);
+  border-radius: 1rem;
 & > div:nth-child(1){
     span{
           font-size: 1.4rem;
