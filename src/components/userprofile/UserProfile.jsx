@@ -231,7 +231,7 @@ const UserProfileStyles = styled.div`
 
         height: 3.5rem;
 
-        column-gap: 11px;
+        column-gap: 9px;
 
         align-items: center;
         .specialC {
