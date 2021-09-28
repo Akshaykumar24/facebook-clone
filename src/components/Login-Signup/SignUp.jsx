@@ -121,14 +121,16 @@ function SignUp() {
       </Logger>
       {isCreateClick && (
         <Sign>
-          <div className="signUpContainer">
-            <h2 className="signUpH2">Sign Up</h2>
+          <div>
+            <h2>Sign Up</h2>
             <p className="signUpP">It's quick and easy.</p>
-            <hr className="signUpHr" />
-            <button className="signUpbuttonClose" onClick={handleCloseClick}>
-              Close
-            </button>
-            <div className="nameSignUpContainer">
+            {/* <hr /> */}
+            <img
+              src="https://static.xx.fbcdn.net/rsrc.php/v3/yC/r/Q0G2UVjVQ4_.png"
+              alt="x"
+              onClick={handleCloseClick}
+            />
+            <div>
               <input
                 type="text"
                 placeholder="First name"
@@ -160,8 +162,8 @@ function SignUp() {
               name="password"
               onChange={handleSignUpForm}
             />
+            <p>Date of birth</p>
             <div className="dobSignUpContainer">
-              <p>Date of birth</p>
               <select
                 onChange={(e) => handleChangeDob(e)}
                 className="first"
@@ -200,31 +202,31 @@ function SignUp() {
             <p className="genderPtag">Gender</p>
             <div className="dobSignUpContainer flexBox">
               <div>
+                <p>Male</p>
                 <input
                   type="radio"
                   onChange={(e) => handleSignUpForm(e)}
                   value="MALE"
                   name="gender"
                 />
-                <p>Male</p>
               </div>
               <div>
+                <p>Female</p>
                 <input
                   type="radio"
                   onChange={(e) => handleSignUpForm(e)}
                   value="FEMALE"
                   name="gender"
                 />
-                <p>Female</p>
               </div>
               <div>
+                <p>Others</p>
                 <input
                   type="radio"
                   onChange={(e) => handleSignUpForm(e)}
                   value="OTHERS"
                   name="gender"
                 />
-                <p>Others</p>
               </div>
             </div>
             <p className="termsSignUpContainer">
@@ -236,7 +238,7 @@ function SignUp() {
               className="signUpButton"
               onClick={handleSingUp}
             >
-              "Sign-up"
+              Sign-up
             </button>
           </div>
         </Sign>
@@ -317,14 +319,101 @@ const Logger = styled.div`
 const Sign = styled.div`
   width: 100%;
   height: 100%;
-  background: transparent;
+  background: rgba(252, 252, 253, 0.8);
   position: absolute;
-  top: 50%;
-  left: 85%;
-  transform: translateX(-50%) translateY(-25%);
+  top: 0;
+  left: 0;
+
   > div {
     opacity: 1;
-    max-width: 472px;
+    padding: 10px;
+    max-width: 420px;
     background-color: white;
+    position: relative;
+    top: 17%;
+    left: 35%;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgb(0 0 0 / 25%), 0 8px 16px rgb(0 0 0 / 25%);
+
+    > h2 {
+      font-size: 32px;
+      font-family: SFProDisplay-Bold, Helvetica, Arial, sans-serif;
+      line-height: 38px;
+      margin: 0 10px;
+      font-weight: 650;
+    }
+    input {
+      font-size: 14px;
+      padding: 8px 16px;
+      width: 90%;
+      height: 18px;
+      margin: 7px 5px;
+      border-radius: 5px;
+      background-color: rgb(238, 238, 238);
+      border: 1px solid rgb(190, 190, 190);
+    }
+    > input:focus {
+      outline: 1px solid #1877f2;
+    }
+    > p {
+      font-size: 12px;
+      line-height: 16px;
+      padding: 0 10px;
+    }
+    > :nth-child(2) {
+      font-size: 15px;
+      line-height: 24px;
+      padding-bottom: 15px;
+      margin: 10px;
+      border-bottom: 1px solid rgb(212, 212, 212);
+    }
+    > img {
+      position: absolute;
+      right: 12px;
+      top: 10px;
+    }
+    > div {
+      display: flex;
+      > select {
+        width: 30%;
+        margin: 0 1.5%;
+        font-size: 16px;
+        padding: 8px;
+        border-radius: 5px;
+        border: 1px solid rgb(204, 208, 213);
+      }
+      > div {
+        width: 30%;
+        margin: 0 1.5%;
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+        border-radius: 5px;
+        border: 1px solid rgb(204, 208, 213);
+        > p {
+          flex: 4;
+          margin: 8px;
+        }
+        > input {
+          flex: 1;
+          height: auto;
+        }
+      }
+    }
+    > :last-child {
+      background-color: rgb(66, 183, 42);
+      border: none;
+      border-radius: 6px;
+      font-size: 18px;
+      line-height: 38px;
+      font-weight: 700;
+      padding: 0 16px;
+      width: 210px;
+      margin: 0 25%;
+      color: #fff;
+    }
+    > :last-child:hover {
+      background-color: rgb(54, 164, 32);
+    }
   }
 `;
