@@ -18,6 +18,7 @@ const HomePage = () => {
   const getPosts =  ()=>{
   return axios.get("http://localhost:2345/posts")
   }
+  
   useEffect(()=>{
     setIsLoading(true)
     getPosts().then(({data})=>{
