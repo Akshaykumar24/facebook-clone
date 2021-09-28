@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { url } from "../../utils/url";
 import Login from "./Login";
+import styled from "styled-components";
 
 const initFormSignup = {
   first_name: "",
@@ -67,12 +68,12 @@ function SignUp() {
       .then(setLogInForm({}));
   };
 
-  //   const handleCreateClick = () => {
-  //     setIsCreateClick(true);
-  //   };
+  const handleCreateClick = () => {
+    setIsCreateClick(true);
+  };
   const handleCloseClick = () => {
     console.log(signUpForm, dob);
-    //setIsCreateClick(false);
+    setIsCreateClick(false);
   };
 
   const years = new Array(71).fill(1950);
@@ -93,27 +94,37 @@ function SignUp() {
   ];
 
   return (
-    <>
-      <div>
-        <div className="loginPageContainer flexBox"></div>
-        <div className="LoginPageFooter">
-          <p>English (UK)</p>
-          <p>Facebook © 2021</p>
+    <Cont>
+      <Logger>
+        <div>
+          <img
+            src="https://static.xx.fbcdn.net/rsrc.php/y8/r/dF5SId3UHWd.svg"
+            alt="logo"
+          />
+          <h2>
+            Facebook helps you connect and share with the people in your life.
+          </h2>
         </div>
-      </div>
-      <Login
-        handleLogin={handleLogin}
-        handleLoginForm={handleLoginForm}
-        email={logInForm.email}
-        password={logInForm.password}
-      />
+        <div>
+          <Login
+            handleLogin={handleLogin}
+            handleLoginForm={handleLoginForm}
+            email={logInForm.email}
+            password={logInForm.password}
+          />
+          <a href="#">Forgotten Password ?</a>
+          <br />
+          <hr />
+          <br />
+          <button onClick={handleCreateClick}>Create New Account</button>
+        </div>
+      </Logger>
       {isCreateClick && (
-        <div className="signUpModel">
+        <Sign>
           <div className="signUpContainer">
             <h2 className="signUpH2">Sign Up</h2>
             <p className="signUpP">It's quick and easy.</p>
             <hr className="signUpHr" />
-            {/* <br /> */}
             <button className="signUpbuttonClose" onClick={handleCloseClick}>
               Close
             </button>
@@ -228,10 +239,92 @@ function SignUp() {
               "Sign-up"
             </button>
           </div>
-        </div>
+        </Sign>
       )}
-    </>
+    </Cont>
   );
 }
 
 export default SignUp;
+
+const Cont = styled.div`
+  width: 90vw;
+  height: 87vh;
+  padding: 6% 5% 0;
+  background-color: rgb(240, 242, 245);
+`;
+
+const Logger = styled.div`
+  display: flex;
+  justify-content: space-around;
+  flex-direction: row;
+  width: 70%;
+  margin: auto;
+  padding: 5% auto;
+  > div:nth-child(1) {
+    width: 55%;
+    text-align: left;
+    margin: auto;
+    > img {
+      height: 106px;
+      margin: -28px;
+    }
+    > h2 {
+      font-size: 28px;
+      font-weight: normal;
+      line-height: 32px;
+    }
+  }
+  > div:nth-child(2) {
+    width: 396px;
+    text-align: center;
+    margin: auto;
+    border: none;
+    margin: 40px 0 0;
+    padding: 10px 0 18px;
+    border-radius: 8px;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgb(0 0 0 / 10%), 0 8px 16px rgb(0 0 0 / 10%);
+
+    > a {
+      text-decoration: none;
+      margin: 20px auto;
+      font-size: 14px;
+      font-weight: 400;
+    }
+    > hr {
+      width: 90%;
+      margin: 20px auto 10px;
+      border: 1px solid rgb(230, 230, 230);
+    }
+    > button {
+      background-color: rgb(66, 183, 42);
+      border: none;
+      border-radius: 6px;
+      font-size: 16px;
+      line-height: 48px;
+      font-weight: 700;
+      padding: 0 16px;
+      width: 200px;
+      margin: 0 auto 10px;
+      color: #fff;
+    }
+    > button:hover {
+      background-color: rgb(54, 164, 32);
+    }
+  }
+`;
+const Sign = styled.div`
+  width: 100%;
+  height: 100%;
+  background: transparent;
+  position: absolute;
+  top: 50%;
+  left: 85%;
+  transform: translateX(-50%) translateY(-25%);
+  > div {
+    opacity: 1;
+    max-width: 472px;
+    background-color: white;
+  }
+`;
