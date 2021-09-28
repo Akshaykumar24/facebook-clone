@@ -1,8 +1,9 @@
 import "./styles/App.css";
-import PostCard from "./components/PostCard/PostCard";
+
+import HomePage from "./routes/HomePage";
 function App() {
   return <div className="App">
-    <PostCard/>
+    <HomePage/>
   </div>;
 }
 
