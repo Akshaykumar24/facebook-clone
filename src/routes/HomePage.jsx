@@ -6,17 +6,7 @@ const HomePage = () => {
   const [posts, setPosts] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
-  const writePost = async () => {
-    axios
-      .post("http://localhost:2345/posts", {
-        user_id: "ravi from react",
-        body_text: "first post",
-      })
-      .then((resp) => {
-        console.log(resp);
-      })
-      
-  };
+  
 
   const getPosts = () => {
     return axios.get("http://localhost:2424/api/posts");

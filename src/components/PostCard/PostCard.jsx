@@ -1,20 +1,36 @@
 import React from "react";
+import axios from "axios";
+
+import PostState from './PostStat'
 
 import Box from "@mui/material/Box";
-// import Container from "@mui/material/Container";
+
 import Avatar from "@mui/material/Avatar";
 
 import LanguageIcon from "@mui/icons-material/Language";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import Divider from "@mui/material/Divider";
+import Button from "@mui/material/Button";
 
-import ThumbUpOutlinedIcon from "@mui/icons-material/ThumbUpOutlined";
-import ChatBubbleOutlineOutlinedIcon from "@mui/icons-material/ChatBubbleOutlineOutlined";
-import ShareIcon from "@mui/icons-material/Share";
+import { AiOutlineLike } from "react-icons/ai";
+import { FaRegCommentAlt } from "react-icons/fa";
+import { RiShareForwardLine } from "react-icons/ri";
+
+const writePost = async () => {
+  axios
+    .post("http://localhost:2345/posts", {
+      user_id: "ravi from react",
+      body_text: "first post",
+    })
+    .then((resp) => {
+      console.log(resp);
+    });
+};
 
 const PostCard = ({ post }) => {
-  const { body_text } = post;
-  console.log("body_text:", body_text);
+  const { body_text,_id } = post;
+  
+  
   return (
     <Box
       sx={{ border: "1px solid black", padding: "0 2rem", margin: "1rem 0" }}
@@ -26,7 +42,7 @@ const PostCard = ({ post }) => {
           flexDirection: "row",
           justifyContent: "space-between",
           alignContent: "center",
-            alignItems: "center",
+          alignItems: "center",
         }}
       >
         <Box
@@ -35,6 +51,7 @@ const PostCard = ({ post }) => {
             flexDirection: "row",
             alignContent: "center",
             alignItems: "center",
+            margin: "1rem 0",
           }}
         >
           <Box>
@@ -52,9 +69,11 @@ const PostCard = ({ post }) => {
         </Box>
       </Box>
       {/* post body */}
-      <Box>{body_text}</Box>
+      <Box sx={{ margin: "1rem 0" }}>{body_text}</Box>
       {/* post stat */}
-      <Box></Box>
+      <Box>
+        <PostState id={_id}/>
+      </Box>
       <Divider variant="middle" />
       {/* like comment share */}
       <Box
@@ -63,17 +82,24 @@ const PostCard = ({ post }) => {
           flexDirection: "row",
           justifyContent: "space-between",
           alignContent: "center",
-            alignItems: "center",
+          alignItems: "center",
+          margin: "1rem 0",
         }}
       >
         <Box>
-          <ThumbUpOutlinedIcon /> Like
+          <Button variant="outlined" startIcon={<AiOutlineLike />}>
+            Like
+          </Button>
         </Box>
         <Box>
-          <ChatBubbleOutlineOutlinedIcon /> Comment
+          <Button variant="outlined" startIcon={<FaRegCommentAlt />}>
+            Comment
+          </Button>
         </Box>
         <Box>
-          <ShareIcon /> Share
+          <Button variant="outlined" startIcon={<RiShareForwardLine />}>
+            Share
+          </Button>
         </Box>
       </Box>
     </Box>
