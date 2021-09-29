@@ -1,0 +1,40 @@
+.sideBarContainer {
+  min-width: 200px;
+  max-width: 350px;
+  width: 25vw;
+  padding: 10px;
+}
+
+.sideBarContentLink {
+  padding: 7px;
+  margin-left: 0.5%;
+  text-decoration: none;
+  color: var(--primary-text);
+  border-radius: 4px;
+  cursor: pointer;
+  justify-content: left;
+  transition: all 0.3s ease-in-out;
+}
+
+.sideBarContentLink:hover {
+  background: var(--hover-overlay);
+}
+
+.sideBarContentUserImageBox {
+  position: relative;
+}
+
+.sideBarContentImage {
+  width: 35px;
+  height: 35px;
+  margin: auto;
+  border-radius: 100%;
+  object-fit: cover;
+}
+
+.sideBarContentLabel {
+  font-size: 0.9375rem;
+  font-weight: 500;
+  margin-left: 10px;
+  padding-top: 7px;
+}
