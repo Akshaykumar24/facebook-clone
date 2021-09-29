@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import axios from "axios";
 import { url } from "../../utils/url";
-import PostState from "./PostStat";
+import PostStat from "./PostStat";
 import CommentForm from "../CommentForm/CommentForm";
 import CommentCard from "../CommentCard/CommentCard";
 import Box from "@mui/material/Box";
@@ -31,13 +31,19 @@ const getCommentOfThisPost = (id) => {
 };
 
 const PostCard = ({ post }) => {
-  const { body_text, _id } = post;
+  const { body_text, _id,no_of_likes,no_of_comments } = post;
   const [isComment, setIsComment] = useState(false);
   const [showComments, setShowComments] = useState(false);
   const [comments,setComments]=useState('')
-
+  const [noOfLikes,setNoOfLikes]=useState(0)
+  const [noOfComments,setNoOfComments]=useState(0)
+  
   let likes = 0;
-
+  useEffect(()=>{
+    setNoOfLikes(no_of_likes)
+    setNoOfComments(no_of_comments)
+  },[no_of_comments,no_of_likes])
+  
   const handleLike = () => {
     getPost(_id)
       .then(({ data }) => {
@@ -47,7 +53,7 @@ const PostCard = ({ post }) => {
       .then((resp) => {
         updatePost(_id, likes + 1).then(({ data }) => {
           likes = data.post.no_of_likes;
-          
+          setNoOfLikes(likes)
         });
       });
   };
@@ -86,7 +92,7 @@ const PostCard = ({ post }) => {
           }}
         >
           <Box>
-            <Avatar>R</Avatar>
+            <Avatar sx={{ m: "0 1rem 0 0" }}>R</Avatar>
           </Box>
           <Box>
             <Box>Ravi Ranjan Kumar</Box>
@@ -103,7 +109,7 @@ const PostCard = ({ post }) => {
       <Box sx={{ margin: "1rem 0" }}>{body_text}</Box>
       {/* post stat */}
       <Box>
-        <PostState id={_id} handleShowComments={handleShowComments} />
+        <PostStat id={_id} noOfLikes={noOfLikes} noOfComments={noOfComments} handleShowComments={handleShowComments} />
       </Box>
       <Divider variant="middle" />
       {/* like comment share */}

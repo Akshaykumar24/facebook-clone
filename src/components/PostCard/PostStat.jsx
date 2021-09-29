@@ -12,7 +12,7 @@ const getPost = (id) => {
   return axios.get(`${url}/api/posts/${id}`);
 };
 
-const PostStat = ({ id,handleShowComments }) => {
+const PostStat = ({ id,handleShowComments,noOfLikes,noOfComments }) => {
  
   const [postStat, setPostStat] = useState({
     no_of_likes: 0,
@@ -45,7 +45,7 @@ const PostStat = ({ id,handleShowComments }) => {
       >
         <Box>
           <Button variant="outlined" startIcon={<AiOutlineLike />}>
-            { postStat.no_of_likes}
+            { noOfLikes}
           </Button>
         </Box>
         <Box
@@ -59,7 +59,7 @@ const PostStat = ({ id,handleShowComments }) => {
         >
           <Box>
             <Button variant="outlined" onClick={()=>handleShowComments()} startIcon={<FaRegCommentAlt />}>
-              {postStat.no_of_comments}
+              {noOfComments}
             </Button>
           </Box>
           <Box>

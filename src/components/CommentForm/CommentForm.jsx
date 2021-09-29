@@ -23,9 +23,7 @@ const getPost = async (id) => {
   return axios.get(`${url}/api/posts/${id}`);
 };
 
-
 const CommentForm = ({ post_id }) => {
-  console.log("post_id:", post_id);
   const [body, setBody] = useState("Write a comment...");
   const handleChange = (e) => {
     setBody(e.target.value);
@@ -38,21 +36,18 @@ const CommentForm = ({ post_id }) => {
     });
 
     getPost(post_id)
-    .then(({ data }) => {
-      comments = data.post.no_of_comments;
-      console.log("comments:", comments);
-    })
-    .then((resp) => {
-      updatePost(post_id, comments + 1).then(({ data }) => {
-        console.log('data:', data)
+      .then(({ data }) => {
         comments = data.post.no_of_comments;
-        console.log("comments:", comments);
+      })
+      .then((resp) => {
+        updatePost(post_id, comments + 1).then(({ data }) => {
+          comments = data.post.no_of_comments;
+        });
       });
-    });
   };
   return (
-    <Box sx={{ display: "flex", alignItems: "center" }}>
-      <Avatar sx={{ m: "1rem" }}>R</Avatar>
+    <Box sx={{ display: "flex", alignItems: "center", margin: "1rem 0" }}>
+      <Avatar sx={{ m: "0 1rem 0 0" }}>R</Avatar>
       <TextField
         fullWidth
         id="outlined-end-adornment"
