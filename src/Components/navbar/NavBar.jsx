@@ -1,5 +1,5 @@
 import React from "react";
-import "../../styles/Navbar/Navbar.css";
+import '../../styles/Navbar/Navbar.css'
 import { ReactComponent as SearchIcon } from "../../Icons/search.svg";
 import { ReactComponent as MainLogo } from "../../Icons/main-logo.svg";
 import { ReactComponent as FavIcon } from "../../Icons/fav.svg";
@@ -12,8 +12,25 @@ import { ReactComponent as NotificationIcon } from "../../Icons/notification.svg
 import { ReactComponent as DownArrowIcon } from "../../Icons/downArrow.svg";
 import IconWrapper from "./IconWrapper";
 import IconWrapperCircle from "./IconWrapperCircle";
+import AccountMenu from "./AccountMenu";
+import Notification from "./Notification";
 
 const NavBar = () => {
+  const [account, setAccount] = React.useState(false);
+  const [notification, setNotification] = React.useState(false);
+  
+
+  const changeState = (p) => {
+    if (account && p === setAccount) {
+      return setAccount(false);
+    }
+    if (notification && p === setNotification) {
+      return setNotification(false);
+    }
+    setAccount(false);
+    setNotification(false);
+    p(true);
+  };
 
   return (
     <>
@@ -61,13 +78,17 @@ const NavBar = () => {
             <MessageIcon />
           </IconWrapperCircle>
           <IconWrapperCircle title="Notifications">
-            <NotificationIcon />
+            <NotificationIcon onClick={() => changeState(setNotification)} />
           </IconWrapperCircle>
           <IconWrapperCircle title="Account">
-            <DownArrowIcon />
+            <DownArrowIcon
+              onClick={() => changeState(setAccount)}
+            ></DownArrowIcon>
           </IconWrapperCircle>
         </div>
       </div>
+      {account && <AccountMenu />}
+      {notification && <Notification />}
     </>
   );
 };
