@@ -27,6 +27,7 @@ const getPost = async (id) => {
 
 const PostCard = ({ post }) => {
   const { body_text, _id } = post;
+  
   let likes = 0;
   const handleLike = () => {
     getPost(_id)
