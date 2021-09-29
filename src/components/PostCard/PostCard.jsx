@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import { url } from "../../utils/url";
 import PostState from "./PostStat";
-
+import CommentForm from "../CommentForm/CommentForm";
+import CommentCard from '../CommentCard/CommentCard'
 import Box from "@mui/material/Box";
 
 import Avatar from "@mui/material/Avatar";
@@ -27,7 +28,8 @@ const getPost = async (id) => {
 
 const PostCard = ({ post }) => {
   const { body_text, _id } = post;
-  
+  const [isComment, setIsComment] = useState(false);
+  const [showComments, setShowComments] = useState(false);
   let likes = 0;
   const handleLike = () => {
     getPost(_id)
@@ -42,7 +44,10 @@ const PostCard = ({ post }) => {
         });
       });
   };
-
+  const handleShowComments = ()=>{
+    setShowComments((prev)=>!prev)
+    setIsComment(true);
+  }
   return (
     <Box
       sx={{ border: "1px solid black", padding: "0 2rem", margin: "1rem 0" }}
@@ -84,7 +89,7 @@ const PostCard = ({ post }) => {
       <Box sx={{ margin: "1rem 0" }}>{body_text}</Box>
       {/* post stat */}
       <Box>
-        <PostState id={(_id)} />
+        <PostState id={_id} handleShowComments={handleShowComments} />
       </Box>
       <Divider variant="middle" />
       {/* like comment share */}
@@ -108,7 +113,13 @@ const PostCard = ({ post }) => {
           </Button>
         </Box>
         <Box>
-          <Button variant="outlined" startIcon={<FaRegCommentAlt />}>
+          <Button
+            variant="outlined"
+            onClick={() => {
+              setIsComment((prev) => !prev);
+            }}
+            startIcon={<FaRegCommentAlt />}
+          >
             Comment
           </Button>
         </Box>
@@ -118,6 +129,8 @@ const PostCard = ({ post }) => {
           </Button>
         </Box>
       </Box>
+        {isComment && <Box><CommentForm post_id={_id}/></Box>}
+        {showComments && <Box><CommentCard post_id={_id}/></Box>}
     </Box>
   );
 };
