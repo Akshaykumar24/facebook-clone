@@ -13,15 +13,10 @@ export const GlobalStyles = createGlobalStyle`
    --box-shadow-color: rgb(222,224,227);
    --icons-gray-color:rgb(140,147,157);
    --hover-effect:rgb(222 225 227);
-}
-
-//for bottom border of profile page menu
-.menuBorder-bottom{
-    border-bottom:4px solid var(--primary-color);
-    color: var(--primary-color) !important;
-}
-//vaibhav 
---accent: hsl(214, 89%, 52%);
+   
+   
+   //vaibhav
+   --accent: hsl(214, 89%, 52%);
 
   --primary-1: #1877f2;
   --primary-2: rgb(134, 218, 255);
@@ -93,4 +88,10 @@ export const GlobalStyles = createGlobalStyle`
   --filter-invert: 0;
   --filter-placeholder-icon: invert(59%) sepia(11%) saturate(200%)
     saturate(135%) hue-rotate(176deg) brightness(96%) contrast(94%);
-`;
+}
+
+//for bottom border of profile page menu
+.menuBorder-bottom{
+    border-bottom:4px solid var(--primary-color);
+    color: var(--primary-color) !important;
+}
