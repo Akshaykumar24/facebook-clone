@@ -16,7 +16,7 @@ const initFormLogin = {
   password: "",
 };
 function SignUp() {
-  const [isCreateClick, setIsCreateClick] = useState(true);
+  const [isCreateClick, setIsCreateClick] = useState(false);
   const [signUpForm, setSignUpForm] = React.useState(initFormSignup);
   const [logInForm, setLogInForm] = React.useState(initFormLogin);
 
