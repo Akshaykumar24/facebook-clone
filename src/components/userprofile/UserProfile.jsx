@@ -247,7 +247,7 @@ const UserProfileStyles = styled.div`
           height: 100%;
           color: var(--font-light-color);
           display: flex;
-
+  
           align-items: center;
           border-top-left-radius: 4px;
           border-top-right-radius: 4px;
