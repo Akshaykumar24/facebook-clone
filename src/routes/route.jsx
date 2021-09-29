@@ -19,7 +19,7 @@ const Router = () => {
         <Route path="/login">
           <SignUp />
         </Route>
-        <Route path="/home">
+        <Route path="/wall">
           <Wall />
         </Route>
         <Route path="/friends">
