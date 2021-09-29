@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import PostCard from "../components/PostCard/PostCard";
 import PostForm from "../components/PostForm/PostForm";
+
 const HomePage = () => {
   const [posts, setPosts] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -25,6 +26,7 @@ const HomePage = () => {
 
   return (
     <div>
+      
       <PostForm />
       {isLoading
         ? "Loading posts"

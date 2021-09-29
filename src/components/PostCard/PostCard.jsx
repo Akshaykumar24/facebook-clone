@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useState,useEffect } from "react";
 import axios from "axios";
 import { url } from "../../utils/url";
-import PostState from "./PostStat";
-
+import PostStat from "./PostStat";
+import CommentForm from "../CommentForm/CommentForm";
+import CommentCard from "../CommentCard/CommentCard";
 import Box from "@mui/material/Box";
 
 import Avatar from "@mui/material/Avatar";
@@ -22,26 +23,51 @@ const updatePost = (id, no_of_likes) => {
   });
 };
 const getPost = async (id) => {
+ 
   return axios.get(`${url}/api/posts/${id}`);
+};
+const getCommentOfThisPost = (id) => {
+  return axios.get(`${url}/api/posts/${id}/comments`);
 };
 
 const PostCard = ({ post }) => {
-  const { body_text, _id } = post;
+  const { body_text, _id,no_of_likes,no_of_comments } = post;
+  const [isComment, setIsComment] = useState(false);
+  const [showComments, setShowComments] = useState(false);
+  const [comments,setComments]=useState('')
+  const [noOfLikes,setNoOfLikes]=useState(0)
+  const [noOfComments,setNoOfComments]=useState(0)
+  
   let likes = 0;
+  useEffect(()=>{
+    setNoOfLikes(no_of_likes)
+    setNoOfComments(no_of_comments)
+  },[no_of_comments,no_of_likes])
+  
   const handleLike = () => {
     getPost(_id)
       .then(({ data }) => {
         likes = data.post.no_of_likes;
-        console.log("likes:", likes);
-      })
+       
+      }).catch((err)=>console.log(err))
       .then((resp) => {
         updatePost(_id, likes + 1).then(({ data }) => {
           likes = data.post.no_of_likes;
-          console.log("likes:", likes);
+          setNoOfLikes(likes)
         });
       });
   };
 
+  const handleShowComments = () => {
+    setShowComments((prev) => !prev);
+    setIsComment(true);
+    getCommentOfThisPost(_id).then(({data}) => {
+      const commentsArr = data.comments
+      
+      setComments(commentsArr)
+    });
+    
+  };
   return (
     <Box
       sx={{ border: "1px solid black", padding: "0 2rem", margin: "1rem 0" }}
@@ -66,7 +92,7 @@ const PostCard = ({ post }) => {
           }}
         >
           <Box>
-            <Avatar>R</Avatar>
+            <Avatar sx={{ m: "0 1rem 0 0" }}>R</Avatar>
           </Box>
           <Box>
             <Box>Ravi Ranjan Kumar</Box>
@@ -83,7 +109,7 @@ const PostCard = ({ post }) => {
       <Box sx={{ margin: "1rem 0" }}>{body_text}</Box>
       {/* post stat */}
       <Box>
-        <PostState id={(_id)} />
+        <PostStat id={_id} noOfLikes={noOfLikes} noOfComments={noOfComments} handleShowComments={handleShowComments} />
       </Box>
       <Divider variant="middle" />
       {/* like comment share */}
@@ -107,7 +133,13 @@ const PostCard = ({ post }) => {
           </Button>
         </Box>
         <Box>
-          <Button variant="outlined" startIcon={<FaRegCommentAlt />}>
+          <Button
+            variant="outlined"
+            onClick={() => {
+              setIsComment((prev) => !prev);
+            }}
+            startIcon={<FaRegCommentAlt />}
+          >
             Comment
           </Button>
         </Box>
@@ -117,6 +149,22 @@ const PostCard = ({ post }) => {
           </Button>
         </Box>
       </Box>
+      {isComment && (
+        <Box>
+          <CommentForm post_id={_id} />
+        </Box>
+      )}
+      {showComments && (
+        <Box>
+          {
+
+            comments.length>0 && comments.map((comment)=>{
+
+             return <CommentCard comment={comment}  />
+            })
+          }
+        </Box>
+      )}
     </Box>
   );
 };
