@@ -30,7 +30,7 @@ const PostStat = ({ id }) => {
 
       setPostStat(stat );
     });
-  }, []);
+  }, [id]);
   // console.log(postStat)
   return (
     <>

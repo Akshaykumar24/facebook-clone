@@ -1,7 +1,7 @@
 import React from "react";
 import axios from "axios";
-
-import PostState from './PostStat'
+import { url } from "../../utils/url";
+import PostState from "./PostStat";
 
 import Box from "@mui/material/Box";
 
@@ -16,21 +16,35 @@ import { AiOutlineLike } from "react-icons/ai";
 import { FaRegCommentAlt } from "react-icons/fa";
 import { RiShareForwardLine } from "react-icons/ri";
 
-const writePost = async () => {
-  axios
-    .post("http://localhost:2345/posts", {
-      user_id: "ravi from react",
-      body_text: "first post",
-    })
-    .then((resp) => {
-      console.log(resp);
-    });
+const updatePost = (id, no_of_likes) => {
+  // console.log('no_of_likes:', no_of_likes)
+  return axios.patch(`${url}/api/posts/${id}`, {
+    no_of_likes,
+  });
+};
+const getPost = async (id) => {
+  return axios.get(`${url}/api/posts/${id}`);
 };
 
 const PostCard = ({ post }) => {
-  const { body_text,_id } = post;
-  
-  
+  const { body_text, _id } = post;
+
+  const handleLike = () => {
+    console.log("clicked");
+    let likes = 0;
+    getPost(_id)
+      .then(({ data }) => {
+        likes = data.post.no_of_likes;
+        console.log("likes:", likes);
+      })
+      .then((resp) => {
+        updatePost(_id, likes + 1).then(({ data }) => {
+          likes = data.post.no_of_likes;
+          console.log("likes:", likes);
+        });
+      });
+  };
+
   return (
     <Box
       sx={{ border: "1px solid black", padding: "0 2rem", margin: "1rem 0" }}
@@ -72,7 +86,7 @@ const PostCard = ({ post }) => {
       <Box sx={{ margin: "1rem 0" }}>{body_text}</Box>
       {/* post stat */}
       <Box>
-        <PostState id={_id}/>
+        <PostState id={_id} />
       </Box>
       <Divider variant="middle" />
       {/* like comment share */}
@@ -87,7 +101,11 @@ const PostCard = ({ post }) => {
         }}
       >
         <Box>
-          <Button variant="outlined" startIcon={<AiOutlineLike />}>
+          <Button
+            variant="outlined"
+            onClick={handleLike}
+            startIcon={<AiOutlineLike />}
+          >
             Like
           </Button>
         </Box>
