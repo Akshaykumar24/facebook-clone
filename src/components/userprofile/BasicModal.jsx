@@ -9,6 +9,7 @@ import styled from 'styled-components'
 const Input = styled1('input')({
     display: 'none',
 });
+
 const style = {
     position: 'absolute',
     top: '50%',
@@ -20,19 +21,17 @@ const style = {
     alignItems: "center",
     height: "20rem",
     bgcolor: 'background.paper',
-    border: '2px solid #000',
-    boxShadow: 24,
+    borderRadius: " 0.9rem",
+    boxShadow: `0px 0px 10px var(--font-light-color)`,
+
     p: 2,
 };
 
-export default function BasicModal() {
-    const [open, setOpen] = React.useState(false);
-    const handleOpen = () => setOpen(true);
-    const handleClose = () => setOpen(false);
+export default function BasicModal({ title, btnText, handleClose, open }) {
+
 
     return (
         <div>
-            <Button onClick={handleOpen}>Open modal</Button>
             <Modal
                 open={open}
                 onClose={handleClose}
@@ -41,16 +40,19 @@ export default function BasicModal() {
             >
                 <Box sx={style}>
                     <EditProfilePicTextStyled>
-                        <div>Edit Profile Picture</div>
+                        <div>{title}</div>
                         <div>
-                            <CloseIcon />
+                            <span onClick={handleClose}>
+                                <CloseIcon />
+                            </span>
+
                         </div>
                     </EditProfilePicTextStyled>
                     <UploadProfPicStyled>
                         <label htmlFor="contained-button-file">
                             <Input accept="image/*" id="contained-button-file" multiple type="file" />
                             <Button variant="contained" component="span">
-                                Upload
+                                {btnText}
                             </Button>
                         </label>
                     </UploadProfPicStyled>
@@ -96,19 +98,35 @@ align-items: center;
     justify-content: center;
     background-color:var(--primary-color);
     color: var(  --primary-background-color);
+        cursor: pointer;
 }
 
 `
-const EditProfilePicTextStyled = styled.div`
+export const EditProfilePicTextStyled = styled.div`
 display: flex;
 &>div:nth-child(1){
-    width: 65%;
+       width: 70%;
     display: flex;
     justify-content: flex-end;
+    font-size: 1.2rem;
+    font-weight: bold;
 }
 
 &>div:nth-child(2){
-padding-left: 7rem
+padding-left: 6rem;
+
+span{
+    width:5rem ;
+    height:5rem;
+    border-radius: 50%;
+    background-color:var(--primary-background-color);
+    border: 1px solid var(--background-gray-color);
+    cursor: pointer;
+    
+    :hover{
+        background-color: var(--background-gray-color)
+    }
+}
 }
 
 
