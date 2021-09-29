@@ -95,3 +95,27 @@ export const GlobalStyles = createGlobalStyle`
     border-bottom:4px solid var(--primary-color);
     color: var(--primary-color) !important;
 }
+
+body {
+  margin: 0;
+  font-family: "Poppins", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  line-height: 1.34;
+  background-color: var(--secondary-background-2);
+}
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  color: var(--primary-text);
+  font-size: 16px;
+}
+input,
+button,
+textarea {
+  outline: none;
+}
+button {
+  cursor: pointer;
+}`;
