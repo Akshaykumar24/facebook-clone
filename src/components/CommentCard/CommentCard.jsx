@@ -1,7 +1,10 @@
 import React from "react";
 import Box from "@mui/material/Box";
 import Avatar from "@mui/material/Avatar";
-const CommentCard = () => {
+const CommentCard = ({comment}) => {
+  console.log('comment:', comment)
+  const {body_text}=comment
+
   return (
     <Box sx={{display:'flex'}}>
       <Box >
@@ -10,7 +13,7 @@ const CommentCard = () => {
       <Box>
         <Box>
             <h3>Ravi</h3>
-            <p>Coment body</p>
+            <p>{body_text}</p>
         </Box>
         <Box>Like Comment</Box>
       </Box>
