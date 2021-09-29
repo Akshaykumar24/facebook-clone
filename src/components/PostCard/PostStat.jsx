@@ -13,7 +13,7 @@ const getPost = (id) => {
 };
 
 const PostStat = ({ id }) => {
-  console.log("id:", id);
+ 
   const [postStat, setPostStat] = useState({
     no_of_likes: 0,
     no_of_comments: 0,
@@ -25,8 +25,7 @@ const PostStat = ({ id }) => {
   useEffect(() => {
     getPost(id).then(({ data }) => {
       const stat = data.post;
-      console.log("stat:", stat);
-      
+           
 
       setPostStat(stat );
     });

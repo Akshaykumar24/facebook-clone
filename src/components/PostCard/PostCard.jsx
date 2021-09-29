@@ -17,7 +17,6 @@ import { FaRegCommentAlt } from "react-icons/fa";
 import { RiShareForwardLine } from "react-icons/ri";
 
 const updatePost = (id, no_of_likes) => {
-  // console.log('no_of_likes:', no_of_likes)
   return axios.patch(`${url}/api/posts/${id}`, {
     no_of_likes,
   });
@@ -28,10 +27,8 @@ const getPost = async (id) => {
 
 const PostCard = ({ post }) => {
   const { body_text, _id } = post;
-
+  let likes = 0;
   const handleLike = () => {
-    console.log("clicked");
-    let likes = 0;
     getPost(_id)
       .then(({ data }) => {
         likes = data.post.no_of_likes;
@@ -86,7 +83,7 @@ const PostCard = ({ post }) => {
       <Box sx={{ margin: "1rem 0" }}>{body_text}</Box>
       {/* post stat */}
       <Box>
-        <PostState id={_id} />
+        <PostState id={(_id)} />
       </Box>
       <Divider variant="middle" />
       {/* like comment share */}
