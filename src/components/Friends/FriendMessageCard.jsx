@@ -1,26 +1,8 @@
-import axios from "axios";
 import React from "react";
 import styled from "styled-components";
-import { url } from "../../utils/url";
+import { Link } from "react-router-dom";
 
-const AcceptCard = ({ p, id, update, data }) => {
-  const accept = () => {
-    axios
-      .post(`${url}/api/user/acceptRequest/${id}`, {
-        id: p._id,
-      })
-      .then((res) => console.log(res))
-      .then(update(data, p._id));
-  };
-  const reject = () => {
-    axios
-      .post(`${url}/api/user/rejectRequest/${id}`, {
-        id: p._id,
-      })
-      .then((res) => console.log(res))
-      .then(update(data, p._id));
-  };
-
+const FriendMessageCard = ({ p }) => {
   return (
     <Known>
       <img
@@ -32,13 +14,14 @@ const AcceptCard = ({ p, id, update, data }) => {
         alt="profile"
       />
       <h2>{p.first_name}</h2>
-      <button onClick={accept}>Accept</button>
-      <button onClick={reject}>Reject</button>
+      <button>
+        <Link to="/messenger">Message</Link>
+      </button>
     </Known>
   );
 };
 
-export default AcceptCard;
+export default FriendMessageCard;
 
 const Known = styled.div`
   max-width: 250px;
@@ -68,6 +51,9 @@ const Known = styled.div`
   > :nth-child(3) {
     background-color: rgb(231, 243, 255);
     color: rgb(74, 126, 230);
+    > * {
+      text-decoration: none;
+    }
   }
   > :nth-child(3):hover {
     background-color: rgb(219, 231, 242);

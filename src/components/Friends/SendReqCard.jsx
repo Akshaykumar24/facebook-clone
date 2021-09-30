@@ -1,7 +1,17 @@
+import axios from "axios";
 import React from "react";
 import styled from "styled-components";
+import { url } from "../../utils/url";
 
-const SendReqCard = ({ p }) => {
+const SendReqCard = ({ p, id, update, data }) => {
+  const cancelReq = () => [
+    axios
+      .post(`${url}/api/user/cancelRequest/${id}`, {
+        id: p._id,
+      })
+      .then(update(data, p._id)),
+  ];
+
   return (
     <Known>
       <img
@@ -13,7 +23,7 @@ const SendReqCard = ({ p }) => {
         alt="profile"
       />
       <h2>{p.first_name}</h2>
-      <button>Add Friend</button>
+      <button onClick={cancelReq}>Cancel Request</button>
     </Known>
   );
 };
@@ -32,7 +42,7 @@ const Known = styled.div`
   border-radius: max(0px, min(8px, ((100vw - 4px) - 100%) * 9999)) / 8px;
   padding-bottom: 7px;
   > h2 {
-    padding: 12px;
+    padding: 12px 12px 24px;
     margin: 0;
     font-size: 18px;
   }
@@ -46,8 +56,8 @@ const Known = styled.div`
     border-radius: 4px;
   }
   > :nth-child(3) {
-    background-color: rgb(231, 243, 255);
-    color: rgb(74, 126, 230);
+    background-color: rgb(255, 195, 195);
+    color: rgb(255, 31, 31);
   }
   > :nth-child(3):hover {
     background-color: rgb(219, 231, 242);
