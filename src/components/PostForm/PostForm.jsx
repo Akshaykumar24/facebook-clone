@@ -7,6 +7,7 @@ import Avatar from "@mui/material/Avatar";
 import Modal from "@mui/material/Modal";
 import TextField from "@mui/material/TextField";
 import Button from '@mui/material/Button';
+import PhotoUploadForm from "../PhotoUploadForm/PhotoUploadForm";
 const modalStyle = {
   position: "absolute",
   top: "50%",
@@ -27,7 +28,8 @@ const PostForm = () => {
   // text form control
   const [body_text, setBodyText] = useState("Whats on your mind?");
   const [buttonDisabled, setButtonDisabled] = useState(true);
-
+  const [body_photo, setBody_photo] = useState("");
+  
   const handleChange = (e) => {
     const value = e.target.value
     if(value.length>0){
@@ -35,14 +37,20 @@ const PostForm = () => {
     }
     setBodyText(value);
   };
-  const writePost = (body_text)=>{
+  const writePost = (body_text,body_photo)=>{
     return axios.post(`${url}/api/posts`,{
       user_id:'Ravi Ranjan kumar',
-      body_text:body_text
+      body_text:body_text,
+      body_photo:body_photo,
     })
   }
+  // const handelbodyPhoto = ()=>{
+    
+  // }
+
   const handleSubmit = ()=>{
-    writePost(body_text).then((resp)=>{
+   
+    writePost(body_text,body_photo).then((resp)=>{
       console.log(resp)
       if(resp.status===201){
         console.log('succes')
@@ -107,7 +115,7 @@ const PostForm = () => {
               />
             </Box>
             <Box></Box>
-            <Box>Add to your post</Box>
+            <Box>Add to your post <PhotoUploadForm setBody_photo={setBody_photo} /></Box>
             <Box><Button disabled={buttonDisabled} fullWidth variant="contained" onClick={handleSubmit} >Post</Button></Box>
           </Box>
         </Modal>

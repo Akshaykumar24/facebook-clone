@@ -2,7 +2,7 @@ import React from "react";
 import { Switch, Route } from "react-router-dom";
 import FriendsAll from "../components/Friends/FriendsAll";
 import SignUp from "../components/Login-Signup/SignUp";
-
+import HomePage from "./HomePage";
 import FriendsCompo from "../components/userprofile/FriendsCompo";
 import Intro from "../components/userprofile/Intro";
 import PhotosComp from "../components/userprofile/PhotosComp";
@@ -19,8 +19,11 @@ const Router = () => {
         <Route path="/login">
           <SignUp />
         </Route>
-        <Route path="/home">
+        <Route path="/wall">
           <Wall />
+        </Route>
+        <Route path="/home">
+          <HomePage />
         </Route>
         <Route path="/friends">
           <FriendsAll />
