@@ -27,9 +27,7 @@ const Router = () => {
         </Route>
         <Route path="/profile">
           <UserProfile />
-          <Intro />
-          <PhotosComp />
-          <FriendsCompo />
+
         </Route>
       </Switch>
     </div>
