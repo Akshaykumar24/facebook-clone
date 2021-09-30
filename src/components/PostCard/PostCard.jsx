@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { url } from "../../utils/url";
 import PostStat from "./PostStat";
@@ -23,7 +23,6 @@ const updatePost = (id, no_of_likes) => {
   });
 };
 const getPost = async (id) => {
- 
   return axios.get(`${url}/api/posts/${id}`);
 };
 const getCommentOfThisPost = (id) => {
@@ -31,29 +30,29 @@ const getCommentOfThisPost = (id) => {
 };
 
 const PostCard = ({ post }) => {
-  const { body_text, _id,no_of_likes,no_of_comments,body_photo } = post;
+  const { body_text, _id, no_of_likes, no_of_comments, body_photo } = post;
   const [isComment, setIsComment] = useState(false);
   const [showComments, setShowComments] = useState(false);
-  const [comments,setComments]=useState('')
-  const [noOfLikes,setNoOfLikes]=useState(0)
-  const [noOfComments,setNoOfComments]=useState(0)
-  
+  const [comments, setComments] = useState("");
+  const [noOfLikes, setNoOfLikes] = useState(0);
+  const [noOfComments, setNoOfComments] = useState(0);
+
   let likes = 0;
-  useEffect(()=>{
-    setNoOfLikes(no_of_likes)
-    setNoOfComments(no_of_comments)
-  },[no_of_comments,no_of_likes])
-  
+  useEffect(() => {
+    setNoOfLikes(no_of_likes);
+    setNoOfComments(no_of_comments);
+  }, [no_of_comments, no_of_likes]);
+
   const handleLike = () => {
     getPost(_id)
       .then(({ data }) => {
         likes = data.post.no_of_likes;
-       
-      }).catch((err)=>console.log(err))
+      })
+      .catch((err) => console.log(err))
       .then((resp) => {
         updatePost(_id, likes + 1).then(({ data }) => {
           likes = data.post.no_of_likes;
-          setNoOfLikes(likes)
+          setNoOfLikes(likes);
         });
       });
   };
@@ -61,16 +60,15 @@ const PostCard = ({ post }) => {
   const handleShowComments = () => {
     setShowComments((prev) => !prev);
     setIsComment(true);
-    getCommentOfThisPost(_id).then(({data}) => {
-      const commentsArr = data.comments
-      
-      setComments(commentsArr)
+    getCommentOfThisPost(_id).then(({ data }) => {
+      const commentsArr = data.comments;
+
+      setComments(commentsArr);
     });
-    
   };
   return (
     <Box
-      sx={{ border: "1px solid black", padding: "0 2rem", margin: "1rem 0" }}
+      sx={{ backgroundColor: "#FFFFFF", padding: "0 2rem", margin: "1rem 0" }}
     >
       {/* header */}
       <Box
@@ -92,7 +90,11 @@ const PostCard = ({ post }) => {
           }}
         >
           <Box>
-            <Avatar sx={{ m: "0 1rem 0 0" }} alt="Remy Sharp" src={body_photo}/>
+            <Avatar
+              sx={{ m: "0 1rem 0 0" }}
+              alt="R"
+              src={body_photo}
+            />
           </Box>
           <Box>
             <Box>Ravi Ranjan Kumar</Box>
@@ -109,11 +111,15 @@ const PostCard = ({ post }) => {
       <Box sx={{ margin: "1rem 0" }}>{body_text}</Box>
       <Box sx={{ margin: "1rem 0" }}>
         <img src={body_photo} alt="" />
-       
-        </Box>
+      </Box>
       {/* post stat */}
       <Box>
-        <PostStat id={_id} noOfLikes={noOfLikes} noOfComments={noOfComments} handleShowComments={handleShowComments} />
+        <PostStat
+          id={_id}
+          noOfLikes={noOfLikes}
+          noOfComments={noOfComments}
+          handleShowComments={handleShowComments}
+        />
       </Box>
       <Divider variant="middle" />
       {/* like comment share */}
@@ -125,11 +131,12 @@ const PostCard = ({ post }) => {
           alignContent: "center",
           alignItems: "center",
           margin: "1rem 0",
+          padding: "0 2rem",
         }}
       >
         <Box>
           <Button
-            variant="outlined"
+            variant="text"
             onClick={handleLike}
             startIcon={<AiOutlineLike />}
           >
@@ -138,7 +145,7 @@ const PostCard = ({ post }) => {
         </Box>
         <Box>
           <Button
-            variant="outlined"
+            variant="text"
             onClick={() => {
               setIsComment((prev) => !prev);
             }}
@@ -148,7 +155,7 @@ const PostCard = ({ post }) => {
           </Button>
         </Box>
         <Box>
-          <Button variant="outlined" startIcon={<RiShareForwardLine />}>
+          <Button variant="text" startIcon={<RiShareForwardLine />}>
             Share
           </Button>
         </Box>
@@ -160,13 +167,10 @@ const PostCard = ({ post }) => {
       )}
       {showComments && (
         <Box>
-          {
-
-            comments.length>0 && comments.map((comment)=>{
-
-             return <CommentCard comment={comment}  />
-            })
-          }
+          {comments.length > 0 &&
+            comments.map((comment) => {
+              return <CommentCard comment={comment} />;
+            })}
         </Box>
       )}
     </Box>

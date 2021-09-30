@@ -23,7 +23,9 @@ const PhotoUploadForm = ({setBody_photo}) => {
     <div>
       <input
         type="file"
-        accept="image/png, image/jpeg"
+        
+        // accept="image/png, image/jpeg; capture=camera"
+        accept="image/*; capture=camera"
         onChange={handleChange}
       />
       <button onClick={handleUpload}>upload</button>
