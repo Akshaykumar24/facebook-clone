@@ -3,6 +3,7 @@ import { ReactComponent as DarkModeIcon } from "../../Icons/darkMode.svg";
 import { ReactComponent as LogoutIcon } from "../../Icons/logout.svg";
 import { ReactComponent as SettingIcon } from "../../Icons/setting.svg";
 import Switch from "@mui/material/Switch";
+import '../../styles/SideBar/SideBar.css'
 
 const AccountMenu = () => {
   const label = { inputProps: { "aria-label": "Switch demo" } };
