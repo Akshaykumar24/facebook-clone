@@ -17,9 +17,6 @@ function SideBar() {
                 <Link className="flexBox sideBarContentLink" to="/group/new">
                     <SideBarContent src={'/Images/friends_icon.png'} label="Groups" />
                 </Link>
-                <Link className="flexBox sideBarContentLink" to="/">
-                    <SideBarContent src={'/Images/market_place_icon.png'} label="Marketplace" />
-                </Link>
                 <Link className="flexBox sideBarContentLink" to="/messenger/new">
                     <SideBarContent src={'/Images/messenger_icon.png'} label="Messenger" />
                 </Link>

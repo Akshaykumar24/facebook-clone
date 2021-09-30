@@ -12,8 +12,8 @@ function App() {
     <Intro />
     <PhotosComp />
     <FriendsCompo /> */}
-      {/* <NavBar />
-      <Home /> */}
+      <NavBar />
+      <Home />
     </div>
   );
 }
