@@ -1,5 +1,5 @@
 import React from "react";
-import '../../styles/Navbar/Navbar.css'
+import "../../styles/Navbar/Navbar.css"
 import { ReactComponent as SearchIcon } from "../../Icons/search.svg";
 import { ReactComponent as MainLogo } from "../../Icons/main-logo.svg";
 import { ReactComponent as FavIcon } from "../../Icons/fav.svg";
@@ -14,10 +14,20 @@ import IconWrapper from "./IconWrapper";
 import IconWrapperCircle from "./IconWrapperCircle";
 import AccountMenu from "./AccountMenu";
 import Notification from "./Notification";
+import IconButton from '@mui/material/IconButton';
+import MenuIcon from '@mui/icons-material/Menu';
 
-const NavBar = () => {
+const NavBar = ({menu, setMenu}) => {
+  
   const [account, setAccount] = React.useState(false);
   const [notification, setNotification] = React.useState(false);
+
+
+
+  const handleMenu = () => {
+    console.log(menu,'menu');
+      setMenu((prev) => !prev)    
+  }
   
 
   const changeState = (p) => {
@@ -48,6 +58,12 @@ const NavBar = () => {
               className="navBarSearchBoxInput"
             />
           </div>
+        </div>
+        <div className="navBarMenu" onClick={handleMenu} >
+           <IconButton edge="start" color="inherit" aria-label="menu" sx={{ mr: 2 }}>
+            <MenuIcon />
+          </IconButton>
+      
         </div>
         <div className="navBarMainHeader flexBox">
           <IconWrapper path="/" title="Home">
@@ -89,6 +105,7 @@ const NavBar = () => {
       </div>
       {account && <AccountMenu />}
       {notification && <Notification />}
+          
     </>
   );
 };

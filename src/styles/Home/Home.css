@@ -7,7 +7,6 @@
 }
 .mainPostsContainer {
   flex-grow: 1;
-  /* height: calc(100vh - 50px); */
   overflow: auto;
   display: grid;
   gap: 15px;
@@ -28,4 +27,13 @@
   .mainRightSidebarContainer {
     display: none;
   }
+}
+
+div[role="presentation"] {
+  top: 50px;
+}
+
+.MuiModal-root > div,
+.MuiDrawer-modal {
+  top: 50px;
 }

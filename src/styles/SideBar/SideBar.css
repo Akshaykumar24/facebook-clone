@@ -20,16 +20,11 @@
   background: var(--hover-overlay);
 }
 
-.sideBarContentUserImageBox {
-  position: relative;
-}
-
 .sideBarContentImage {
   width: 35px;
   height: 35px;
   margin: auto;
   border-radius: 100%;
-  object-fit: cover;
 }
 
 .sideBarContentLabel {
@@ -41,8 +36,7 @@
 
 .downBarHeading {
   color: var(--secondary-icon);
-  margin-left: 10px;
-  margin-bottom: 10px;
+  margin: 10px 0 10px 10px;
   font-weight: bold;
 }
 
@@ -58,4 +52,11 @@
   opacity: 0.6;
   vertical-align: middle;
   fill: var(--primary-icon);
+}
+
+@media only screen and (max-width: 768px) {
+  .sideBarContainer {
+    min-width: 100vw;
+    padding: 0;
+  }
 }
