@@ -1,6 +1,6 @@
 .sideBarContainer {
   min-width: 200px;
-  max-width: 350px;
+  max-width: 320px;
   width: 25vw;
   padding: 10px;
 }
@@ -44,4 +44,18 @@
   margin-left: 10px;
   margin-bottom: 10px;
   font-weight: bold;
+}
+
+/* active contact side */
+.activeContactHeader {
+  display: flex;
+  justify-content: space-between;
+  margin: 10px;
+}
+.sideBarContainer .searchIcon {
+  width: 19px;
+  height: 19px;
+  opacity: 0.6;
+  vertical-align: middle;
+  fill: var(--primary-icon);
 }

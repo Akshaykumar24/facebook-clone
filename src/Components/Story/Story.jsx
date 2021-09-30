@@ -10,6 +10,7 @@ const Story = () => {
                 }}
                 className="mainImgContainer"
             >
+                 <img className="imageMainContainer" src="https://lh3.googleusercontent.com/a-/AOh14GhRn5Z0k4yIPKiZRdd8cTmkzDbqswy-A1yJjMTMBw=s576-p-rw-no" alt="" />
                 <p className="pMainTag">Vaibhav</p>
             </div>
             <div
@@ -18,6 +19,7 @@ const Story = () => {
                 }}
                 className="mainImgContainer"
             >
+                 <img className="imageMainContainer" src="https://lh3.googleusercontent.com/a-/AOh14GhRn5Z0k4yIPKiZRdd8cTmkzDbqswy-A1yJjMTMBw=s576-p-rw-no" alt="" />
                 <p className="pMainTag">Vaibhav</p>
             </div>
             <div
@@ -26,6 +28,7 @@ const Story = () => {
                 }}
                 className="mainImgContainer"
             >
+                 <img className="imageMainContainer" src="https://lh3.googleusercontent.com/a-/AOh14GhRn5Z0k4yIPKiZRdd8cTmkzDbqswy-A1yJjMTMBw=s576-p-rw-no" alt="" />
                 <p className="pMainTag">Vaibhav</p>
             </div>
             <div
@@ -34,6 +37,7 @@ const Story = () => {
                 }}
                 className="mainImgContainer"
             >
+                 <img className="imageMainContainer" src="https://lh3.googleusercontent.com/a-/AOh14GhRn5Z0k4yIPKiZRdd8cTmkzDbqswy-A1yJjMTMBw=s576-p-rw-no" alt="" />
                 <p className="pMainTag">Vaibhav</p>
             </div>
             <div
@@ -42,8 +46,10 @@ const Story = () => {
                 }}
                 className="mainImgContainer"
             >
+                 <img className="imageMainContainer" src="https://lh3.googleusercontent.com/a-/AOh14GhRn5Z0k4yIPKiZRdd8cTmkzDbqswy-A1yJjMTMBw=s576-p-rw-no" alt="" />
                 <p className="pMainTag">Vaibhav</p>
             </div>
+           
         </div>
    </> )
 }
