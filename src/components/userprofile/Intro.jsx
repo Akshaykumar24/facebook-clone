@@ -7,22 +7,29 @@ import LocationOnIcon from '@mui/icons-material/LocationOn';
 import AccessTimeFilledIcon from '@mui/icons-material/AccessTimeFilled';
 import WifiIcon from '@mui/icons-material/Wifi';
 import SchoolIcon from '@mui/icons-material/School';
-function Intro() {
-    const dummyEducationData = ["Dr. Babasaheb ambedkar technological university", "Vivekanand College ,Kolhapur", "Halkarni Highschool,Halkarni"]
+import BusinessIcon from '@mui/icons-material/Business';
+function Intro({ work1, work2, education1, education2, livesIn, from, joined, followedBy, handleEditProfileOpen }) {
+
     return (
         <IntroStyles>
             <div>
                 <span>Intro</span>
             </div>
-            {dummyEducationData.map((el) => {
-                return <div key={uuidv4()}><SchoolIcon /><span>studied at{el}</span></div>
-            })}
-            <div><HomeIcon /><span>Lives in chandgad</span></div>
-            <div><LocationOnIcon /><span>From kolhapur</span></div>
+            {work1 && work1.length > 0 ? <div key={uuidv4()}><BusinessIcon /><span>worked at{work1}</span></div> : ""}
+            {work2 && work2.length > 0 ? <div key={uuidv4()}><BusinessIcon /><span>worked at{work2}</span></div> : ""}
+            {education1 && education1.length > 0 ? <div key={uuidv4()}><SchoolIcon /><span>studied at{education1}</span></div> : ""}
+            {education2 && education2.length > 0 ? <div key={uuidv4()}><SchoolIcon /><span>studied at{education2}</span></div> : ""}
+            {/* {work.map((el) => {
+                return <div key={uuidv4()}><BusinessIcon /><span>worked at{el}</span></div>
+            })} */}
+
+            {livesIn ? <div><HomeIcon /><span>Lives in {livesIn}</span></div> : ""}
+            {from ? <div><LocationOnIcon /><span>From {from}</span></div> : ""}
             <div><FavoriteIcon /><span>Single</span></div>
-            <div><AccessTimeFilledIcon /><span>Joined march 2015</span></div>
-            <div><WifiIcon /><span>Followed by 62 people</span></div>
-            <div className="editDetailsBtn">Edit Details</div>
+            {joined ? <div><AccessTimeFilledIcon /><span>Joined {joined}</span></div> : ""}
+            {followedBy ? <div><WifiIcon /><span>Followed by {followedBy} people</span></div> : ""}
+
+            <div className="editDetailsBtn" onClick={handleEditProfileOpen}>Edit Details</div>
             <div className="editDetailsBtn">Add Hobbies</div>
         </IntroStyles>
     )

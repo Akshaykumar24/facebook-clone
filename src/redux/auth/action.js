@@ -57,3 +57,31 @@ export const regUser = (data) => (dispatch) => {
     })
     .catch((err) => dispatch(regFail(err)));
 };
+export const updateUser = (data, id) => (dispatch) => {
+  console.log(data, "hjskdfhkioju")
+  dispatch(regReq());
+  axios
+    .patch(`${url}/api/user/${id}`, data)
+    .then(({ data }) => {
+      console.log(data, "ihi from updateUser");
+      return dispatch(regSuccess(data));
+    })
+    .catch((err) => dispatch(regFail(err)));
+};
+
+
+export const getUser = (id) => dispatch => {
+  dispatch(regReq());
+  if (!id) {
+    const failureAction = regFail("no results");
+    dispatch(failureAction);
+  }
+  return axios.get(`${url}/api/user/${id}`)
+    .then((res) => {
+      dispatch(regSuccess(res.data));
+    })
+    .catch((err) => {
+      const failureAction = regFail(err);
+      dispatch(failureAction);
+    });
+};

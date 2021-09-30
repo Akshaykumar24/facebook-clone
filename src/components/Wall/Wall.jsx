@@ -5,7 +5,7 @@ const Wall = () => {
   return (
     <div>
       Welcome to Your Wall
-      <Link to="/friends">Friends</Link>
+      <Link to="/profile">profile</Link>
     </div>
   );
 };

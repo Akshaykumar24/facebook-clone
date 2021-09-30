@@ -6,48 +6,57 @@ import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import EditIcon from "@mui/icons-material/Edit";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import BasicModal from "./BasicModal";
 import EditProfieModal from "./EditProfile";
-import Intro from './Intro'
-import PhotosComp from './PhotosComp'
-import FriendsCompo from './FriendsCompo'
+import Intro from "./Intro";
+import PhotosComp from "./PhotosComp";
+import FriendsCompo from "./FriendsCompo";
+import { getUser } from "../../redux/auth/action";
+import { shallowEqual, useDispatch, useSelector } from "react-redux";
 
 function UserProfile() {
+  const dispatch = useDispatch();
+
+  // console.log(user)
   const [posts, setPosts] = useState(true);
   const [friends, setFriends] = useState(false);
   const [photos, setPhotos] = useState(false);
 
   const [title, setTitle] = useState("");
-  const [btnText, setBtnText] = useState("")
-  const [showUpdateCoverPhotoModal, setShowUpdateCoverPhotoModal] = useState(false);
-  const [showUpdateProfilePhotoModal, setShowUpdateProfilePhotoModal] = useState(false)
-  const [editProfileOpen, setEditProfileOpen] = useState(false)
+  const [btnText, setBtnText] = useState("");
+
+  const defaultUserPic = {
+    coverPic:
+      "https://th.bing.com/th/id/R.b60ebb76818e10a1ffeb1d76ef807568?rik=BfJWM%2bFjq3YsSA&riu=http%3a%2f%2fthewowstyle.com%2fwp-content%2fuploads%2f2015%2f01%2fFacebook-Covers-004.jpg&ehk=QyHMcIYCHj1%2bqMrmjGWLcUOKe7Zi8kTKnVJ2G1zuQqA%3d&risl=&pid=ImgRaw&r=0",
+    profilePic:
+      "https://th.bing.com/th/id/R.56fa805242ca705c112c21e9142391c6?rik=0FGHjmAsLgoKhQ&riu=http%3a%2f%2fsguru.org%2fwp-content%2fuploads%2f2017%2f04%2fattitude-boys-profile-pics-for-Facebook-20.jpg&ehk=A%2bCtAIdAM172Ttozp8O2Yieal74Rvzj2O%2fHwjJnGrkQ%3d&risl=&pid=ImgRaw&r=0",
+  };
+
+  const [editProfileOpen, setEditProfileOpen] = useState(false);
 
   const handleEditProfileOpen = () => setEditProfileOpen(true);
   const handleEditProfileClose = () => setEditProfileOpen(false);
+  const {
+    auth: { user },
+  } = useSelector((state) => state, shallowEqual);
+  useEffect(() => {
+    dispatch(getUser(user._id));
+  }, []);
 
+  const [userData, setUserData] = useState(user);
   const [open, setOpen] = useState(false);
   const handleCoverPhotoModalOpen = () => {
     setTitle("Edit Cover Photo");
-    setBtnText("Cover Photo")
+    setBtnText("Cover Photo");
     setOpen(true);
-
-  }
+  };
   const handleProfilePhotoModalOpen = () => {
     setTitle("Edit Profile Photo");
-    setBtnText("Profile Photo")
+    setBtnText("Profile Photo");
     setOpen(true);
-
-  }
+  };
   const handlePhotoModalClose = () => setOpen(false);
-
-
-
-
-  const handleBasicModal = () => {
-
-  }
 
   const handleProfilesMenu = (e) => {
     if (e.target.textContent === "Posts") {
@@ -71,7 +80,9 @@ function UserProfile() {
           <div className="profilePhotos">
             <div className="coverPhoto">
               <img
-                src="https://th.bing.com/th/id/R.b60ebb76818e10a1ffeb1d76ef807568?rik=BfJWM%2bFjq3YsSA&riu=http%3a%2f%2fthewowstyle.com%2fwp-content%2fuploads%2f2015%2f01%2fFacebook-Covers-004.jpg&ehk=QyHMcIYCHj1%2bqMrmjGWLcUOKe7Zi8kTKnVJ2G1zuQqA%3d&risl=&pid=ImgRaw&r=0"
+                src={
+                  userData?.cover ? userData?.cover : defaultUserPic.coverPic
+                }
                 alt="coverPhoto"
               />
               <div onClick={handleCoverPhotoModalOpen} className="cameraBtn">
@@ -80,7 +91,11 @@ function UserProfile() {
             </div>
             <div className="avatar">
               <img
-                src="https://th.bing.com/th/id/R.56fa805242ca705c112c21e9142391c6?rik=0FGHjmAsLgoKhQ&riu=http%3a%2f%2fsguru.org%2fwp-content%2fuploads%2f2017%2f04%2fattitude-boys-profile-pics-for-Facebook-20.jpg&ehk=A%2bCtAIdAM172Ttozp8O2Yieal74Rvzj2O%2fHwjJnGrkQ%3d&risl=&pid=ImgRaw&r=0"
+                src={
+                  userData?.profile
+                    ? userData.profile
+                    : defaultUserPic.profilePic
+                }
                 alt="profilePhoto"
               />
               <div onClick={handleProfilePhotoModalOpen} className="cameraBtn">
@@ -88,12 +103,21 @@ function UserProfile() {
               </div>
             </div>
           </div>
-          <BasicModal title={title} btnText={btnText} handleClose={handlePhotoModalClose} open={open} />
-          <EditProfieModal handleEditProfileClose={handleEditProfileClose} editProfileOpen={editProfileOpen} />
+          <BasicModal
+            title={title}
+            btnText={btnText}
+            handleClose={handlePhotoModalClose}
+            open={open}
+          />
+          <EditProfieModal
+            handleEditProfileClose={handleEditProfileClose}
+            editProfileOpen={editProfileOpen}
+            userData={userData}
+          />
           <div className="profileBio">
             <div className="Bio">
               <div>
-                <h1>Omkar Gavade</h1>
+                <h1>{userData.first_name + " " + userData.last_name}</h1>
                 <div>
                   <p>You have to be odd to be number one</p>
                   <p>Commited with life</p>
@@ -132,7 +156,10 @@ function UserProfile() {
                 </div>
               </div>
               <div className="specialC">
-                <div onClick={handleEditProfileOpen} className="menuflex editFont">
+                <div
+                  onClick={handleEditProfileOpen}
+                  className="menuflex editFont"
+                >
                   <EditIcon /> <span>Edit Profile</span>
                 </div>
               </div>
@@ -145,7 +172,17 @@ function UserProfile() {
           </div>
         </MainLayout>
       </div>
-      <Intro />
+      <Intro
+        work1={userData.work1}
+        work2={userData.work2}
+        education1={userData.education1}
+        education2={userData.education2}
+        livesIn={userData.city1}
+        from={userData.city2}
+        joined={userData.createdAt}
+        followedBy={userData.friendRequestRecieved.length}
+        handleEditProfileOpen={handleEditProfileOpen}
+      />
       <PhotosComp />
       <FriendsCompo />
     </UserProfileStyles>
@@ -273,7 +310,7 @@ const UserProfileStyles = styled.div`
 
         height: 3.5rem;
 
-        column-gap: 9px;
+        column-gap: 6px;
 
         align-items: center;
         .specialC {
@@ -289,7 +326,7 @@ const UserProfileStyles = styled.div`
           height: 100%;
           color: var(--font-light-color);
           display: flex;
-  
+
           align-items: center;
           border-top-left-radius: 4px;
           border-top-right-radius: 4px;
@@ -323,8 +360,8 @@ const UserProfileStyles = styled.div`
           font-size: 14px;
           font-weight: 650;
         }
-        .editFont{
-          color: var(--font-dark-color)
+        .editFont {
+          color: var(--font-dark-color);
         }
         .menu {
           min-width: 3rem;
