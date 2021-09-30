@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-const Login = ({ handleLogin, handleLoginForm, email, password }) => {
+const Login = ({ handleLogin, handleLoginForm, email, password, load }) => {
   return (
     <Logs>
       <input
@@ -18,7 +18,7 @@ const Login = ({ handleLogin, handleLoginForm, email, password }) => {
         name="password"
         onChange={(e) => handleLoginForm(e)}
       />
-      <button onClick={handleLogin}>Log-In</button>
+      <button onClick={handleLogin}>{load ? "loading" : "Log-In"}</button>
     </Logs>
   );
 };

@@ -1,7 +1,6 @@
 import React from "react";
 import SideBarContent from "./SideBarContent";
 import { ReactComponent as SearchIcon } from "../../Icons/search.svg";
-import { ReactComponent as VedioIcon } from "../../Icons/videoCallIcon.svg";
 import "../../styles/SideBar/SideBar.css";
 
 const ActiveContacts = () => {
