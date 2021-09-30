@@ -1,7 +1,33 @@
-import React from "react";
+import axios from "axios";
+import React, { useState } from "react";
 import styled from "styled-components";
+import { url } from "../../utils/url";
 
-const KnowCard = ({ p }) => {
+const KnowCard = ({ p, id, update, data }) => {
+  const [sent, setSent] = useState(false);
+  const sendReq = () => {
+    axios
+      .post(`${url}/api/user/sendRequest/${id}`, {
+        id: p._id,
+      })
+      .then(setSent(true));
+    // .then(
+    //   setTimeout(() => {
+    //     update(data, p._id);
+    //   }, 1000)
+    // );
+  };
+  const remove = () => {
+    update(data, p._id);
+    console.log(data, p._id);
+  };
+  const cancelReq = () => [
+    axios
+      .post(`${url}/api/user/cancelRequest/${id}`, {
+        id: p._id,
+      })
+      .then(update(data, p._id)),
+  ];
   return (
     <Known>
       <img
@@ -13,8 +39,25 @@ const KnowCard = ({ p }) => {
         alt="profile"
       />
       <h2>{p.first_name}</h2>
-      <button>Add Friend</button>
-      <button>Remove</button>
+      <button
+        onClick={sendReq}
+        style={{
+          backgroundColor: sent ? "rgb(166, 247, 190)" : "rgb(231, 243, 255)",
+        }}
+      >
+        {sent ? "Request Sent" : "Add Friend"}
+      </button>
+      {!sent && <button onClick={remove}>Remove</button>}
+      {sent && (
+        <button
+          onClick={cancelReq}
+          style={{
+            backgroundColor: "rgb(252, 195, 195)",
+          }}
+        >
+          Cancel Request
+        </button>
+      )}
     </Known>
   );
 };
@@ -33,7 +76,7 @@ const Known = styled.div`
   border-radius: max(0px, min(8px, ((100vw - 4px) - 100%) * 9999)) / 8px;
   padding-bottom: 7px;
   > h2 {
-    padding: 12px;
+    padding: 12px 12px 24px;
     margin: 0;
     font-size: 18px;
   }

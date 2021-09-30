@@ -7,6 +7,7 @@ import SendReqCard from "./SendReqCard";
 import AcceptCard from "./AcceptCard";
 import axios from "axios";
 import { url } from "../../utils/url";
+import FriendMessageCard from "./FriendMessageCard";
 
 const p = {
   first_name: "Akshay",
@@ -18,8 +19,8 @@ const FriendsAll = () => {
   const [suggest, setSuggest] = useState(false);
   const [find, setFind] = useState(false);
   const [birth, setBirth] = useState(false);
-  const [request, setRequest] = useState(false);
-
+  const [pendingRequest, setPendingRequest] = useState(false);
+  const [sentRequest, setSentRequest] = useState(false);
   const [data, setData] = useState([]);
 
   const state = useSelector((state) => state);
@@ -32,12 +33,19 @@ const FriendsAll = () => {
     if (find) {
       setData(friends);
     }
-  }, [find]);
+  }, [find, friends]);
   useEffect(() => {
-    if (request) {
+    if (pendingRequest) {
       setData(friendRequestRecieved);
     }
-  }, [request]);
+  }, [pendingRequest, friendRequestRecieved]);
+
+  useEffect(() => {
+    if (sentRequest) {
+      setData(friendRequestSent);
+    }
+  }, [sentRequest, friendRequestSent]);
+
   useEffect(() => {
     if (suggest) {
       axios.get(`${url}/api/user/all/${id}`).then(({ data }) => {
@@ -45,36 +53,71 @@ const FriendsAll = () => {
         return setData(data.user);
       });
     }
-  }, [suggest]);
+  }, [suggest, id]);
+  const update = (arr, id) => {
+    setData(arr.filter((i) => i._id !== id));
+  };
   return (
     <div>
       All Friends Can be found here
       <FriendsLeft
         suggest={suggest}
-        request={request}
+        pendingRequest={pendingRequest}
+        sentRequest={sentRequest}
         find={find}
         birth={birth}
         setSuggest={setSuggest}
-        setRequest={setRequest}
+        setPendingRequest={setPendingRequest}
+        setSentRequest={setSentRequest}
         setFind={setFind}
         setBirth={setBirth}
       />
-      <Cont>
-        {find && data.map((p) => <KnowCard p={p} />)}
-        {suggest && data.map((p) => <KnowCard p={p} />)}
-        {request && (
-          <>
-            <h2>Pending Requests</h2>
-            {data.map((p) => (
-              <AcceptCard p={p} id={id} />
-            ))}
-            <h2>Requests Sent</h2>
-            {friendRequestSent.map((p) => (
-              <SendReqCard p={p} />
-            ))}
-          </>
-        )}
-      </Cont>
+      {find && (
+        <Cont>
+          {data.map((p) => (
+            <FriendMessageCard p={p} />
+          ))}
+        </Cont>
+      )}
+      {suggest && (
+        <Cont>
+          {data.length === 0 ? (
+            <h2>No New Suggestions</h2>
+          ) : (
+            data.map((p) => (
+              <KnowCard p={p} id={id} update={update} data={data} />
+            ))
+          )}
+        </Cont>
+      )}
+      {pendingRequest && (
+        <>
+          <Head>Pending Requests</Head>
+          <Cont>
+            {data.length === 0 ? (
+              <h2>No New Requests</h2>
+            ) : (
+              data.map((p) => (
+                <AcceptCard p={p} id={id} update={update} data={data} />
+              ))
+            )}
+          </Cont>
+        </>
+      )}
+      {sentRequest && (
+        <>
+          <Head>Requests Sent</Head>
+          <Cont>
+            {data.length === 0 ? (
+              <h2>No New Requests</h2>
+            ) : (
+              data.map((p) => (
+                <SendReqCard p={p} id={id} update={update} data={data} />
+              ))
+            )}
+          </Cont>
+        </>
+      )}
     </div>
   );
 };
@@ -82,7 +125,22 @@ const FriendsAll = () => {
 export default FriendsAll;
 
 const Cont = styled.div`
-  padding: 50px;
+  padding: 80px 50px;
   position: absolute;
   left: 350px;
+  display: flex;
+  flex-wrap: wrap;
+  > div {
+    flex: 1;
+    flex-shrink: 1;
+    /* border: 1px solid rgb(206, 208, 212); */
+    margin: 5px;
+    box-shadow: 2px 2px 5px var(--box-shadow-color);
+  }
+`;
+const Head = styled.h2`
+  padding: 0 50px;
+  position: absolute;
+  left: 360px;
+  margin-bottom: 50px;
 `;
