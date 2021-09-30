@@ -31,7 +31,7 @@ const getCommentOfThisPost = (id) => {
 };
 
 const PostCard = ({ post }) => {
-  const { body_text, _id,no_of_likes,no_of_comments } = post;
+  const { body_text, _id,no_of_likes,no_of_comments,body_photo } = post;
   const [isComment, setIsComment] = useState(false);
   const [showComments, setShowComments] = useState(false);
   const [comments,setComments]=useState('')
@@ -92,7 +92,7 @@ const PostCard = ({ post }) => {
           }}
         >
           <Box>
-            <Avatar sx={{ m: "0 1rem 0 0" }}>R</Avatar>
+            <Avatar sx={{ m: "0 1rem 0 0" }} alt="Remy Sharp" src={body_photo}/>
           </Box>
           <Box>
             <Box>Ravi Ranjan Kumar</Box>
@@ -107,6 +107,10 @@ const PostCard = ({ post }) => {
       </Box>
       {/* post body */}
       <Box sx={{ margin: "1rem 0" }}>{body_text}</Box>
+      <Box sx={{ margin: "1rem 0" }}>
+        <img src={body_photo} alt="" />
+       
+        </Box>
       {/* post stat */}
       <Box>
         <PostStat id={_id} noOfLikes={noOfLikes} noOfComments={noOfComments} handleShowComments={handleShowComments} />
