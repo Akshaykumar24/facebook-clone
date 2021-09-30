@@ -1,5 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
+
+// import {useSelector} from 'react-redux'
+
 import { url } from "../../utils/url";
 import Box from "@mui/material/Box";
 
@@ -26,6 +29,8 @@ const modalStyle = {
   p: 4,
 };
 
+// 615597feba43170537e9315c
+
 const PostForm = () => {
   // modal control
   const [open, setOpen] = useState(false);
@@ -35,7 +40,22 @@ const PostForm = () => {
   const [body_text, setBodyText] = useState("What's on your mind?");
   const [buttonDisabled, setButtonDisabled] = useState(true);
   const [body_photo, setBody_photo] = useState("");
+  const [user, setUser] = useState("");
+  const [loading, setLoading] = useState(false);
 
+  // const state = useSelector((state)=>state)
+  // // console.log('state:', state)
+  // const userId=state.auth
+  // console.log('userId:', userId)
+
+  useEffect(() => {
+    setLoading(true);
+    axios.get(`${url}/api/user/615597feba43170537e9315c`).then(({ data }) => {
+      setUser(data.user);
+      console.log(user)
+      setLoading(false)
+    });
+  },[]);
   const handleChange = (e) => {
     const value = e.target.value;
     if (value.length > 0) {
@@ -45,7 +65,7 @@ const PostForm = () => {
   };
   const writePost = (body_text, body_photo) => {
     return axios.post(`${url}/api/posts`, {
-      user_id: "Ravi Ranjan kumar",
+      user_id: user._id,
       body_text: body_text,
       body_photo: body_photo,
     });
@@ -67,6 +87,9 @@ const PostForm = () => {
         console.log(err);
       });
   };
+  if(loading){
+    return <></>
+  }
 
   return (
     <Box
@@ -87,7 +110,7 @@ const PostForm = () => {
           }}
           onClick={handleOpen}
         >
-          What's on your mind
+          What's on your mind {user.first_name}
         </Button>
       </Box>
       <Divider />
@@ -131,16 +154,18 @@ const PostForm = () => {
               <Box sx={{ width: "90%", textAlign: "center" }}>
                 <h3>Create Post</h3>
               </Box>
-              <Button sx={{ width: "10%" }} startIcon={<FaTimes onClick={handleClose} size="1.5rem" />}/>
-                
+              <Button
+                sx={{ width: "10%" }}
+                startIcon={<FaTimes onClick={handleClose} size="1.5rem" />}
+              />
             </Box>
             <Divider />
-            <Box sx={{display:'flex',alignItems:'center',m:'1rem 0'}}>
+            <Box sx={{ display: "flex", alignItems: "center", m: "1rem 0" }}>
               <Box>
                 <Avatar sx={{ m: "0 1rem 0 0" }} alt="R" src={body_photo} />
               </Box>
               <Box>
-                <Box>Ravi Ranjan Kumar</Box>
+                <Box>{user.first_name}</Box>
                 <Box>Public</Box>
               </Box>
             </Box>
