@@ -14,6 +14,7 @@ export const GlobalStyles = createGlobalStyle`
    --icons-gray-color:rgb(140,147,157);
    --hover-effect:rgb(222 225 227);
    
+   
    //vaibhav
    --accent: hsl(214, 89%, 52%);
 
