@@ -5,6 +5,7 @@ import Modal from '@mui/material/Modal';
 import CloseIcon from '@material-ui/icons/Close';
 import { styled as styled1 } from '@mui/material/styles';
 import styled from 'styled-components'
+import { useState } from "react"
 
 const Input = styled1('input')({
     display: 'none',
@@ -19,7 +20,8 @@ const style = {
     display: "grid",
     gridTemplateRows: " 1fr 3fr 1fr",
     alignItems: "center",
-    height: "20rem",
+    minHeight: "20rem",
+    height: "auto",
     bgcolor: 'background.paper',
     borderRadius: " 0.9rem",
     boxShadow: `0px 0px 10px var(--font-light-color)`,
@@ -28,8 +30,39 @@ const style = {
 };
 
 export default function BasicModal({ title, btnText, handleClose, open }) {
+    const [image, setImage] = useState({
+        profileImg: ''
+    })
+    const [coverImage, setCoverImage] = useState({
+        coverImg: ""
+    })
 
-
+    const imageHandler = (e) => {
+        const reader = new FileReader();
+        reader.onload = () => {
+            if (reader.readyState === 2) {
+                setImage({ profileImg: reader.result })
+            }
+        }
+        reader.readAsDataURL(e.target.files[0])
+    };
+    const coverImageHandler = (e) => {
+        const reader = new FileReader();
+        reader.onload = () => {
+            if (reader.readyState === 2) {
+                setCoverImage({ coverImg: reader.result })
+            }
+        }
+        reader.readAsDataURL(e.target.files[0])
+    }
+    const { profileImg } = image;
+    const { coverImg } = coverImage;
+    const handleImageClose = () => {
+        setImage({ profileImg: "" })
+        setCoverImage({ coverImg: "" })
+    }
+    console.log(profileImg)
+    console.log(coverImg)
     return (
         <div>
             <Modal
@@ -49,12 +82,16 @@ export default function BasicModal({ title, btnText, handleClose, open }) {
                         </div>
                     </EditProfilePicTextStyled>
                     <UploadProfPicStyled>
-                        <label htmlFor="contained-button-file">
-                            <Input accept="image/*" id="contained-button-file" multiple type="file" />
-                            <Button variant="contained" component="span">
-                                {btnText}
-                            </Button>
-                        </label>
+                        {
+                            profileImg.length > 1 || coverImg.length > 1 ? <div> <img className="previewImage" src={title === "Edit Cover Photo" ? coverImg : profileImg} alt="" /> <span className="imageCloseIcon" onClick={handleImageClose}><CloseIcon /></span></div> : <label htmlFor="contained-button-file">
+
+                                <Input accept="image/*" id="contained-button-file" onChange={title === "Edit Cover Photo" ? coverImageHandler : imageHandler} multiple type="file" />
+                                <Button variant="contained" component="span">
+                                    {btnText}
+                                </Button>
+                            </label>
+                        }
+
                     </UploadProfPicStyled>
                     <UpdateProfilePicStyled>
                         <div className="updateBtn">Update</div>
@@ -71,7 +108,8 @@ align-items: center;
 justify-content: center;
 border-top: 1px solid var(--font-light-color);
 border-bottom: 1px solid var(--font-light-color);
-height: 100%;
+min-height:12rem;
+height: auto;
 .profilePicBtn{
     width: 8rem;
     display: flex;
@@ -79,6 +117,16 @@ height: 100%;
     justify-content: center;
     background-color:var(--primary-color);
     color: var(  --primary-background-color);
+}
+.previewImage{
+    width: 24rem;
+    height: 20rem;
+}
+.imageCloseIcon{
+        position: absolute;
+  right:2rem;
+  cursor: pointer;
+
 }
 
 `
