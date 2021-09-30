@@ -29,6 +29,7 @@ const FriendsAll = () => {
   const friendRequestRecieved = state.auth.user.friendRequestRecieved;
 
   const id = state.auth.user._id;
+
   useEffect(() => {
     if (find) {
       setData(friends);

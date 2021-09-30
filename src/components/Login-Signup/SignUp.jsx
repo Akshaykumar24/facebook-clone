@@ -80,7 +80,7 @@ function SignUp() {
   if (all.reg && !all.Load && !all.Error) {
     history.push("/profile");
   } else if (all.token !== "") {
-    history.push("/wall");
+    history.push("/");
   }
   const handleCreateClick = () => {
     setIsCreateClick(true);
@@ -127,7 +127,7 @@ function SignUp() {
             password={logInForm.password}
             load={load}
           />
-          <a href="#">Forgotten Password ?</a>
+          <a href="/">Forgotten Password ?</a>
           <br />
           <hr />
           <br />
@@ -265,8 +265,8 @@ function SignUp() {
 export default SignUp;
 
 const Cont = styled.div`
-  width: 90vw;
-  height: 87vh;
+  width: 100vw;
+  height: 90vh;
   padding: 6% 5% 0;
   background-color: rgb(240, 242, 245);
 `;
