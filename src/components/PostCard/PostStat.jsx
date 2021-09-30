@@ -5,8 +5,7 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 
 import { AiOutlineLike } from "react-icons/ai";
-import { FaRegCommentAlt } from "react-icons/fa";
-import { RiShareForwardLine } from "react-icons/ri";
+
 
 const getPost = (id) => {
   return axios.get(`${url}/api/posts/${id}`);
@@ -41,10 +40,11 @@ const PostStat = ({ id,handleShowComments,noOfLikes,noOfComments }) => {
           alignContent: "center",
           alignItems: "center",
           margin: "1rem 0",
+          
         }}
       >
         <Box>
-          <Button variant="outlined" startIcon={<AiOutlineLike />}>
+          <Button variant="text" startIcon={<AiOutlineLike />}>
             { noOfLikes}
           </Button>
         </Box>
@@ -58,13 +58,13 @@ const PostStat = ({ id,handleShowComments,noOfLikes,noOfComments }) => {
           }}
         >
           <Box>
-            <Button variant="outlined" onClick={()=>handleShowComments()} startIcon={<FaRegCommentAlt />}>
-              {noOfComments}
+            <Button variant="text" onClick={()=>handleShowComments()} >
+              {noOfComments} comments
             </Button>
           </Box>
           <Box>
-            <Button variant="outlined" startIcon={<RiShareForwardLine />}>
-             {postStat.no_of_shares}
+            <Button variant="text" >
+             {postStat.no_of_shares} shares
             </Button>
           </Box>
         </Box>
