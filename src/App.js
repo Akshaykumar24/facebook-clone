@@ -1,12 +1,14 @@
 import React from "react";
-import NavBar from "./Components/navbar/NavBar";
-import SideBar from "./Components/SideBar/SideBar";
+import NavBar from "./components/navbar/NavBar";
+import SideBar from "./components/SideBar/SideBar";
+import Story from "./components/Story/Story.jsx";
 
 const App = () => {
   return (
     <div>
       <NavBar />
       <SideBar />
+      <Story />
     </div>
   );
 };

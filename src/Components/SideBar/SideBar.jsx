@@ -2,9 +2,10 @@ import React from 'react';
 import SideBarContent from "./SideBarContent";
 import { Link } from "react-router-dom";
 import "../../styles/SideBar/SideBar.css";
+import LeftDownBar from "./LeftDownBar";
 
 function SideBar() {
-    return (
+    return (<>
         <div className="sideBarContainer">
             <div className="sideBarLinksContainer">
                 <Link className="flexBox sideBarContentLink">
@@ -14,7 +15,7 @@ function SideBar() {
                     <SideBarContent src={'/Images/friends_icon.png'} label="Friends" />
                 </Link>
                 <Link className="flexBox sideBarContentLink" to="/group/new">
-                    <SideBarContent src={'/Images/group_icon.png'} label="Groups" />
+                    <SideBarContent src={'/Images/friends_icon.png'} label="Groups" />
                 </Link>
                 <Link className="flexBox sideBarContentLink" to="/">
                     <SideBarContent src={'/Images/market_place_icon.png'} label="Marketplace" />
@@ -33,7 +34,8 @@ function SideBar() {
                 </Link>
             </div>
         </div>
-    )
+      <LeftDownBar />
+  </>  )
 }
 
 export default SideBar

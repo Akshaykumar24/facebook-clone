@@ -4,7 +4,7 @@ import Tooltip from '@mui/material/Tooltip';
 
 function IconWrapper({children,title}) {
     return (
-        <div>
+        <div >
             <Tooltip title={title}>
             {children}
             </Tooltip>

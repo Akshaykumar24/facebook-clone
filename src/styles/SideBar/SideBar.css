@@ -33,7 +33,15 @@
 }
 
 .sideBarContentLabel {
-  font-size: 0.9375rem;
+  font-size: 15px;
+  line-height: 19.9995px;
   font-weight: 500;
   margin: 10px;
+}
+
+.downBarHeading {
+  color: var(--secondary-icon);
+  margin-left: 10px;
+  margin-bottom: 10px;
+  font-weight: bold;
 }
