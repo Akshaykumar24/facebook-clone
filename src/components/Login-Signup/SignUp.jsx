@@ -4,6 +4,11 @@ import { url } from "../../utils/url";
 import Login from "./Login";
 import styled from "styled-components";
 
+import { useHistory } from "react-router-dom";
+
+import { useDispatch, useSelector } from "react-redux";
+import { logUser, regUser } from "../../redux/auth/action";
+
 const initFormSignup = {
   first_name: "",
   last_name: "",
@@ -27,6 +32,13 @@ function SignUp() {
   const [mon, setMon] = useState("June");
   const [year, setYear] = useState("1950");
   //   const [reset, setReset] = useState(false);
+  const history = useHistory();
+  // From Redux
+  const state = useSelector((state) => state);
+  const all = state.auth;
+  const load = state.auth.Load;
+  console.log(all);
+  const dispatch = useDispatch();
 
   const handleSignUpForm = (e) => {
     const { value, name } = e.target;
@@ -54,25 +66,27 @@ function SignUp() {
 
   const handleSingUp = () => {
     setSignUpForm({ ...signUpForm, dob: dob });
-    axios
-      .post(`${url}/api/register`, signUpForm)
-      .then((res) => console.log(res))
-      .then(setSignUpForm({}));
+    dispatch(regUser(signUpForm));
+    // axios
+    //   .post(`${url}/api/register`, signUpForm)
+    //   .then((res) => console.log(res))
+    //   .then(setSignUpForm({}));
   };
 
   const handleLogin = () => {
     console.log(logInForm);
-    axios
-      .post(`${url}/api/login`, logInForm)
-      .then((res) => console.log(res))
-      .then(setLogInForm({}));
+    dispatch(logUser(logInForm));
   };
-
+  if (all.reg && !all.Load && !all.Error) {
+    history.push("/profile");
+  } else if (all.token !== "") {
+    history.push("/wall");
+  }
   const handleCreateClick = () => {
     setIsCreateClick(true);
   };
   const handleCloseClick = () => {
-    console.log(signUpForm, dob);
+    //console.log(signUpForm, dob);
     setIsCreateClick(false);
   };
 
@@ -111,6 +125,7 @@ function SignUp() {
             handleLoginForm={handleLoginForm}
             email={logInForm.email}
             password={logInForm.password}
+            load={load}
           />
           <a href="#">Forgotten Password ?</a>
           <br />
