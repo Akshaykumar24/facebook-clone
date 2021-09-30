@@ -22,6 +22,7 @@ function UserProfile() {
   const [posts, setPosts] = useState(true);
   const [friends, setFriends] = useState(false);
   const [photos, setPhotos] = useState(false);
+  const [update, setUpdate] = useState(false)
 
   const [title, setTitle] = useState("");
   const [btnText, setBtnText] = useState("");
@@ -37,12 +38,16 @@ function UserProfile() {
 
   const handleEditProfileOpen = () => setEditProfileOpen(true);
   const handleEditProfileClose = () => setEditProfileOpen(false);
+
+
+
+
   const {
     auth: { user },
   } = useSelector((state) => state, shallowEqual);
   useEffect(() => {
     dispatch(getUser(user._id));
-  }, []);
+  }, [update]);
 
   const [userData, setUserData] = useState(user);
   const [open, setOpen] = useState(false);
@@ -73,6 +78,7 @@ function UserProfile() {
       setPosts(false);
     }
   };
+
   return (
     <UserProfileStyles>
       <div className="mainProfile">
@@ -92,9 +98,9 @@ function UserProfile() {
             <div className="avatar">
               <img
                 src={
-                  userData?.profile
-                    ? userData.profile
-                    : defaultUserPic.profilePic
+                  userData.profile === undefined
+                    ? `https://avatars.dicebear.com/api/micah/${userData.first_name}.svg`
+                    : userData.profile
                 }
                 alt="profilePhoto"
               />
@@ -108,11 +114,13 @@ function UserProfile() {
             btnText={btnText}
             handleClose={handlePhotoModalClose}
             open={open}
+            userData={userData}
           />
           <EditProfieModal
             handleEditProfileClose={handleEditProfileClose}
             editProfileOpen={editProfileOpen}
             userData={userData}
+            setUpdate={setUpdate}
           />
           <div className="profileBio">
             <div className="Bio">
@@ -184,7 +192,7 @@ function UserProfile() {
         handleEditProfileOpen={handleEditProfileOpen}
       />
       <PhotosComp />
-      <FriendsCompo />
+      <FriendsCompo friends={userData.friends} />
     </UserProfileStyles>
   );
 }

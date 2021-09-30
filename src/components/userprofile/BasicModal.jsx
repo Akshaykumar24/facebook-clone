@@ -7,6 +7,13 @@ import { styled as styled1 } from '@mui/material/styles';
 import styled from 'styled-components'
 import { useState } from "react"
 
+import { useDispatch } from "react-redux";
+// import { getUser } from "../../redux/auth/action";
+// import { useHistory } from "react-router-dom";
+
+import { updateUser } from "../../redux/auth/action";
+
+
 const Input = styled1('input')({
     display: 'none',
 });
@@ -29,40 +36,95 @@ const style = {
     p: 2,
 };
 
-export default function BasicModal({ title, btnText, handleClose, open }) {
-    const [image, setImage] = useState({
-        profileImg: ''
-    })
-    const [coverImage, setCoverImage] = useState({
-        coverImg: ""
-    })
+export default function BasicModal({ title, btnText, handleClose, open, userData }) {
+    const dispatch = useDispatch();
+    const [imageUrl, setImageUrl] = useState("");
+    const [coverImageUrl, setCoverImageUrl] = useState("");
+    const [loading, setLoading] = useState("");
+    // const handleChange = async (e) => {
+    //     const files = e.target.files[0];
+    //     const data = new FormData();
+    //     data.append("file", files);
+    //     data.append("upload_preset", "facebookimagedb");
+    //     setLoading(true);
+    //     const res = await fetch(
+    //         "https://api.cloudinary.com/v1_1/raviimagedb/image/upload",
+    //         { method: "POST", body: data }
+    //     );
+    //     const file = await res.json();
+    //     setImageUrl(file.secure_url);
 
-    const imageHandler = (e) => {
-        const reader = new FileReader();
-        reader.onload = () => {
-            if (reader.readyState === 2) {
-                setImage({ profileImg: reader.result })
-            }
+    //     setLoading(false);
+    // };
+    const handleUpload = () => {
+        if (title === "Edit Cover Photo") {
+            dispatch(updateUser({ cover: coverImageUrl }, userData._id))
+        } else {
+            dispatch(updateUser({ profile: imageUrl }, userData._id))
         }
-        reader.readAsDataURL(e.target.files[0])
+
+
     };
-    const coverImageHandler = (e) => {
-        const reader = new FileReader();
-        reader.onload = () => {
-            if (reader.readyState === 2) {
-                setCoverImage({ coverImg: reader.result })
-            }
-        }
-        reader.readAsDataURL(e.target.files[0])
+
+
+    // const [body_photo, setBody_photo] = useState("")
+    // const [image, setImage] = useState({
+    //     profileImg: ''
+    // })
+    // const [coverImage, setCoverImage] = useState({
+    //     coverImg: ""
+    // })
+
+    const imageHandler = async (e) => {
+        // const reader = new FileReader();
+        // reader.onload = () => {
+        //     if (reader.readyState === 2) {
+        //         setImage({ profileImg: reader.result })
+        //     }
+        // }
+        // reader.readAsDataURL(e.target.files[0])
+
+        const files = e.target.files[0];
+        const data = new FormData();
+        data.append("file", files);
+        data.append("upload_preset", "facebookimagedb");
+        setLoading(true);
+        const res = await fetch(
+            "https://api.cloudinary.com/v1_1/raviimagedb/image/upload",
+            { method: "POST", body: data }
+        );
+        const file = await res.json();
+        setImageUrl(file.secure_url);
+
+    };
+    const coverImageHandler = async (e) => {
+        // const reader = new FileReader();
+        // reader.onload = () => {
+        //     if (reader.readyState === 2) {
+        //         setCoverImage({ coverImg: reader.result })
+        //     }
+        // }
+        // reader.readAsDataURL(e.target.files[0])
+        const files = e.target.files[0];
+        const data = new FormData();
+        data.append("file", files);
+        data.append("upload_preset", "facebookimagedb");
+        setLoading(true);
+        const res = await fetch(
+            "https://api.cloudinary.com/v1_1/raviimagedb/image/upload",
+            { method: "POST", body: data }
+        );
+        const file = await res.json();
+        setCoverImageUrl(file.secure_url);
+        console.log(coverImageUrl, "jojo")
     }
-    const { profileImg } = image;
-    const { coverImg } = coverImage;
+
     const handleImageClose = () => {
-        setImage({ profileImg: "" })
-        setCoverImage({ coverImg: "" })
+        setImageUrl("")
+        setCoverImageUrl("")
     }
-    console.log(profileImg)
-    console.log(coverImg)
+    // console.log(profileImg)
+    // console.log(coverImg)
     return (
         <div>
             <Modal
@@ -83,7 +145,7 @@ export default function BasicModal({ title, btnText, handleClose, open }) {
                     </EditProfilePicTextStyled>
                     <UploadProfPicStyled>
                         {
-                            profileImg.length > 1 || coverImg.length > 1 ? <div> <img className="previewImage" src={title === "Edit Cover Photo" ? coverImg : profileImg} alt="" /> <span className="imageCloseIcon" onClick={handleImageClose}><CloseIcon /></span></div> : <label htmlFor="contained-button-file">
+                            imageUrl.length > 1 || coverImageUrl.length > 1 ? <div> <img className="previewImage" src={title === "Edit Cover Photo" ? coverImageUrl : imageUrl} alt="" /> <span className="imageCloseIcon" onClick={handleImageClose}><CloseIcon /></span></div> : <label htmlFor="contained-button-file">
 
                                 <Input accept="image/*" id="contained-button-file" onChange={title === "Edit Cover Photo" ? coverImageHandler : imageHandler} multiple type="file" />
                                 <Button variant="contained" component="span">
@@ -94,7 +156,7 @@ export default function BasicModal({ title, btnText, handleClose, open }) {
 
                     </UploadProfPicStyled>
                     <UpdateProfilePicStyled>
-                        <div className="updateBtn">Update</div>
+                        <div onClick={handleUpload} className="updateBtn">Update</div>
                     </UpdateProfilePicStyled>
                 </Box>
             </Modal>

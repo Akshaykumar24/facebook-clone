@@ -1,6 +1,18 @@
 import React from 'react'
 import styled from 'styled-components'
-function FriendsCompo() {
+//   <img
+//       src={
+//         userData.profile === undefined
+//           ? `https://avatars.dicebear.com/api/micah/${userData.first_name}.svg`
+//           : userData.profile
+//       }
+//       alt="profile"
+//     />
+
+function FriendsCompo({ friends }) {
+    // const dummyProfilePic = {
+    //     pic: "https://th.bing.com/th/id/OIP.0NtZVP0BfsDG8A3g3QCohwHaHa?pid=ImgDet&rs=1"
+    // }
     const friendsData = [
         {
             imageUrl: "https://scontent.fpnq7-4.fna.fbcdn.net/v/t1.6435-9/35799287_2073684202954764_7545216993050230784_n.jpg?_nc_cat=111&ccb=1-5&_nc_sid=174925&_nc_ohc=_hZCbwLIc6wAX9Gebht&_nc_ht=scontent.fpnq7-4.fna&oh=f56970935bc300864b0c21ee0de0ea95&oe=61791D41",
@@ -45,16 +57,20 @@ function FriendsCompo() {
             <div className="linksForPhotos">
                 <div>
                     <span>Friends</span>
-                    <span>1027 friends</span>
+                    <span>{friends.length} friends</span>
                 </div>
 
                 <div>See All Friends</div>
             </div>
             <div className="photosGrid">
-                {friendsData.map((el) => {
+                {friends.map((el) => {
                     return <div>
-                        <img src={el.imageUrl} alt="" />
-                        <span>{el.name}</span>
+                        <img src={
+                            el.profile === undefined
+                                ? `https://avatars.dicebear.com/api/micah/${el.first_name}.svg`
+                                : el.profile
+                        } alt="" />
+                        <span>{el.first_name + " " + el.last_name}</span>
                     </div>
                 })}
             </div>
@@ -91,7 +107,7 @@ const FriendsCompoStyled = styled.div`
 }
     & > div:nth-child(2) {
       width: 8rem;
-      height: 100%;
+      height: 3rem;
       display: flex;
       align-items: center;
       justify-content: center;

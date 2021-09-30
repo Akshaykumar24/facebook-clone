@@ -36,6 +36,7 @@ export default function EditProfieModal({
     handleEditProfileClose,
     editProfileOpen,
     userData,
+    setUpdate
 }) {
     const dispatch = useDispatch();
     const history = useHistory();
@@ -71,6 +72,15 @@ export default function EditProfieModal({
             [name]: value,
         };
     };
+
+    // <img
+    //   src={
+    //     userData.profile === undefined
+    //       ? `https://avatars.dicebear.com/api/micah/${userData.first_name}.svg`
+    //       : userData.profile
+    //   }
+    //   alt="profile"
+    // />
 
     useEffect(() => { }, [dispatch]);
     return (
@@ -332,7 +342,7 @@ export default function EditProfieModal({
                                 dispatch(updateUser(payload2, userData._id));
                                 dispatch(getUser(userData._id));
                                 console.log(payload2, "from update");
-                                history.push("/profile");
+                                setUpdate(p => !p)
                                 handleEditProfileClose()
                             }}
                             className="updateDetailsBtn"
