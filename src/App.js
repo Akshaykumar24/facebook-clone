@@ -8,11 +8,8 @@ import EditProfieModal from "./components/userprofile/EditProfile";
 function App() {
   return <div className="App">
     <UserProfile />
-    {/* 
-    <Intro />
-    <PhotosComp />
-    <FriendsCompo /> */}
-    {/* <EditProfieModal /> */}
+
+
   </div>;
 }
 

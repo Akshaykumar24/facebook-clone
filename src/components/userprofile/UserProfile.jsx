@@ -9,6 +9,10 @@ import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import { useState } from "react";
 import BasicModal from "./BasicModal";
 import EditProfieModal from "./EditProfile";
+import Intro from './Intro'
+import PhotosComp from './PhotosComp'
+import FriendsCompo from './FriendsCompo'
+
 function UserProfile() {
   const [posts, setPosts] = useState(true);
   const [friends, setFriends] = useState(false);
@@ -141,6 +145,9 @@ function UserProfile() {
           </div>
         </MainLayout>
       </div>
+      <Intro />
+      <PhotosComp />
+      <FriendsCompo />
     </UserProfileStyles>
   );
 }
