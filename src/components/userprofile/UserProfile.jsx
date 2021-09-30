@@ -7,10 +7,47 @@ import AddCircleIcon from "@mui/icons-material/AddCircle";
 import EditIcon from "@mui/icons-material/Edit";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import { useState } from "react";
+import BasicModal from "./BasicModal";
+import EditProfieModal from "./EditProfile";
+import Intro from './Intro'
+import PhotosComp from './PhotosComp'
+import FriendsCompo from './FriendsCompo'
+
 function UserProfile() {
   const [posts, setPosts] = useState(true);
   const [friends, setFriends] = useState(false);
   const [photos, setPhotos] = useState(false);
+
+  const [title, setTitle] = useState("");
+  const [btnText, setBtnText] = useState("")
+  const [showUpdateCoverPhotoModal, setShowUpdateCoverPhotoModal] = useState(false);
+  const [showUpdateProfilePhotoModal, setShowUpdateProfilePhotoModal] = useState(false)
+  const [editProfileOpen, setEditProfileOpen] = useState(false)
+
+  const handleEditProfileOpen = () => setEditProfileOpen(true);
+  const handleEditProfileClose = () => setEditProfileOpen(false);
+
+  const [open, setOpen] = useState(false);
+  const handleCoverPhotoModalOpen = () => {
+    setTitle("Edit Cover Photo");
+    setBtnText("Cover Photo")
+    setOpen(true);
+
+  }
+  const handleProfilePhotoModalOpen = () => {
+    setTitle("Edit Profile Photo");
+    setBtnText("Profile Photo")
+    setOpen(true);
+
+  }
+  const handlePhotoModalClose = () => setOpen(false);
+
+
+
+
+  const handleBasicModal = () => {
+
+  }
 
   const handleProfilesMenu = (e) => {
     if (e.target.textContent === "Posts") {
@@ -37,7 +74,7 @@ function UserProfile() {
                 src="https://th.bing.com/th/id/R.b60ebb76818e10a1ffeb1d76ef807568?rik=BfJWM%2bFjq3YsSA&riu=http%3a%2f%2fthewowstyle.com%2fwp-content%2fuploads%2f2015%2f01%2fFacebook-Covers-004.jpg&ehk=QyHMcIYCHj1%2bqMrmjGWLcUOKe7Zi8kTKnVJ2G1zuQqA%3d&risl=&pid=ImgRaw&r=0"
                 alt="coverPhoto"
               />
-              <div className="cameraBtn">
+              <div onClick={handleCoverPhotoModalOpen} className="cameraBtn">
                 <CameraAltIcon /> <span>Edit Cover Photo</span>
               </div>
             </div>
@@ -46,11 +83,13 @@ function UserProfile() {
                 src="https://th.bing.com/th/id/R.56fa805242ca705c112c21e9142391c6?rik=0FGHjmAsLgoKhQ&riu=http%3a%2f%2fsguru.org%2fwp-content%2fuploads%2f2017%2f04%2fattitude-boys-profile-pics-for-Facebook-20.jpg&ehk=A%2bCtAIdAM172Ttozp8O2Yieal74Rvzj2O%2fHwjJnGrkQ%3d&risl=&pid=ImgRaw&r=0"
                 alt="profilePhoto"
               />
-              <div className="cameraBtn">
+              <div onClick={handleProfilePhotoModalOpen} className="cameraBtn">
                 <CameraAltIcon />
               </div>
             </div>
           </div>
+          <BasicModal title={title} btnText={btnText} handleClose={handlePhotoModalClose} open={open} />
+          <EditProfieModal handleEditProfileClose={handleEditProfileClose} editProfileOpen={editProfileOpen} />
           <div className="profileBio">
             <div className="Bio">
               <div>
@@ -93,7 +132,7 @@ function UserProfile() {
                 </div>
               </div>
               <div className="specialC">
-                <div className="menuflex editFont">
+                <div onClick={handleEditProfileOpen} className="menuflex editFont">
                   <EditIcon /> <span>Edit Profile</span>
                 </div>
               </div>
@@ -106,6 +145,9 @@ function UserProfile() {
           </div>
         </MainLayout>
       </div>
+      <Intro />
+      <PhotosComp />
+      <FriendsCompo />
     </UserProfileStyles>
   );
 }
