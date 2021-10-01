@@ -1,17 +1,13 @@
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { url } from "../../utils/url";
 import PostStat from "./PostStat";
 import CommentForm from "../CommentForm/CommentForm";
 import CommentCard from "../CommentCard/CommentCard";
-import Box from "@mui/material/Box";
 
-import Avatar from "@mui/material/Avatar";
+import { Box, Button, Avatar, Divider } from "@mui/material";
 
-import LanguageIcon from "@mui/icons-material/Language";
-import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
-import Divider from "@mui/material/Divider";
-import Button from "@mui/material/Button";
+
 
 import { AiOutlineLike } from "react-icons/ai";
 import { FaRegCommentAlt } from "react-icons/fa";
@@ -23,7 +19,6 @@ const updatePost = (id, no_of_likes) => {
   });
 };
 const getPost = async (id) => {
- 
   return axios.get(`${url}/api/posts/${id}`);
 };
 const getCommentOfThisPost = (id) => {
@@ -31,29 +26,40 @@ const getCommentOfThisPost = (id) => {
 };
 
 const PostCard = ({ post }) => {
-  const { body_text, _id,no_of_likes,no_of_comments,body_photo } = post;
+  console.log('post:', post)
+  const { body_text, _id, no_of_likes, no_of_comments, body_photo } = post;
   const [isComment, setIsComment] = useState(false);
   const [showComments, setShowComments] = useState(false);
-  const [comments,setComments]=useState('')
-  const [noOfLikes,setNoOfLikes]=useState(0)
-  const [noOfComments,setNoOfComments]=useState(0)
-  
+  const [comments, setComments] = useState("");
+  const [noOfLikes, setNoOfLikes] = useState(0);
+  const [noOfComments, setNoOfComments] = useState(0);
+  // const [user, setUser] = useState("");
+  const [loading, setLoading] = useState(true);
+
+  // useEffect(() => {
+  //   setLoading(true);
+  //   axios.get(`${url}/api/user/615597feba43170537e9315c`).then(({ data }) => {
+  //     setUser(data.user);
+  //     console.log(user);
+  //     setLoading(false);
+  //   });
+  // }, []);
   let likes = 0;
-  useEffect(()=>{
-    setNoOfLikes(no_of_likes)
-    setNoOfComments(no_of_comments)
-  },[no_of_comments,no_of_likes])
-  
+  useEffect(() => {
+    setNoOfLikes(no_of_likes);
+    setNoOfComments(no_of_comments);
+  }, [no_of_comments, no_of_likes]);
+
   const handleLike = () => {
     getPost(_id)
       .then(({ data }) => {
         likes = data.post.no_of_likes;
-       
-      }).catch((err)=>console.log(err))
+      })
+      .catch((err) => console.log(err))
       .then((resp) => {
         updatePost(_id, likes + 1).then(({ data }) => {
           likes = data.post.no_of_likes;
-          setNoOfLikes(likes)
+          setNoOfLikes(likes);
         });
       });
   };
@@ -61,16 +67,18 @@ const PostCard = ({ post }) => {
   const handleShowComments = () => {
     setShowComments((prev) => !prev);
     setIsComment(true);
-    getCommentOfThisPost(_id).then(({data}) => {
-      const commentsArr = data.comments
-      
-      setComments(commentsArr)
+    getCommentOfThisPost(_id).then(({ data }) => {
+      const commentsArr = data.comments;
+
+      setComments(commentsArr);
     });
-    
   };
+  // if (loading) {
+  //   return <></>;
+  // }
   return (
     <Box
-      sx={{ border: "1px solid black", padding: "0 2rem", margin: "1rem 0" }}
+      sx={{ backgroundColor: "#FFFFFF", padding: "0 2rem", margin: "1rem 0" }}
     >
       {/* header */}
       <Box
@@ -92,28 +100,33 @@ const PostCard = ({ post }) => {
           }}
         >
           <Box>
-            <Avatar sx={{ m: "0 1rem 0 0" }} alt="Remy Sharp" src={body_photo}/>
+            <Avatar sx={{ m: "0 1rem 0 0" }} alt="R" src={body_photo} />
           </Box>
           <Box>
             <Box>Ravi Ranjan Kumar</Box>
             <Box>
-              22h <LanguageIcon />
+              22h {/* <LanguageIcon /> */}
             </Box>
           </Box>
         </Box>
         <Box>
-          <MoreHorizIcon />
+          {/* <MoreHorizOutlined /> */}
         </Box>
       </Box>
       {/* post body */}
       <Box sx={{ margin: "1rem 0" }}>{body_text}</Box>
       <Box sx={{ margin: "1rem 0" }}>
         <img src={body_photo} alt="" />
-       
-        </Box>
+      </Box>
       {/* post stat */}
       <Box>
-        <PostStat id={_id} noOfLikes={noOfLikes} noOfComments={noOfComments} handleShowComments={handleShowComments} />
+        <PostStat
+          key={_id}
+          id={_id}
+          noOfLikes={noOfLikes}
+          noOfComments={noOfComments}
+          handleShowComments={handleShowComments}
+        />
       </Box>
       <Divider variant="middle" />
       {/* like comment share */}
@@ -125,11 +138,14 @@ const PostCard = ({ post }) => {
           alignContent: "center",
           alignItems: "center",
           margin: "1rem 0",
+          padding: "0 2rem",
+          color: "#769292",
         }}
       >
         <Box>
           <Button
-            variant="outlined"
+            variant="text"
+            color="inherit"
             onClick={handleLike}
             startIcon={<AiOutlineLike />}
           >
@@ -138,7 +154,8 @@ const PostCard = ({ post }) => {
         </Box>
         <Box>
           <Button
-            variant="outlined"
+            variant="text"
+            color="inherit"
             onClick={() => {
               setIsComment((prev) => !prev);
             }}
@@ -148,7 +165,11 @@ const PostCard = ({ post }) => {
           </Button>
         </Box>
         <Box>
-          <Button variant="outlined" startIcon={<RiShareForwardLine />}>
+          <Button
+            variant="text"
+            color="inherit"
+            startIcon={<RiShareForwardLine />}
+          >
             Share
           </Button>
         </Box>
@@ -160,13 +181,10 @@ const PostCard = ({ post }) => {
       )}
       {showComments && (
         <Box>
-          {
-
-            comments.length>0 && comments.map((comment)=>{
-
-             return <CommentCard comment={comment}  />
-            })
-          }
+          {comments.length > 0 &&
+            comments.map((comment) => {
+              return <CommentCard post_id={_id * 2} comment={comment} />;
+            })}
         </Box>
       )}
     </Box>

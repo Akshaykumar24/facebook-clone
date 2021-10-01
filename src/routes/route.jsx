@@ -28,6 +28,9 @@ const Router = () => {
         <Route path="/friends">
           <FriendsAll />
         </Route>
+        <Route path="/messenger">
+          <Wall />
+        </Route>
         <Route path="/profile">
           <UserProfile />
 
