@@ -14,18 +14,30 @@ import PhotosComp from "./PhotosComp";
 import FriendsCompo from "./FriendsCompo";
 import { getUser } from "../../redux/auth/action";
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
-
+import { getData, setData } from '../../utils/localStorage'
+import { useContext } from 'react'
+import { UserDataContext } from "../Context/UserDataContext";
+import axios from "axios";
+function useForceUpdate() {
+  const [value, setValue] = useState(0);
+  return () => setValue(value => value + 1)
+}
 function UserProfile() {
-  const dispatch = useDispatch();
+  const { handleUserDataContext, userDataContext } = useContext(UserDataContext)
 
+  const dispatch = useDispatch();
+  const forceUpdate = useForceUpdate();
   // console.log(user)
   const [posts, setPosts] = useState(true);
   const [friends, setFriends] = useState(false);
   const [photos, setPhotos] = useState(false);
-  const [update, setUpdate] = useState(false)
+  const [update, setUpdate] = useState(true)
 
   const [title, setTitle] = useState("");
   const [btnText, setBtnText] = useState("");
+  const refreshPage = () => {
+    window.location.reload();
+  }
 
   const defaultUserPic = {
     coverPic:
@@ -42,14 +54,44 @@ function UserProfile() {
 
 
 
-  const {
-    auth: { user },
-  } = useSelector((state) => state, shallowEqual);
-  useEffect(() => {
-    dispatch(getUser(user._id));
-  }, [update]);
+  // useEffect(() => {
 
-  const [userData, setUserData] = useState(user);
+
+
+
+  // }, []);
+  // function getUsersData() {
+  //   const id = getData("userId")
+  //   console.log(id, "id")
+  //   dispatch(getUser(id))
+  // }
+
+  // ;
+  // getUsersData();
+  // useEffect(() => {
+  //   const id = getData("userId")
+  //   dispatch(getUser(id))
+  // }, [dispatch])
+  // const {
+  //   auth: { user },
+  // } = useSelector((state) => state, shallowEqual);
+
+  const [userData, setUserData] = useState(getData("userData").user ? getData("userData").user : getData("userData").userOnline);
+
+
+
+  // async function getusersData(id) {
+  //   await axios.get(`http://localhost:2424/api/user/${id}`).then(({ data }) => {
+  //     handleUserDataContext(data)
+  //   })
+  // }
+  // getusersData(id)
+
+  console.log(userDataContext, "i am context")
+
+
+
+
   const [open, setOpen] = useState(false);
   const handleCoverPhotoModalOpen = () => {
     setTitle("Edit Cover Photo");
@@ -80,6 +122,7 @@ function UserProfile() {
   };
 
   return (
+
     <UserProfileStyles>
       <div className="mainProfile">
         <MainLayout>
@@ -109,19 +152,23 @@ function UserProfile() {
               </div>
             </div>
           </div>
-          <BasicModal
+          {open ? <BasicModal
             title={title}
             btnText={btnText}
             handleClose={handlePhotoModalClose}
             open={open}
             userData={userData}
-          />
-          <EditProfieModal
+            refreshPage={refreshPage}
+          /> : ""}
+          {editProfileOpen ? <EditProfieModal
             handleEditProfileClose={handleEditProfileClose}
             editProfileOpen={editProfileOpen}
             userData={userData}
             setUpdate={setUpdate}
-          />
+            forceUpdate={forceUpdate}
+            refreshPage={refreshPage}
+          /> : ""}
+
           <div className="profileBio">
             <div className="Bio">
               <div>
@@ -284,7 +331,7 @@ const UserProfileStyles = styled.div`
       .Bio {
         width: inherit;
         height: 9.8rem;
-        padding: 0px 25%;
+        /* padding: 0px 25%; */
         & > div {
           text-align: center;
           height: 8.6rem;

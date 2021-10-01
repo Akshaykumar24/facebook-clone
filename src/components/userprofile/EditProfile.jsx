@@ -36,7 +36,7 @@ export default function EditProfieModal({
     handleEditProfileClose,
     editProfileOpen,
     userData,
-    setUpdate
+    refreshPage
 }) {
     const dispatch = useDispatch();
     const history = useHistory();
@@ -73,14 +73,6 @@ export default function EditProfieModal({
         };
     };
 
-    // <img
-    //   src={
-    //     userData.profile === undefined
-    //       ? `https://avatars.dicebear.com/api/micah/${userData.first_name}.svg`
-    //       : userData.profile
-    //   }
-    //   alt="profile"
-    // />
 
     useEffect(() => { }, [dispatch]);
     return (
@@ -95,9 +87,9 @@ export default function EditProfieModal({
                     <EditDetailsStyled>
                         <div>Edit Details</div>
                         <div>
-                            <span onClick={handleEditProfileClose}>
-                                <CloseIcon />
-                            </span>
+
+                            <CloseIcon onClick={handleEditProfileClose} />
+
                         </div>
                     </EditDetailsStyled>
                     <div>
@@ -340,10 +332,16 @@ export default function EditProfieModal({
                                     delete payload2.password;
                                 }
                                 dispatch(updateUser(payload2, userData._id));
-                                dispatch(getUser(userData._id));
+                                // dispatch(getUser(userData._id));
                                 console.log(payload2, "from update");
-                                setUpdate(p => !p)
-                                handleEditProfileClose()
+                                setTimeout(() => {
+                                    refreshPage()
+                                    handleEditProfileClose()
+                                }, 2000)
+
+
+
+
                             }}
                             className="updateDetailsBtn"
                         >
@@ -395,18 +393,9 @@ const EditDetailsStyled = styled.div`
   & > div:nth-child(2) {
     padding-left: 7rem;
 
-    span {
-      width: 5rem;
-      height: 5rem;
-      border-radius: 50%;
-      background-color: var(--primary-background-color);
-      border: 1px solid var(--background-gray-color);
+  svg{
       cursor: pointer;
-
-      :hover {
-        background-color: var(--background-gray-color);
-      }
-    }
+  }
   }
 `;
 

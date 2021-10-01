@@ -80,7 +80,7 @@ function FriendsCompo({ friends }) {
 const FriendsCompoStyled = styled.div`
   width: 23rem;
   margin: auto;
-  height: 25.18rem;
+  height: auto;
   display: grid;
   padding: 15px;
   grid-gap: 1rem;

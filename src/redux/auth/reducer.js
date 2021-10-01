@@ -10,7 +10,6 @@ import {
 const init = { user: {}, Load: false, Error: false, token: "", reg: false };
 
 export const authReducer = (state = { ...init }, { type, payload }) => {
-  //console.log(state, "users");
   switch (type) {
     case LOG_REQUEST:
       return {

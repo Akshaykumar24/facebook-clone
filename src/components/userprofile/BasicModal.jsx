@@ -6,13 +6,15 @@ import CloseIcon from '@material-ui/icons/Close';
 import { styled as styled1 } from '@mui/material/styles';
 import styled from 'styled-components'
 import { useState } from "react"
-
+import LoadingButton from '@mui/lab/LoadingButton';
+import SaveIcon from '@mui/icons-material/Save';
 import { useDispatch } from "react-redux";
 // import { getUser } from "../../redux/auth/action";
 // import { useHistory } from "react-router-dom";
+import LoadingIo from '../LoadingIo/LoadingIo'
 
 import { updateUser } from "../../redux/auth/action";
-
+import ErrorModal from '../ErrorPopup/ErrorModal'
 
 const Input = styled1('input')({
     display: 'none',
@@ -36,11 +38,19 @@ const style = {
     p: 2,
 };
 
-export default function BasicModal({ title, btnText, handleClose, open, userData }) {
+export default function BasicModal({ title, btnText, handleClose, open, userData, refreshPage }) {
     const dispatch = useDispatch();
     const [imageUrl, setImageUrl] = useState("");
     const [coverImageUrl, setCoverImageUrl] = useState("");
-    const [loading, setLoading] = useState("");
+    const [loading, setLoading] = useState(false);
+    const [errorModalOpen, setErrorModalOpen] = useState(false);
+    const [imageLoading, setImageLoading] = useState(false);
+    const handleErrorModalOpen = () => setErrorModalOpen(true);
+    const handleErrorModalClose = () => {
+        setErrorModalOpen(false);
+        refreshPage()
+    }
+    const [message, setMessage] = useState("")
     // const handleChange = async (e) => {
     //     const files = e.target.files[0];
     //     const data = new FormData();
@@ -57,11 +67,28 @@ export default function BasicModal({ title, btnText, handleClose, open, userData
     //     setLoading(false);
     // };
     const handleUpload = () => {
+
         if (title === "Edit Cover Photo") {
+            if (coverImageUrl === "") {
+                setMessage("Invalid Image,please upload valid image")
+                return handleErrorModalOpen()
+            }
             dispatch(updateUser({ cover: coverImageUrl }, userData._id))
         } else {
+            if (imageUrl === "") {
+                setMessage("Invalid Image,please upload valid image")
+                return handleErrorModalOpen()
+            }
             dispatch(updateUser({ profile: imageUrl }, userData._id))
         }
+        setLoading(true)
+        setTimeout(() => {
+            setLoading(false)
+            handleErrorModalOpen()
+            setMessage("Image is successfully uploaded")
+
+        }, 2000)
+
 
 
     };
@@ -88,12 +115,14 @@ export default function BasicModal({ title, btnText, handleClose, open, userData
         const data = new FormData();
         data.append("file", files);
         data.append("upload_preset", "facebookimagedb");
-        setLoading(true);
+        setImageLoading(true)
         const res = await fetch(
             "https://api.cloudinary.com/v1_1/raviimagedb/image/upload",
             { method: "POST", body: data }
         );
+
         const file = await res.json();
+        setImageLoading(false)
         setImageUrl(file.secure_url);
 
     };
@@ -109,12 +138,13 @@ export default function BasicModal({ title, btnText, handleClose, open, userData
         const data = new FormData();
         data.append("file", files);
         data.append("upload_preset", "facebookimagedb");
-        setLoading(true);
+        setImageLoading(true)
         const res = await fetch(
             "https://api.cloudinary.com/v1_1/raviimagedb/image/upload",
             { method: "POST", body: data }
         );
         const file = await res.json();
+        setImageLoading(false)
         setCoverImageUrl(file.secure_url);
         console.log(coverImageUrl, "jojo")
     }
@@ -137,30 +167,43 @@ export default function BasicModal({ title, btnText, handleClose, open, userData
                     <EditProfilePicTextStyled>
                         <div>{title}</div>
                         <div>
-                            <span onClick={handleClose}>
-                                <CloseIcon />
-                            </span>
+
+                            <CloseIcon onClick={handleClose} />
+
 
                         </div>
                     </EditProfilePicTextStyled>
                     <UploadProfPicStyled>
                         {
-                            imageUrl.length > 1 || coverImageUrl.length > 1 ? <div> <img className="previewImage" src={title === "Edit Cover Photo" ? coverImageUrl : imageUrl} alt="" /> <span className="imageCloseIcon" onClick={handleImageClose}><CloseIcon /></span></div> : <label htmlFor="contained-button-file">
+                            (!imageLoading && imageUrl.length > 1) || (!imageLoading && coverImageUrl.length > 1) ? <div> <img className="previewImage" src={title === "Edit Cover Photo" ? coverImageUrl : imageUrl} alt="" /> <span className="imageCloseIcon" onClick={handleImageClose}><CloseIcon /></span></div> : !imageLoading ? <label htmlFor="contained-button-file">
 
                                 <Input accept="image/*" id="contained-button-file" onChange={title === "Edit Cover Photo" ? coverImageHandler : imageHandler} multiple type="file" />
                                 <Button variant="contained" component="span">
                                     {btnText}
                                 </Button>
-                            </label>
+                            </label> : <LoadingIo />
                         }
 
+
                     </UploadProfPicStyled>
-                    <UpdateProfilePicStyled>
-                        <div onClick={handleUpload} className="updateBtn">Update</div>
+                    {errorModalOpen ? <ErrorModal message={message} handleErrorModalClose={handleErrorModalClose} errorModalOpen={errorModalOpen} /> : ""}
+
+                    < UpdateProfilePicStyled >
+
+                        <LoadingButton
+                            color="primary"
+                            onClick={handleUpload}
+                            loading={loading}
+                            loadingPosition="start"
+                            startIcon={<SaveIcon />}
+                            variant="contained"
+                        >
+                            Upload
+                        </LoadingButton>
                     </UpdateProfilePicStyled>
                 </Box>
             </Modal>
-        </div>
+        </div >
     );
 }
 
@@ -225,17 +268,8 @@ display: flex;
 &>div:nth-child(2){
 padding-left: 6rem;
 
-span{
-    width:5rem ;
-    height:5rem;
-    border-radius: 50%;
-    background-color:var(--primary-background-color);
-    border: 1px solid var(--background-gray-color);
+svg{
     cursor: pointer;
-    
-    :hover{
-        background-color: var(--background-gray-color)
-    }
 }
 }
 
