@@ -8,6 +8,7 @@ import {
   REG_FAILURE,
   REG_REQUEST,
   REG_SUCCESS,
+  FRND_SUCCESS,
 } from "./actionTypes";
 
 export const logReq = () => {
@@ -28,6 +29,9 @@ export const regReq = () => {
 };
 export const regSuccess = (data) => {
   return { type: REG_SUCCESS, payload: data };
+};
+export const frndSuccess = (data) => {
+  return { type: FRND_SUCCESS, payload: data };
 };
 export const regFail = (err) => {
   return {
@@ -94,6 +98,17 @@ export const getUser = (id) => (dispatch) => {
       console.log(data, "ihi from updateUser");
       setData("userData", data)
       return dispatch(regSuccess(data));
+    })
+    .catch((err) => dispatch(regFail(err)));
+};
+export const getAnotherUser = (id) => (dispatch) => {
+  dispatch(regReq());
+  axios
+    .get(`${url}/api/user/${id}`)
+    .then(({ data }) => {
+      console.log(data, "ihi from updateUser");
+      setData("frndData", data)
+      return dispatch(frndSuccess(data));
     })
     .catch((err) => dispatch(regFail(err)));
 };

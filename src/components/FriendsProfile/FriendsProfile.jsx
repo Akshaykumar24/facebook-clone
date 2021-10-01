@@ -1,0 +1,368 @@
+import React from "react";
+import styled from "styled-components";
+import { MainLayout } from "../../styles/layouts";
+import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
+
+import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
+import { useState, useEffect } from "react";
+import ChatIcon from '@mui/icons-material/Chat';
+import Intro from "./Intro";
+import PhotosComp from "./PhotosComp";
+import FriendsCompo from "./FriendsCompo";
+// import PhotosComp from "../userprofile/PhotosComp";
+// import FriendsCompo from "../userprofile/FriendsCompo";
+import axios from 'axios'
+// import Intro from "./Intro";
+// import PhotosComp from "./PhotosComp";
+// import FriendsCompo from "./FriendsCompo";
+import { useParams } from 'react-router-dom'
+import { getData } from "../../utils/localStorage";
+
+function FriendsProfile() {
+
+    const { id } = useParams()
+    console.log(id)
+
+    // console.log(user)
+    const [posts, setPosts] = useState(true);
+    const [friends, setFriends] = useState(false);
+    const [photos, setPhotos] = useState(false);
+    const refreshPage = () => {
+        window.location.reload();
+    };
+
+
+
+    const defaultUserPic = {
+        coverPic:
+            "https://th.bing.com/th/id/R.b60ebb76818e10a1ffeb1d76ef807568?rik=BfJWM%2bFjq3YsSA&riu=http%3a%2f%2fthewowstyle.com%2fwp-content%2fuploads%2f2015%2f01%2fFacebook-Covers-004.jpg&ehk=QyHMcIYCHj1%2bqMrmjGWLcUOKe7Zi8kTKnVJ2G1zuQqA%3d&risl=&pid=ImgRaw&r=0",
+        profilePic:
+            "https://th.bing.com/th/id/R.56fa805242ca705c112c21e9142391c6?rik=0FGHjmAsLgoKhQ&riu=http%3a%2f%2fsguru.org%2fwp-content%2fuploads%2f2017%2f04%2fattitude-boys-profile-pics-for-Facebook-20.jpg&ehk=A%2bCtAIdAM172Ttozp8O2Yieal74Rvzj2O%2fHwjJnGrkQ%3d&risl=&pid=ImgRaw&r=0",
+    };
+
+
+    const [userData, setUserData] = useState(
+        getData("frndData").user
+            ? getData("frndData").user
+            : getData("frndData").userOnline
+    );
+
+
+
+
+    const handleProfilesMenu = (e) => {
+        if (e.target.textContent === "Posts") {
+            setPosts(true);
+            setPhotos(false);
+            setFriends(false);
+        } else if (e.target.textContent === "Friends") {
+            setFriends(true);
+            setPosts(false);
+            setPhotos(false);
+        } else if (e.target.textContent === "Photos") {
+            setPhotos(true);
+            setFriends(false);
+            setPosts(false);
+        }
+    };
+
+    return (
+        <UserProfileStyles>
+            <div className="mainProfile">
+                <MainLayout>
+                    <div className="profilePhotos">
+                        <div className="coverPhoto">
+                            <img
+                                src={
+                                    userData?.cover ? userData?.cover : defaultUserPic.coverPic
+                                }
+                                alt="coverPhoto"
+                            />
+
+                        </div>
+                        <div className="avatar">
+                            <img
+                                src={
+                                    userData.profile === undefined
+                                        ? defaultUserPic.profilePic
+                                        : userData.profile
+                                }
+                                alt="profilePhoto"
+                            />
+
+                        </div>
+                    </div>
+
+
+
+                    <div className="profileBio">
+                        <div className="Bio">
+                            <div>
+                                <h1>{userData.first_name + " " + userData.last_name}</h1>
+                                <div>
+                                    <p>You have to be odd to be number one</p>
+                                    <p>Commited with life</p>
+                                    <p>Dreamer,quick learner,proud son</p>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div className="profileMenuItems">
+                            <div
+                                className={`${posts ? "menuBorder-bottom" : ""}`}
+                                onClick={handleProfilesMenu}
+                            >
+                                Posts
+                            </div>
+                            <div onClick={handleProfilesMenu}>About</div>
+                            <div
+                                className={`${friends ? "menuBorder-bottom" : ""}`}
+                                onClick={handleProfilesMenu}
+                            >
+                                Friends
+                            </div>
+                            <div
+                                className={`${photos ? "menuBorder-bottom" : ""}`}
+                                onClick={handleProfilesMenu}
+                            >
+                                Photos
+                            </div>
+                            <div>Stories Archive</div>
+                            <div>
+                                <span>More</span> <ArrowDropDownIcon />
+                            </div>
+                            <div className="specialC">
+                                <div className="menuflex primarybgc">
+                                    <ChatIcon /> <span> Friends </span>
+                                </div>
+                            </div>
+                            <div className="specialC">
+                                <div
+
+                                >
+                                    <span>Message</span>
+                                </div>
+                            </div>
+                            <div className="menu">
+                                <div>
+                                    <MoreHorizIcon />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </MainLayout>
+            </div>
+            <Intro
+                work1={userData.work1}
+                work2={userData.work2}
+                education1={userData.education1}
+                education2={userData.education2}
+                livesIn={userData.city1}
+                from={userData.city2}
+                joined={userData.createdAt}
+                followedBy={userData.friendRequestRecieved.length}
+
+            />
+            <PhotosComp />
+            <FriendsCompo friends={userData.friends} refreshPage={refreshPage} />
+            {/* <EmojiMart /> */}
+        </UserProfileStyles>
+    );
+}
+
+const UserProfileStyles = styled.div`
+  .mainProfile {
+    width: 100%;
+    height: 36.3125rem;
+    box-shadow: 0px -1px 9px var(--font-dark-color);
+    background-color: var(--primary-background-color);
+    .profilePhotos {
+      width: 100%;
+      height: 21.625rem;
+      .coverPhoto {
+        width: 100%;
+        height: 100%;
+        img {
+          width: 100%;
+          height: 100%;
+          border-bottom-right-radius: 0.8rem;
+          border-bottom-left-radius: 0.8rem;
+        }
+        .cameraBtn {
+          position: absolute;
+          height: 2rem;
+          width: 10rem;
+
+          display: flex;
+          justify-content: space-evenly;
+          align-items: center;
+          background-color: var(--primary-background-color);
+
+          left: 68%;
+
+          top: 18rem;
+          border-radius: 6px;
+          .css-i4bv87-MuiSvgIcon-root {
+            width: 0.8em;
+            height: 0.8em;
+          }
+          :hover {
+            background-color: var(--background-gray-color);
+            cursor: pointer;
+          }
+          span {
+            color: var(--font-dark-color);
+            padding-bottom: 3px;
+            font-size: 14px;
+            font-weight: 650;
+          }
+        }
+      }
+      .avatar {
+        width: 11rem;
+        height: 11rem;
+        text-align: center;
+        position: absolute;
+        left: 44%;
+        top: 12rem;
+
+        img {
+          width: 100%;
+          height: 100%;
+          border-radius: 50%;
+          border: 4px solid var(--border-color);
+          box-shadow: 0px 1px 10px var(--shadow-5);
+        }
+        .cameraBtn {
+          position: absolute;
+          left: 8.5rem;
+          top: 7.6rem;
+          width: 2.2rem;
+          border-radius: 50%;
+          padding-top: 7px;
+          background-color: var(--background-gray-color);
+          :hover {
+            background-color: var(--background-gray-color);
+            cursor: pointer;
+          }
+        }
+      }
+    }
+    .profileBio {
+      padding: 0 2rem;
+
+      .Bio {
+        width: inherit;
+        height: 11.2rem;
+
+        flex-basis: 60%;
+        & > div {
+          text-align: center;
+          height: 8.6rem;
+          padding-top: 18px;
+          h1 {
+            color: var(--font-dark-color);
+            font-size: 2em;
+          }
+          & > div {
+            line-height: 25px;
+            margin-top: 0px;
+            font-size: 1.1rem;
+            color: var(--font-light-color);
+            span {
+              color: var(--primary-color);
+              font-size: 0.9rem;
+              font-weight: 650;
+              :hover {
+                text-decoration: underline;
+                cursor: pointer;
+              }
+            }
+          }
+        }
+        flex-basis: 60%;
+      }
+      .profileMenuItems {
+        display: flex;
+        border-top: 1px solid var(--border-color2);
+        padding: 4px 4px 0px 4px;
+
+        height: 3.4rem;
+
+        column-gap: 6px;
+
+        align-items: center;
+        .specialC {
+          padding: 0;
+          width: 8.4rem;
+          :hover {
+            background-color: var(--primary-background-color);
+          }
+        }
+        & > div {
+          min-width: 3rem;
+          padding: 0px 0.6rem;
+          height: 100%;
+          color: var(--font-light-color);
+          display: flex;
+
+          align-items: center;
+          border-top-left-radius: 4px;
+          border-top-right-radius: 4px;
+          :hover {
+            background-color: var(--background-gray-color);
+            cursor: pointer;
+          }
+        }
+        .menuflex {
+          display: flex;
+          align-items: center;
+          background-color: var(--background-gray-color);
+          height: 2rem;
+          padding: 0 3px;
+          font-size: 14px;
+          font-weight: 650;
+          width: 100%;
+          border-radius: 3px;
+          justify-content: space-around;
+          .css-i4bv87-MuiSvgIcon-root {
+            width: 0.7em;
+            height: 0.7em;
+          }
+        }
+        .primarybgc {
+          border-radius: 8px;
+          background-color: var(--primary-color);
+          color: var(--primary-background-color);
+          height: 2rem;
+          padding: 0 3px;
+          font-size: 14px;
+          font-weight: 650;
+          span {
+            color: var(--primary-background-color);
+          }
+        }
+        .editFont {
+          color: var(--font-dark-color);
+        }
+        .menu {
+          min-width: 3rem;
+          padding: 0;
+          & > div {
+            width: 100%;
+            justify-content: center;
+            background-color: var(--background-gray-color);
+            height: 2rem;
+            display: flex;
+            align-items: center;
+          }
+          :hover {
+            background-color: var(--primary-background-color);
+          }
+        }
+      }
+    }
+  }
+`;
+
+export default FriendsProfile;

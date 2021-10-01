@@ -14,7 +14,7 @@ import { getData } from '../../utils/localStorage'
 //       alt="profile"
 //     />
 
-function FriendsCompo({ friends }) {
+function FriendsCompo({ friends, refreshPage }) {
     const dispatch = useDispatch();
     const history = useHistory();
     const [userData, setUserData] = useState(
@@ -81,10 +81,12 @@ function FriendsCompo({ friends }) {
 
                             if (el._id === userData._id) {
                                 history.push('/profile')
+                                return
                             }
                             dispatch(getAnotherUser(el._id))
                             setTimeout(() => {
                                 history.push(`/facebook/${el._id}`)
+                                refreshPage()
                             }, 2000)
 
                         }} src={

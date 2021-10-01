@@ -8,7 +8,7 @@ import Intro from "../components/userprofile/Intro";
 import PhotosComp from "../components/userprofile/PhotosComp";
 import UserProfile from "../components/userprofile/UserProfile";
 import Wall from "../components/Wall/Wall";
-
+import FriendsProfile from "../components/FriendsProfile/FriendsProfile";
 const Router = () => {
   return (
     <div>
@@ -34,6 +34,9 @@ const Router = () => {
         <Route path="/profile">
           <UserProfile />
 
+        </Route>
+        <Route path='/facebook/:id' >
+          <FriendsProfile />
         </Route>
       </Switch>
     </div>

@@ -4,10 +4,11 @@ import {
   LOG_SUCCESS,
   REG_FAILURE,
   REG_REQUEST,
+  FRND_SUCCESS,
   REG_SUCCESS,
 } from "./actionTypes";
 
-const init = { user: {}, Load: false, Error: false, token: "", reg: false };
+const init = { user: {}, Load: false, Error: false, token: "", reg: false, frndData: {} };
 
 export const authReducer = (state = { ...init }, { type, payload }) => {
   switch (type) {
@@ -50,6 +51,14 @@ export const authReducer = (state = { ...init }, { type, payload }) => {
         ...state,
         Load: false,
         Error: true,
+      };
+    case FRND_SUCCESS:
+      return {
+        ...state,
+        Load: false,
+        user: payload.user,
+        token: payload.token,
+        frndData: payload.user,
       };
     default:
       return state;

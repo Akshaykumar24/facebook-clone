@@ -228,7 +228,7 @@ function UserProfile() {
         handleEditProfileOpen={handleEditProfileOpen}
       />
       <PhotosComp />
-      <FriendsCompo friends={userData.friends} />
+      <FriendsCompo friends={userData.friends} userData={userData} />
       {/* <EmojiMart /> */}
     </UserProfileStyles>
   );
