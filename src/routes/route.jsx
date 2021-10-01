@@ -9,6 +9,8 @@ import PhotosComp from "../components/userprofile/PhotosComp";
 import UserProfile from "../components/userprofile/UserProfile";
 import Wall from "../components/Wall/Wall";
 import NavBar from "../components/navbar/NavBar";
+import Chat from "../components/Socket/Chat";
+import Messenger from "../components/Socket/Messenger";
 
 const Router = () => {
   const [menu, setMenu] = React.useState(false);
@@ -28,7 +30,8 @@ const Router = () => {
         </Route>
         <Route path="/messenger">
           <NavBar setMenu={setMenu} menu={setMenu} />
-          <Wall />
+          <Messenger />
+          {/* <Chat /> */}
         </Route>
         <Route path="/profile">
           <NavBar setMenu={setMenu} menu={setMenu} />

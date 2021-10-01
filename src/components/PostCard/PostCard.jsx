@@ -90,11 +90,7 @@ const PostCard = ({ post }) => {
           }}
         >
           <Box>
-            <Avatar
-              sx={{ m: "0 1rem 0 0" }}
-              alt="R"
-              src={body_photo}
-            />
+            <Avatar sx={{ m: "0 1rem 0 0" }} alt="R" src={body_photo} />
           </Box>
           <Box>
             <Box>Ravi Ranjan Kumar</Box>

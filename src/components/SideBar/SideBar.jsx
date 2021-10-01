@@ -30,7 +30,7 @@ function SideBar() {
               label="Marketplace"
             />
           </Link>
-          <Link className="flexBox sideBarContentLink" to="/messenger/new">
+          <Link className="flexBox sideBarContentLink" to="/messenger">
             <SideBarContent
               src={"/Images/messenger_icon.png"}
               label="Messenger"
