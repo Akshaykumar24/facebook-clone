@@ -4,14 +4,10 @@ import { url } from "../../utils/url";
 import PostStat from "./PostStat";
 import CommentForm from "../CommentForm/CommentForm";
 import CommentCard from "../CommentCard/CommentCard";
-import Box from "@mui/material/Box";
 
-import Avatar from "@mui/material/Avatar";
+import { Box, Button, Avatar, Divider } from "@mui/material";
 
-import LanguageIcon from "@mui/icons-material/Language";
-import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
-import Divider from "@mui/material/Divider";
-import Button from "@mui/material/Button";
+
 
 import { AiOutlineLike } from "react-icons/ai";
 import { FaRegCommentAlt } from "react-icons/fa";
@@ -30,13 +26,24 @@ const getCommentOfThisPost = (id) => {
 };
 
 const PostCard = ({ post }) => {
+  console.log('post:', post)
   const { body_text, _id, no_of_likes, no_of_comments, body_photo } = post;
   const [isComment, setIsComment] = useState(false);
   const [showComments, setShowComments] = useState(false);
   const [comments, setComments] = useState("");
   const [noOfLikes, setNoOfLikes] = useState(0);
   const [noOfComments, setNoOfComments] = useState(0);
+  // const [user, setUser] = useState("");
+  const [loading, setLoading] = useState(true);
 
+  // useEffect(() => {
+  //   setLoading(true);
+  //   axios.get(`${url}/api/user/615597feba43170537e9315c`).then(({ data }) => {
+  //     setUser(data.user);
+  //     console.log(user);
+  //     setLoading(false);
+  //   });
+  // }, []);
   let likes = 0;
   useEffect(() => {
     setNoOfLikes(no_of_likes);
@@ -66,6 +73,9 @@ const PostCard = ({ post }) => {
       setComments(commentsArr);
     });
   };
+  // if (loading) {
+  //   return <></>;
+  // }
   return (
     <Box
       sx={{ backgroundColor: "#FFFFFF", padding: "0 2rem", margin: "1rem 0" }}
@@ -90,21 +100,17 @@ const PostCard = ({ post }) => {
           }}
         >
           <Box>
-            <Avatar
-              sx={{ m: "0 1rem 0 0" }}
-              alt="R"
-              src={body_photo}
-            />
+            <Avatar sx={{ m: "0 1rem 0 0" }} alt="R" src={body_photo} />
           </Box>
           <Box>
             <Box>Ravi Ranjan Kumar</Box>
             <Box>
-              22h <LanguageIcon />
+              22h {/* <LanguageIcon /> */}
             </Box>
           </Box>
         </Box>
         <Box>
-          <MoreHorizIcon />
+          {/* <MoreHorizOutlined /> */}
         </Box>
       </Box>
       {/* post body */}
@@ -115,6 +121,7 @@ const PostCard = ({ post }) => {
       {/* post stat */}
       <Box>
         <PostStat
+          key={_id}
           id={_id}
           noOfLikes={noOfLikes}
           noOfComments={noOfComments}
@@ -132,11 +139,13 @@ const PostCard = ({ post }) => {
           alignItems: "center",
           margin: "1rem 0",
           padding: "0 2rem",
+          color: "#769292",
         }}
       >
         <Box>
           <Button
             variant="text"
+            color="inherit"
             onClick={handleLike}
             startIcon={<AiOutlineLike />}
           >
@@ -146,6 +155,7 @@ const PostCard = ({ post }) => {
         <Box>
           <Button
             variant="text"
+            color="inherit"
             onClick={() => {
               setIsComment((prev) => !prev);
             }}
@@ -155,7 +165,11 @@ const PostCard = ({ post }) => {
           </Button>
         </Box>
         <Box>
-          <Button variant="text" startIcon={<RiShareForwardLine />}>
+          <Button
+            variant="text"
+            color="inherit"
+            startIcon={<RiShareForwardLine />}
+          >
             Share
           </Button>
         </Box>
@@ -169,7 +183,7 @@ const PostCard = ({ post }) => {
         <Box>
           {comments.length > 0 &&
             comments.map((comment) => {
-              return <CommentCard comment={comment} />;
+              return <CommentCard post_id={_id * 2} comment={comment} />;
             })}
         </Box>
       )}

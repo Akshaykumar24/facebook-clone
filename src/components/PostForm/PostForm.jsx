@@ -1,16 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { /* useEffect, */ useState } from "react";
 import axios from "axios";
 
 // import {useSelector} from 'react-redux'
 
 import { url } from "../../utils/url";
-import Box from "@mui/material/Box";
 
-import Divider from "@mui/material/Divider";
-import Avatar from "@mui/material/Avatar";
-import Modal from "@mui/material/Modal";
-import TextField from "@mui/material/TextField";
-import Button from "@mui/material/Button";
+import { Box, Button, Divider, Avatar, Modal, TextField } from "@mui/material";
+
 import PhotoUploadForm from "../PhotoUploadForm/PhotoUploadForm";
 import { FcStackOfPhotos } from "react-icons/fc";
 import { BiSmile } from "react-icons/bi";
@@ -40,22 +36,22 @@ const PostForm = () => {
   const [body_text, setBodyText] = useState("What's on your mind?");
   const [buttonDisabled, setButtonDisabled] = useState(true);
   const [body_photo, setBody_photo] = useState("");
-  const [user, setUser] = useState("");
-  const [loading, setLoading] = useState(false);
+  // const [user, setUser] = useState("");
+  // const [loading, setLoading] = useState(false);
 
   // const state = useSelector((state)=>state)
   // // console.log('state:', state)
   // const userId=state.auth
   // console.log('userId:', userId)
 
-  useEffect(() => {
-    setLoading(true);
-    axios.get(`${url}/api/user/615597feba43170537e9315c`).then(({ data }) => {
-      setUser(data.user);
-      console.log(user)
-      setLoading(false)
-    });
-  },[]);
+  // useEffect(() => {
+  //   setLoading(true);
+  //   axios.get(`${url}/api/user/615597feba43170537e9315c`).then(({ data }) => {
+  //     setUser(data.user);
+  //     console.log(user);
+  //     setLoading(false);
+  //   });
+  // }, []);
   const handleChange = (e) => {
     const value = e.target.value;
     if (value.length > 0) {
@@ -65,7 +61,7 @@ const PostForm = () => {
   };
   const writePost = (body_text, body_photo) => {
     return axios.post(`${url}/api/posts`, {
-      user_id: user._id,
+      // user_id: user._id,
       body_text: body_text,
       body_photo: body_photo,
     });
@@ -87,9 +83,9 @@ const PostForm = () => {
         console.log(err);
       });
   };
-  if(loading){
-    return <></>
-  }
+  // if (loading) {
+  //   return <></>;
+  // }
 
   return (
     <Box
@@ -110,7 +106,7 @@ const PostForm = () => {
           }}
           onClick={handleOpen}
         >
-          What's on your mind {user.first_name}
+          {/* What's on your mind {user.first_name} */}
         </Button>
       </Box>
       <Divider />
@@ -165,7 +161,7 @@ const PostForm = () => {
                 <Avatar sx={{ m: "0 1rem 0 0" }} alt="R" src={body_photo} />
               </Box>
               <Box>
-                <Box>{user.first_name}</Box>
+                {/* <Box>{user.first_name}</Box> */}
                 <Box>Public</Box>
               </Box>
             </Box>

@@ -10,7 +10,7 @@ import {
 
 const HomePageCenter = () => {
   const [posts, setPosts] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [isError, setIsError] = useState(false);
 
   const getPosts = () => {
@@ -21,27 +21,32 @@ const HomePageCenter = () => {
     setIsLoading(true);
     getPosts()
       .then(({ data }) => {
+        // console.log('data:', data.posts)
+        
         setPosts(data.posts);
         setIsLoading(false);
       })
       .catch((err) => {
         setIsError(true);
-        console.log(err);
+        console.log('err:', err)
+        
       });
-  }, []);
+    }, []);
+    // console.log('posts:', posts)
 
   return (
     <Wrapper>
-      <FormContainer>
+   <FormContainer>
         <PostForm />
-      </FormContainer>
-      <PostsContainer>
+      </FormContainer> 
+       <PostsContainer>
         {isLoading
           ? "Loading posts"
           : isError
           ? "Some errors"
           : posts.map((post) => {
-              return <PostCard post={post} />;
+              
+              return <PostCard key={post._id} post={post} />;
             })}
       </PostsContainer>
     </Wrapper>

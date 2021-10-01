@@ -40,11 +40,11 @@ const PostStat = ({ id,handleShowComments,noOfLikes,noOfComments }) => {
           alignContent: "center",
           alignItems: "center",
           margin: "1rem 0",
-          
+          color:"#769292"
         }}
       >
         <Box>
-          <Button variant="text" startIcon={<AiOutlineLike />}>
+          <Button variant="text" color="inherit" startIcon={<AiOutlineLike color="primary"/>}>
             { noOfLikes}
           </Button>
         </Box>
@@ -58,12 +58,12 @@ const PostStat = ({ id,handleShowComments,noOfLikes,noOfComments }) => {
           }}
         >
           <Box>
-            <Button variant="text" onClick={()=>handleShowComments()} >
+            <Button variant="text" color="inherit" onClick={()=>handleShowComments()} >
               {noOfComments} comments
             </Button>
           </Box>
           <Box>
-            <Button variant="text" >
+            <Button variant="text" color="inherit">
              {postStat.no_of_shares} shares
             </Button>
           </Box>
