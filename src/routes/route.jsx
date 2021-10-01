@@ -19,7 +19,7 @@ const Router = () => {
           <SignUp />
         </Route>
         <Route exact path="/">
-          <NavBar setMenu={setMenu} menu={setMenu} />
+          {/* <NavBar setMenu={setMenu} menu={setMenu} /> */}
           <HomePage />
         </Route>
         <Route path="/friends">

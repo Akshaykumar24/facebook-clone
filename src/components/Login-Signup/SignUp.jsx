@@ -3,7 +3,7 @@ import axios from "axios";
 import { url } from "../../utils/url";
 import Login from "./Login";
 import styled from "styled-components";
-
+import { setData } from "../../utils/localStorage";
 import { useHistory } from "react-router-dom";
 
 import { useDispatch, useSelector } from "react-redux";
@@ -78,8 +78,10 @@ function SignUp() {
     dispatch(logUser(logInForm));
   };
   if (all.reg && !all.Load && !all.Error) {
+    setData("userId", all.user._id);
     history.push("/profile");
   } else if (all.token !== "") {
+    setData("userId", all.user._id);
     history.push("/");
   }
   const handleCreateClick = () => {
@@ -266,7 +268,7 @@ export default SignUp;
 
 const Cont = styled.div`
   width: 100vw;
-  height: 90vh;
+  height: 100vh;
   padding: 6% 5% 0;
   background-color: rgb(240, 242, 245);
 `;
@@ -350,9 +352,21 @@ const Sign = styled.div`
     border-radius: 8px;
     box-shadow: 0 2px 4px rgb(0 0 0 / 25%), 0 8px 16px rgb(0 0 0 / 25%);
 
+    > :nth-child(4) {
+      > input {
+        font-size: 14px;
+        padding: 8px 16px;
+        width: 50%;
+        height: 36px;
+        margin: 7px 5px;
+        border-radius: 5px;
+        background-color: rgb(238, 238, 238);
+        border: 1px solid rgb(190, 190, 190);
+      }
+    }
     > h2 {
       font-size: 32px;
-      font-family: SFProDisplay-Bold, Helvetica, Arial, sans-serif;
+      font-family: Helvetica, Arial, sans-serif;
       line-height: 38px;
       margin: 0 10px;
       font-weight: 650;
@@ -360,8 +374,8 @@ const Sign = styled.div`
     input {
       font-size: 14px;
       padding: 8px 16px;
-      width: 90%;
-      height: 18px;
+      width: 98%;
+      height: 36px;
       margin: 7px 5px;
       border-radius: 5px;
       background-color: rgb(238, 238, 238);
@@ -373,7 +387,7 @@ const Sign = styled.div`
     > p {
       font-size: 12px;
       line-height: 16px;
-      padding: 0 10px;
+      padding: 10px 10px;
     }
     > :nth-child(2) {
       font-size: 15px;

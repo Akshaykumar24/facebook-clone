@@ -3,17 +3,19 @@ import HomePageCenter from "../components/HomePageCenter/HomePageCenter";
 import SideBar from "../components/SideBar/SideBar";
 import styled from "styled-components";
 import Story from "../components/Story/Story";
+import Home from "../components/Active/Pages/Home";
 
 const HomePage = () => {
   return (
-    <Container>
-      <SideBar />
-      <Cent>
-        <Story />
-        <HomePageCenter />
-      </Cent>
-      <div></div>
-    </Container>
+    // <Container>
+    //   <SideBar />
+    //   <Cent>
+    //     <Story />
+    //     <HomePageCenter />
+    //   </Cent>
+    //   <div></div>
+    // </Container>
+    <Home />
   );
 };
 

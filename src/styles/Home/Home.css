@@ -1,9 +1,16 @@
 .MainContainer {
   display: flex;
   padding: 0 10px;
-  overflow: hidden;
+
   height: calc(100vh - 50px);
   align-items: flex-start;
+}
+.hidden {
+  overflow: auto;
+  position: fixed;
+}
+.right {
+  right: 0;
 }
 .mainPostsContainer {
   flex-grow: 1;
@@ -36,4 +43,8 @@ div[role="presentation"] {
 .MuiModal-root > div,
 .MuiDrawer-modal {
   top: 50px;
+}
+.scroll {
+  overflow: auto;
+  scroll-behavior: smooth;
 }

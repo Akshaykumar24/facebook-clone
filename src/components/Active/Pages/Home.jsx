@@ -1,10 +1,11 @@
 import React from "react";
-import SideBar from "../SideBar/SideBar";
-import ActiveContacts from "../SideBar/ActiveContacts";
-import "../../styles/Home/Home.css";
+import SideBar from "../../SideBar/SideBar";
+import ActiveContacts from "../../SideBar/ActiveContacts";
+import "../../../styles/Home/Home.css";
 import Story from "../../Story/Story";
 import Navbar from "../../navbar/NavBar";
 import Drawer from "@mui/material/Drawer";
+import HomePageCenter from "../../HomePageCenter/HomePageCenter";
 
 const Home = () => {
   const [menu, setMenu] = React.useState(false);
@@ -12,7 +13,7 @@ const Home = () => {
   return (
     <>
       <Navbar setMenu={setMenu} menu={setMenu} />
-      <div className="MainContainer">
+      <div className="MainContainer ">
         {menu && (
           <Drawer
             open={menu}
@@ -22,14 +23,15 @@ const Home = () => {
             <SideBar />
           </Drawer>
         )}
-        <div className="mainLeftSidebarContainer">
+        <div className="mainLeftSidebarContainer hidden">
           <SideBar />
         </div>
         <div className="mainPostsContainer scroll">
           <Story />
           {/* <NewPost /> */}
+          <HomePageCenter className="width" />
         </div>
-        <div className="mainRightSidebarContainer scroll">
+        <div className="mainRightSidebarContainer hidden right">
           <ActiveContacts />
         </div>
       </div>

@@ -26,6 +26,10 @@ const Login = ({ handleLogin, handleLoginForm, email, password, load }) => {
 export default Login;
 
 const Logs = styled.div`
+  * {
+    padding: 0;
+    margin: 0;
+  }
   width: 100%;
   margin: auto;
   text-align: center;
@@ -33,8 +37,8 @@ const Logs = styled.div`
   > input {
     font-size: 17px;
     padding: 14px 16px;
-    width: 330px;
-    height: 22px;
+    width: 360px;
+    height: 48px;
     margin: 7px auto;
     line-height: 1.34;
     border-radius: 5px;

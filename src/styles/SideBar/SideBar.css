@@ -1,7 +1,10 @@
 .sideBarContainer {
   min-width: 200px;
   max-width: 320px;
+  position: relative;
+  top: 50px;
   width: 25vw;
+  height: 100vh;
   padding: 10px;
 }
 

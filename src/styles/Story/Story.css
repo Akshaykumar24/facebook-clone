@@ -2,6 +2,7 @@
   background-color: transparent;
   max-width: 676px;
   min-width: 400px;
+  padding-top: 50px;
   width: 85%;
   margin: auto;
   margin-bottom: 10px;
@@ -26,8 +27,8 @@
   height: 40px;
   position: relative;
   object-fit: cover;
-  top: 15px;
-  left: 20%;
+  top: 10px;
+  left: 8%;
   border-radius: 50%;
   border: 3.5px solid var(--accent);
   box-shadow: 0 1px 5px var(--shadow-2);
@@ -36,7 +37,7 @@
 
 .pMainTag {
   position: relative;
-  top: 120px;
+  top: 100px;
   text-align: center;
   max-width: 60px;
   padding: 1px;

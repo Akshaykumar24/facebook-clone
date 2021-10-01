@@ -16,7 +16,7 @@ const SendReqCard = ({ p, id, update, data }) => {
     <Known>
       <img
         src={
-          p.profile === undefined
+          p.profile === undefined || ""
             ? `https://avatars.dicebear.com/api/micah/${p.first_name}.svg`
             : p.profile
         }
