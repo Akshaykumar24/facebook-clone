@@ -1,4 +1,4 @@
-import React, { /* useEffect, */ useState } from "react";
+import React, { useState } from "react";
 import axios from "axios";
 
 // import {useSelector} from 'react-redux'
@@ -12,56 +12,44 @@ import { FcStackOfPhotos } from "react-icons/fc";
 import { BiSmile } from "react-icons/bi";
 import { BsPersonPlusFill } from "react-icons/bs";
 import { FaTimes } from "react-icons/fa";
-
+// import { getData } from "../../utils/localStorage";
 const modalStyle = {
   position: "absolute",
   top: "50%",
   left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: 400,
+  transform: "translate(-50%, -10%)",
+  width: '500px',
   bgcolor: "background.paper",
-  border: "2px solid #000",
+  // border: "2px solid #df1313",
   boxShadow: 24,
-  p: 4,
+  p: "2rem 1.5rem",
 };
 
-// 615597feba43170537e9315c
-
-const PostForm = () => {
+const PostForm = ({ user }) => {
+  // console.log('user in form comp:', user.first_name)
   // modal control
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   // text form control
-  const [body_text, setBodyText] = useState("What's on your mind?");
+  const [body_text, setBodyText] = useState(`What's on your mind?`);
   const [buttonDisabled, setButtonDisabled] = useState(true);
   const [body_photo, setBody_photo] = useState("");
-  // const [user, setUser] = useState("");
-  // const [loading, setLoading] = useState(false);
+ 
+  const refreshPage = () => {
+    window.location.reload();
+  };
 
-  // const state = useSelector((state)=>state)
-  // // console.log('state:', state)
-  // const userId=state.auth
-  // console.log('userId:', userId)
-
-  // useEffect(() => {
-  //   setLoading(true);
-  //   axios.get(`${url}/api/user/615597feba43170537e9315c`).then(({ data }) => {
-  //     setUser(data.user);
-  //     console.log(user);
-  //     setLoading(false);
-  //   });
-  // }, []);
   const handleChange = (e) => {
     const value = e.target.value;
-    if (value.length > 0) {
+    if (value.length > 0 || body_photo!=='') {
       setButtonDisabled(false);
     }
     setBodyText(value);
   };
   const writePost = (body_text, body_photo) => {
     return axios.post(`${url}/api/posts`, {
-      // user_id: user._id,
+      user_id: user._id,
       body_text: body_text,
       body_photo: body_photo,
     });
@@ -76,6 +64,7 @@ const PostForm = () => {
         console.log(resp);
         if (resp.status === 201) {
           console.log("succes");
+          refreshPage();
           handleClose();
         }
       })
@@ -106,7 +95,7 @@ const PostForm = () => {
           }}
           onClick={handleOpen}
         >
-          {/* What's on your mind {user.first_name} */}
+          What's on your mind
         </Button>
       </Box>
       <Divider />
@@ -171,14 +160,18 @@ const PostForm = () => {
                 multiline
                 rows={3}
                 fullWidth
-                defaultValue={body_text}
+                // placeholder={user.first_name}
+                value={body_text}
                 onChange={handleChange}
               />
             </Box>
             <Box></Box>
-            <Box>
-              Add to your post <PhotoUploadForm setBody_photo={setBody_photo} />
+            <Box sx={{display:'flex', justifyContent:'space-between', alignItems:'center', m:'1rem 0' }}>
+              <Box>Add to your post </Box>
+
+              <PhotoUploadForm setBody_photo={setBody_photo} />
             </Box>
+            <Box sx={{textAlign:'center'}}> <img src={body_photo} height='200px'  alt="" /> </Box>
             <Box>
               <Button
                 disabled={buttonDisabled}

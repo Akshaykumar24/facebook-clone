@@ -1,8 +1,10 @@
-import React, { useState } from "react";
-
+import React, { useRef, useState } from "react";
+import { Button } from "@mui/material";
+import { FcStackOfPhotos } from "react-icons/fc";
 const PhotoUploadForm = ({setBody_photo}) => {
-  const [imageUrl, setImageUrl] = useState("");
+  // const [imageUrl, setImageUrl] = useState("");
   const [loading, setLoading] = useState("");
+  const inputRef = useRef()
   const handleChange = async (e) => {
     const files = e.target.files[0];
     const data = new FormData();
@@ -14,22 +16,25 @@ const PhotoUploadForm = ({setBody_photo}) => {
       { method: "POST", body: data }
     );
     const file = await res.json();
-    setImageUrl(file.secure_url);
+    // setImageUrl(file.secure_url);
     setBody_photo(file.secure_url);
     setLoading(false);
   };
-  const handleUpload = () => {};
+  const handleUpload = () => {
+    inputRef.current.click()
+  };
   return (
     <div>
       <input
+        style={{display:'none'}}
         type="file"
-        
+        ref={inputRef}
         // accept="image/png, image/jpeg; capture=camera"
         accept="image/*; capture=camera"
         onChange={handleChange}
       />
-      <button onClick={handleUpload}>upload</button>
-      {loading ? "loading.." : <img width="300px" src={imageUrl} alt="" />}
+      <Button onClick={handleUpload} title='Add Photo' ><FcStackOfPhotos size='3rem'/></Button>
+      {/* {loading ? "loading.." : <img width="300px" src={imageUrl} alt="" />} */}
     </div>
   );
 };

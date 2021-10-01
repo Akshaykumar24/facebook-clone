@@ -26,7 +26,7 @@ const getCommentOfThisPost = (id) => {
 };
 
 const PostCard = ({ post }) => {
-  console.log('post:', post)
+  // console.log('post:', post)
   const { body_text, _id, no_of_likes, no_of_comments, body_photo } = post;
   const [isComment, setIsComment] = useState(false);
   const [showComments, setShowComments] = useState(false);
