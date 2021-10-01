@@ -8,30 +8,30 @@ import Intro from "../components/userprofile/Intro";
 import PhotosComp from "../components/userprofile/PhotosComp";
 import UserProfile from "../components/userprofile/UserProfile";
 import Wall from "../components/Wall/Wall";
+import NavBar from "../components/navbar/NavBar";
 
 const Router = () => {
+  const [menu, setMenu] = React.useState(false);
   return (
     <div>
       <Switch>
-        <Route exact path="/">
-          <Wall />
-        </Route>
         <Route path="/login">
           <SignUp />
         </Route>
-        <Route path="/wall">
-          <Wall />
-        </Route>
-        <Route path="/home">
+        <Route exact path="/">
+          {/* <NavBar setMenu={setMenu} menu={setMenu} /> */}
           <HomePage />
         </Route>
         <Route path="/friends">
+          <NavBar setMenu={setMenu} menu={setMenu} />
           <FriendsAll />
         </Route>
         <Route path="/messenger">
+          <NavBar setMenu={setMenu} menu={setMenu} />
           <Wall />
         </Route>
         <Route path="/profile">
+          <NavBar setMenu={setMenu} menu={setMenu} />
           <UserProfile />
           <Intro />
           <PhotosComp />

@@ -26,7 +26,7 @@ const FriendsLeft = ({
     <div>
       {/* {!suggest && !find && !birth && !request && ( */}
       <ForAll>
-        <h2 style={{ padding: "18px" }}>Friends</h2>
+        <h1 style={{ padding: "18px" }}>Friends</h1>
         <LeftDiv onClick={() => changeState(setPendingRequest)}>
           <img
             src="https://cdn-icons-png.flaticon.com/128/47/47768.png"
@@ -93,12 +93,17 @@ export default FriendsLeft;
 const ForAll = styled.div`
   position: fixed;
   left: 0;
-  top: 20px;
+  top: 0;
+  padding-top: 50px;
   height: 100vh;
   /* z-index: -2; */
   width: 350px;
   box-shadow: 0 2px 4px rgb(0 0 0 / 10%), 0 8px 16px rgb(0 0 0 / 10%);
   background-color: var(--primary-background-color);
+  > h1 {
+    font-size: 28px;
+    padding-left: 20px;
+  }
 `;
 
 const LeftDiv = styled.div`

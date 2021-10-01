@@ -1,21 +1,23 @@
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { url } from "../../utils/url";
 
 const KnowCard = ({ p, id, update, data }) => {
   const [sent, setSent] = useState(false);
-  const sendReq = () => {
-    axios
+
+  const sendReq = async () => {
+    await axios
       .post(`${url}/api/user/sendRequest/${id}`, {
         id: p._id,
       })
-      .then(setSent(true));
-    // .then(
-    //   setTimeout(() => {
-    //     update(data, p._id);
-    //   }, 1000)
-    // );
+      .then(setSent(true))
+      .then(
+        setTimeout(() => {
+          update(data, p._id);
+          setSent(false);
+        }, 1000)
+      );
   };
   const remove = () => {
     update(data, p._id);
@@ -32,7 +34,7 @@ const KnowCard = ({ p, id, update, data }) => {
     <Known>
       <img
         src={
-          p.profile === undefined
+          p.profile === undefined || ""
             ? `https://avatars.dicebear.com/api/micah/${p.first_name}.svg`
             : p.profile
         }
