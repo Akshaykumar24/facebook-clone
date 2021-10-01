@@ -84,8 +84,9 @@ const FriendsCompoStyled = styled.div`
   display: grid;
   padding: 15px;
   grid-gap: 1rem;
-  box-shadow: 1px 1px 13px var(--box-shadow-color);
+  box-shadow: 0px 0px 13px var(--icons-gray-color);
   border-radius: 1rem;
+  background-color: var(--border-color);
   .linksForPhotos {
     display: flex;
     column-gap: 9rem;
@@ -106,7 +107,7 @@ const FriendsCompoStyled = styled.div`
     }
 }
     & > div:nth-child(2) {
-      width: 8rem;
+      width: 7rem;
       height: 3rem;
       display: flex;
       align-items: center;

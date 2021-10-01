@@ -12,32 +12,23 @@ import EditProfieModal from "./EditProfile";
 import Intro from "./Intro";
 import PhotosComp from "./PhotosComp";
 import FriendsCompo from "./FriendsCompo";
-import { getUser } from "../../redux/auth/action";
-import { shallowEqual, useDispatch, useSelector } from "react-redux";
-import { getData, setData } from '../../utils/localStorage'
-import { useContext } from 'react'
-import { UserDataContext } from "../Context/UserDataContext";
-import axios from "axios";
-function useForceUpdate() {
-  const [value, setValue] = useState(0);
-  return () => setValue(value => value + 1)
-}
-function UserProfile() {
-  const { handleUserDataContext, userDataContext } = useContext(UserDataContext)
+import { getData } from "../../utils/localStorage";
+import EmojiMart from "../EmojiMart/EmojiMart";
 
-  const dispatch = useDispatch();
-  const forceUpdate = useForceUpdate();
+function UserProfile() {
+
+
+
   // console.log(user)
   const [posts, setPosts] = useState(true);
   const [friends, setFriends] = useState(false);
   const [photos, setPhotos] = useState(false);
-  const [update, setUpdate] = useState(true)
 
   const [title, setTitle] = useState("");
   const [btnText, setBtnText] = useState("");
   const refreshPage = () => {
     window.location.reload();
-  }
+  };
 
   const defaultUserPic = {
     coverPic:
@@ -51,13 +42,7 @@ function UserProfile() {
   const handleEditProfileOpen = () => setEditProfileOpen(true);
   const handleEditProfileClose = () => setEditProfileOpen(false);
 
-
-
-
   // useEffect(() => {
-
-
-
 
   // }, []);
   // function getUsersData() {
@@ -76,9 +61,11 @@ function UserProfile() {
   //   auth: { user },
   // } = useSelector((state) => state, shallowEqual);
 
-  const [userData, setUserData] = useState(getData("userData").user ? getData("userData").user : getData("userData").userOnline);
-
-
+  const [userData, setUserData] = useState(
+    getData("userData").user
+      ? getData("userData").user
+      : getData("userData").userOnline
+  );
 
   // async function getusersData(id) {
   //   await axios.get(`http://localhost:2424/api/user/${id}`).then(({ data }) => {
@@ -86,10 +73,6 @@ function UserProfile() {
   //   })
   // }
   // getusersData(id)
-
-  console.log(userDataContext, "i am context")
-
-
 
 
   const [open, setOpen] = useState(false);
@@ -122,7 +105,6 @@ function UserProfile() {
   };
 
   return (
-
     <UserProfileStyles>
       <div className="mainProfile">
         <MainLayout>
@@ -152,22 +134,29 @@ function UserProfile() {
               </div>
             </div>
           </div>
-          {open ? <BasicModal
-            title={title}
-            btnText={btnText}
-            handleClose={handlePhotoModalClose}
-            open={open}
-            userData={userData}
-            refreshPage={refreshPage}
-          /> : ""}
-          {editProfileOpen ? <EditProfieModal
-            handleEditProfileClose={handleEditProfileClose}
-            editProfileOpen={editProfileOpen}
-            userData={userData}
-            setUpdate={setUpdate}
-            forceUpdate={forceUpdate}
-            refreshPage={refreshPage}
-          /> : ""}
+          {open ? (
+            <BasicModal
+              title={title}
+              btnText={btnText}
+              handleClose={handlePhotoModalClose}
+              open={open}
+              userData={userData}
+              refreshPage={refreshPage}
+            />
+          ) : (
+            ""
+          )}
+          {editProfileOpen ? (
+            <EditProfieModal
+              handleEditProfileClose={handleEditProfileClose}
+              editProfileOpen={editProfileOpen}
+              userData={userData}
+
+              refreshPage={refreshPage}
+            />
+          ) : (
+            ""
+          )}
 
           <div className="profileBio">
             <div className="Bio">
@@ -240,6 +229,7 @@ function UserProfile() {
       />
       <PhotosComp />
       <FriendsCompo friends={userData.friends} />
+      {/* <EmojiMart /> */}
     </UserProfileStyles>
   );
 }
@@ -247,7 +237,7 @@ function UserProfile() {
 const UserProfileStyles = styled.div`
   .mainProfile {
     width: 100%;
-    height: 35.3125rem;
+    height: 36.3125rem;
     box-shadow: 0px -1px 9px var(--font-dark-color);
     background-color: var(--primary-background-color);
     .profilePhotos {
@@ -295,27 +285,24 @@ const UserProfileStyles = styled.div`
       .avatar {
         width: 11rem;
         height: 11rem;
-
         text-align: center;
-
         position: absolute;
         left: 44%;
-        top: 11.5rem;
+        top: 12rem;
 
         img {
           width: 100%;
           height: 100%;
           border-radius: 50%;
           border: 4px solid var(--border-color);
+          box-shadow: 0px 1px 10px var(--shadow-5);
         }
         .cameraBtn {
           position: absolute;
-
           left: 8.5rem;
-          top: 8.6rem;
+          top: 7.6rem;
           width: 2.2rem;
           border-radius: 50%;
-
           padding-top: 7px;
           background-color: var(--background-gray-color);
           :hover {
@@ -330,19 +317,20 @@ const UserProfileStyles = styled.div`
 
       .Bio {
         width: inherit;
-        height: 9.8rem;
-        /* padding: 0px 25%; */
+        height: 11.2rem;
+
+        flex-basis: 60%;
         & > div {
           text-align: center;
           height: 8.6rem;
-
-          padding-top: 5px;
+          padding-top: 18px;
           h1 {
             color: var(--font-dark-color);
+            font-size: 2em;
           }
           & > div {
-            line-height: 3px;
-            margin-top: -15px;
+            line-height: 25px;
+            margin-top: 0px;
             font-size: 1.1rem;
             color: var(--font-light-color);
             span {
@@ -363,7 +351,7 @@ const UserProfileStyles = styled.div`
         border-top: 1px solid var(--border-color2);
         padding: 4px 4px 0px 4px;
 
-        height: 3.5rem;
+        height: 3.4rem;
 
         column-gap: 6px;
 
@@ -414,6 +402,9 @@ const UserProfileStyles = styled.div`
           padding: 0 3px;
           font-size: 14px;
           font-weight: 650;
+          span {
+            color: var(--primary-background-color);
+          }
         }
         .editFont {
           color: var(--font-dark-color);

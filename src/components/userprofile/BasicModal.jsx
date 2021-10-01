@@ -48,7 +48,10 @@ export default function BasicModal({ title, btnText, handleClose, open, userData
     const handleErrorModalOpen = () => setErrorModalOpen(true);
     const handleErrorModalClose = () => {
         setErrorModalOpen(false);
-        refreshPage()
+        if (!imageUrl === "" || !coverImageUrl === "") {
+            refreshPage()
+        }
+
     }
     const [message, setMessage] = useState("")
     // const handleChange = async (e) => {

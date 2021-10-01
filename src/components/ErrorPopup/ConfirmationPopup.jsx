@@ -18,7 +18,7 @@ const style = {
     p: 4,
 };
 
-export default function ErrorModal({ message, handleErrorModalClose, errorModalOpen }) {
+export default function ConfirmationPopup({ handleErrorModalClose, errorModalOpen, setUploadConfirmation }) {
 
 
     return (
@@ -32,10 +32,14 @@ export default function ErrorModal({ message, handleErrorModalClose, errorModalO
             >
                 <Box sx={style}>
                     <div>
-                        <span>{message}</span>
+                        <span>Do you want to upload your changes?</span>
                     </div>
                     <div>
-                        <Button onClick={handleErrorModalClose} variant="contained">{message === "Image is successfully uploaded" ? "Done" : "Back"}</Button>
+                        <Button onClick={handleErrorModalClose} variant="contained">Cancel</Button>
+                        <Button onClick={() => {
+                            setUploadConfirmation(true)
+                            handleErrorModalClose()
+                        }} color="secondary" variant="contained">Yes</Button>
                     </div>
                 </Box>
             </Modal>

@@ -95,7 +95,7 @@ export const GlobalStyles = createGlobalStyle`
     color: var(--primary-color) !important;
 }
 
-/* body {
+ body {
   margin: 0;
   font-family: "Poppins", sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -107,7 +107,7 @@ export const GlobalStyles = createGlobalStyle`
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  color: var(--primary-text);
+
   font-size: 16px;
 }
 input,
@@ -117,5 +117,5 @@ textarea {
 }
 button {
   cursor: pointer;
-} */
+} 
 `

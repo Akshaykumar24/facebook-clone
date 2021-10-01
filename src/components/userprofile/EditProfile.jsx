@@ -15,6 +15,8 @@ import { getUser } from "../../redux/auth/action";
 import { useHistory } from "react-router-dom";
 
 import { updateUser } from "../../redux/auth/action";
+import ErrorModal from '../ErrorPopup/ErrorModal'
+import ConfirmationPopup from '../ErrorPopup/ConfirmationPopup'
 // import { shallowEqual, useDispatch, useSelector } from "react-redux";
 const style = {
     position: "absolute",
@@ -39,7 +41,7 @@ export default function EditProfieModal({
     refreshPage
 }) {
     const dispatch = useDispatch();
-    const history = useHistory();
+
 
     const initValues = {
         first_name: userData.first_name ? userData.first_name : "",
@@ -335,7 +337,7 @@ export default function EditProfieModal({
                                 // dispatch(getUser(userData._id));
                                 console.log(payload2, "from update");
                                 setTimeout(() => {
-                                    refreshPage()
+                                    // refreshPage()
                                     handleEditProfileClose()
                                 }, 2000)
 

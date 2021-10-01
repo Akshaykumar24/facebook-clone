@@ -44,8 +44,9 @@ grid-template-columns:1fr;
 grid-gap: 1rem;
 height: auto;
 padding: 15px;
-box-shadow: 1px 1px 13px var(--box-shadow-color);
+box-shadow: 0px 0px 4px var(--icons-gray-color);
   border-radius: 1rem;
+    background-color: var(--border-color);
 & > div:nth-child(1){
     span{
           font-size: 1.4rem;
