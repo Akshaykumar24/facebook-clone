@@ -13,9 +13,10 @@ import { AiOutlineLike } from "react-icons/ai";
 import { FaRegCommentAlt } from "react-icons/fa";
 import { RiShareForwardLine } from "react-icons/ri";
 
-const updatePost = (id, no_of_likes) => {
+const updatePost = (id, no_of_likes,liked_by) => {
   return axios.patch(`${url}/api/posts/${id}`, {
     no_of_likes,
+    liked_by
   });
 };
 const getPost = async (id) => {
@@ -25,26 +26,22 @@ const getCommentOfThisPost = (id) => {
   return axios.get(`${url}/api/posts/${id}/comments`);
 };
 
-const PostCard = ({ post }) => {
+const PostCard = ({ post ,user }) => {
+  // console.log('user:', user)
   // console.log('post:', post)
-  const { body_text, _id, no_of_likes, no_of_comments, body_photo } = post;
+  const { body_text, _id, no_of_likes, no_of_comments, body_photo,user_id,liked_by } = post;
   const [isComment, setIsComment] = useState(false);
   const [showComments, setShowComments] = useState(false);
   const [comments, setComments] = useState("");
   const [noOfLikes, setNoOfLikes] = useState(0);
   const [noOfComments, setNoOfComments] = useState(0);
-  // const [user, setUser] = useState("");
-  const [loading, setLoading] = useState(true);
+ 
+ 
 
-  // useEffect(() => {
-  //   setLoading(true);
-  //   axios.get(`${url}/api/user/615597feba43170537e9315c`).then(({ data }) => {
-  //     setUser(data.user);
-  //     console.log(user);
-  //     setLoading(false);
-  //   });
-  // }, []);
+  
   let likes = 0;
+  let likedBy = 0;
+
   useEffect(() => {
     setNoOfLikes(no_of_likes);
     setNoOfComments(no_of_comments);
@@ -54,10 +51,15 @@ const PostCard = ({ post }) => {
     getPost(_id)
       .then(({ data }) => {
         likes = data.post.no_of_likes;
+        likedBy=data.post.liked_by
+        // console.log('likedBy:get: ', likedBy)
       })
       .catch((err) => console.log(err))
       .then((resp) => {
-        updatePost(_id, likes + 1).then(({ data }) => {
+        
+        likedBy=[...likedBy,user._id]
+        // console.log('likedBy:post: ', likedBy)
+        updatePost(_id, likes + 1,likedBy).then(({ data }) => {
           likes = data.post.no_of_likes;
           setNoOfLikes(likes);
         });
@@ -73,9 +75,7 @@ const PostCard = ({ post }) => {
       setComments(commentsArr);
     });
   };
-  // if (loading) {
-  //   return <></>;
-  // }
+  
   return (
     <Box
       sx={{ backgroundColor: "#FFFFFF", padding: "0 2rem", margin: "1rem 0" }}
@@ -103,7 +103,7 @@ const PostCard = ({ post }) => {
             <Avatar sx={{ m: "0 1rem 0 0" }} alt="R" src={body_photo} />
           </Box>
           <Box>
-            <Box>Ravi Ranjan Kumar</Box>
+            <Box>{user_id.first_name} </Box>
             <Box>
               22h {/* <LanguageIcon /> */}
             </Box>
@@ -125,6 +125,7 @@ const PostCard = ({ post }) => {
           id={_id}
           noOfLikes={noOfLikes}
           noOfComments={noOfComments}
+          liked_by={liked_by}
           handleShowComments={handleShowComments}
         />
       </Box>

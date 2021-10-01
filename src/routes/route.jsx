@@ -9,6 +9,7 @@ import PhotosComp from "../components/userprofile/PhotosComp";
 import UserProfile from "../components/userprofile/UserProfile";
 import Wall from "../components/Wall/Wall";
 import NavBar from "../components/navbar/NavBar";
+import UserPage from "./UserPage";
 
 const Router = () => {
   const [menu, setMenu] = React.useState(false);
@@ -36,6 +37,9 @@ const Router = () => {
           <Intro />
           <PhotosComp />
           <FriendsCompo />
+        </Route>
+        <Route path="/user/:id">
+          <UserPage/>
         </Route>
       </Switch>
     </div>

@@ -1,16 +1,17 @@
-import React, { useRef, useState } from "react";
+import React, { useRef } from "react";
 import { Button } from "@mui/material";
 import { FcStackOfPhotos } from "react-icons/fc";
 const PhotoUploadForm = ({setBody_photo}) => {
   // const [imageUrl, setImageUrl] = useState("");
-  const [loading, setLoading] = useState("");
+  // const [loading, setLoading] = useState("");
+
   const inputRef = useRef()
   const handleChange = async (e) => {
     const files = e.target.files[0];
     const data = new FormData();
     data.append("file", files);
     data.append("upload_preset", "facebookimagedb");
-    setLoading(true);
+    // setLoading(true);
     const res = await fetch(
       "https://api.cloudinary.com/v1_1/raviimagedb/image/upload",
       { method: "POST", body: data }
@@ -18,7 +19,7 @@ const PhotoUploadForm = ({setBody_photo}) => {
     const file = await res.json();
     // setImageUrl(file.secure_url);
     setBody_photo(file.secure_url);
-    setLoading(false);
+    // setLoading(false);
   };
   const handleUpload = () => {
     inputRef.current.click()

@@ -48,6 +48,7 @@ const PostForm = ({ user }) => {
     setBodyText(value);
   };
   const writePost = (body_text, body_photo) => {
+    // console.log(user._id)
     return axios.post(`${url}/api/posts`, {
       user_id: user._id,
       body_text: body_text,

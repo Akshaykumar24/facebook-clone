@@ -45,7 +45,7 @@ const HomePageCenter = () => {
         
       });
     }, []);
-    
+
     // console.log('posts:', posts)
 
   return (
@@ -60,7 +60,7 @@ const HomePageCenter = () => {
           ? "Some errors"
           : posts.map((post) => {
               
-              return <PostCard key={post._id} post={post} />;
+              return <PostCard key={post._id} user={user} post={post} />;
             })}
       </PostsContainer>
     </Wrapper>
