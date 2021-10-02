@@ -38,17 +38,17 @@ const PostStat = ({
   const handleClose = () => setOpen(false);
   const [likers, setLikers] = useState([]);
 
-  // useEffect(() => {
-  //   liked_by.forEach((id) => {
-  //     console.log("id of liked:", id);
-  //     axios.get(`${url}/api/user/${id}`).then(({ data }) => {
+  useEffect(() => {
+    liked_by.forEach((id) => {
+      // console.log("id of liked:", id);
+      axios.get(`${url}/api/user/${id}`).then(({ data }) => {
 
-  //       setLikers((prev) => {
-  //         return [...prev, data.user];
-  //       });
-  //     });
-  //   });
-  // }, [liked_by]);
+        setLikers((prev) => {
+          return [...prev, data.user];
+        });
+      });
+    });
+  }, [liked_by]);
 
 
 
