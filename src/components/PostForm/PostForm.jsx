@@ -14,15 +14,28 @@ import { BsPersonPlusFill } from "react-icons/bs";
 import { FaTimes } from "react-icons/fa";
 // import { getData } from "../../utils/localStorage";
 const modalStyle = {
+  // position: "absolute",
+  // top: "50%",
+  // left: "50%",
+  // transform: "translate(-50%, -10%)",
+  // width: '500px',
+  // maxHeight:'80vh',
+  // bgcolor: "background.paper",
+  // // border: "2px solid #df1313",
+  // boxShadow: 24,
+  // p: "2rem 1.5rem",
+  // overflowY: "scroll"
   position: "absolute",
-  top: "50%",
+  top: '50% !important',
   left: "50%",
-  transform: "translate(-50%, -10%)",
-  width: '500px',
+  transform: "translate(-50%, -50%)",
+  width: "30rem",
   bgcolor: "background.paper",
-  // border: "2px solid #df1313",
-  boxShadow: 24,
-  p: "2rem 1.5rem",
+  borderRadius: " 0.9rem",
+  boxShadow: `0px 0px 10px var(--font-light-color)`,
+  maxHeight: "35rem",
+  overflowY: "scroll",
+
 };
 
 const PostForm = ({ user }) => {

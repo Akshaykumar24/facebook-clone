@@ -40,7 +40,7 @@ const PostStat = ({
   
   useEffect(() => {
     liked_by.forEach((id) => {
-      console.log("id of liked:", id);
+      // console.log("id of liked:", id);
       axios.get(`${url}/api/user/${id}`).then(({ data }) => {
         
         setLikers((prev) => {
