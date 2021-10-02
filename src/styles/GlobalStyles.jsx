@@ -67,7 +67,7 @@ export const GlobalStyles = createGlobalStyle`
   --supplementary-3: rgb(218, 218, 218);
   --supplementary-4: rgb(50, 52, 54);
 
-  --shadow-1: rgba(0, 0, 0, 0.1);
+  --shadow-1: rgba(104, 60, 60, 0.1);
   --shadow-2: rgba(0, 0, 0, 0.2);
   --shadow-5: rgba(0, 0, 0, 0.5);
   --shadow-7: rgba(0, 0, 0, 0.7);

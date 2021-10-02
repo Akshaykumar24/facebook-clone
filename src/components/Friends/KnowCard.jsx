@@ -3,8 +3,17 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { url } from "../../utils/url";
 
-const KnowCard = ({ p, id, update, data }) => {
+const KnowCard = ({ p, id, update, data, socket }) => {
   const [sent, setSent] = useState(false);
+
+  /*
+const recieverId = currentChat?.members.find((m) => m !== user._id);
+    socket.current.emit("sendMessage", {
+      senderId: id,
+      recieverId:p._id,
+      text: Sent Friende Request,
+    });
+*/
 
   const sendReq = async () => {
     await axios
@@ -17,6 +26,13 @@ const KnowCard = ({ p, id, update, data }) => {
           update(data, p._id);
           setSent(false);
         }, 1000)
+      )
+      .then(
+        socket.current.emit("sendNotification", {
+          senderId: id,
+          recieverId: p._id,
+          text: "Sent Friend Request",
+        })
       );
   };
   const remove = () => {
@@ -67,7 +83,7 @@ const KnowCard = ({ p, id, update, data }) => {
 export default KnowCard;
 
 const Known = styled.div`
-  max-width: 250px;
+  max-width: 220px;
   min-width: 200px;
   /* height: 350px; */
   display: flex;
@@ -81,6 +97,10 @@ const Known = styled.div`
     padding: 12px 12px 24px;
     margin: 0;
     font-size: 18px;
+  }
+  > img {
+    height: 200px;
+    object-fit: contain;
   }
   > button {
     width: 90%;
@@ -96,7 +116,7 @@ const Known = styled.div`
     color: rgb(74, 126, 230);
   }
   > :nth-child(3):hover {
-    background-color: rgb(219, 231, 242);
+    opacity: 0.75;
   }
   > :nth-child(4):hover {
     background-color: rgb(216, 218, 223);
