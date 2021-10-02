@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { url } from "../../utils/url";
+import { getData } from "../../utils/localStorage";
 import PostCard from "../PostCard/PostCard";
 import PostForm from "../PostForm/PostForm";
 import {
@@ -12,10 +14,21 @@ const HomePageCenter = () => {
   const [posts, setPosts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isError, setIsError] = useState(false);
-
+  const [user, setUser] = useState("");
   const getPosts = () => {
     return axios.get("http://localhost:2424/api/posts");
   };
+
+  useEffect(() => {
+    let res = getData('userId')
+      //  console.log('res:', res)
+       axios.get(`${url}/api/user/${res}`).then(({data})=>{
+        
+         setUser(data.user)
+       })
+     
+   }, []);
+
 
   useEffect(() => {
     setIsLoading(true);
@@ -32,12 +45,13 @@ const HomePageCenter = () => {
         
       });
     }, []);
+
     // console.log('posts:', posts)
 
   return (
     <Wrapper>
    <FormContainer>
-        <PostForm />
+        <PostForm user={user}/>
       </FormContainer> 
        <PostsContainer>
         {isLoading
@@ -46,7 +60,7 @@ const HomePageCenter = () => {
           ? "Some errors"
           : posts.map((post) => {
               
-              return <PostCard key={post._id} post={post} />;
+              return <PostCard key={post._id} user={user} post={post} />;
             })}
       </PostsContainer>
     </Wrapper>

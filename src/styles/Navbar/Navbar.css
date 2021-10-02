@@ -1,0 +1,436 @@
+.navBarContainer {
+  position: fixed;
+  top: 0;
+  height: 50px;
+  width: 100vw;
+  background-color: var(--primary-background);
+  box-shadow: 0px 0px 5px var(--shadow-2);
+  justify-content: space-between;
+  padding: 5px 10px;
+  z-index: 999;
+  border-bottom: 1px solid var(--shadow-1);
+}
+
+.flexBox {
+  display: flex;
+  justify-content: space-between;
+}
+.navBarLogo .main-logoIcon {
+  height: 40px;
+  margin-right: 8px;
+  cursor: pointer;
+  margin-left: 10px;
+}
+.mainLogoLetter {
+  fill: var(--white);
+}
+.navBarSearchBox .searchIcon {
+  fill: var(--secondary-icon);
+  width: 20px;
+  height: 30px;
+}
+.navBarSearchBox {
+  background-color: var(--secondary-background-1);
+  width: 19vw;
+  padding: 4px 10px;
+  border-radius: 50px;
+  text-align: left;
+}
+.mainSearchIconResponse {
+  display: none;
+}
+
+.navBarSearchBox > input {
+  padding: 5px;
+  background-color: transparent;
+  border: none;
+  margin-right: 50px;
+}
+.navBarSearchBox > input::placeholder {
+  font-size: 14px;
+}
+.navBarMenu {
+  margin: 4px;
+  cursor: pointer;
+  border-radius: 5px;
+  display: none;
+}
+.navBarMainHeader {
+  height: 100%;
+  width: 30%;
+}
+.navBarMainHeader svg {
+  fill: var(--secondary-icon);
+  width: 30px;
+  height: 100%;
+}
+.navBarMainHeader .active svg {
+  fill: var(--primary-1);
+}
+.navBarMainHeader .active {
+  border-bottom: 3px solid var(--primary-1);
+  height: 100%;
+  width: 30%;
+  cursor: pointer;
+  position: relative;
+}
+
+.navBarUserBox {
+  width: 300px;
+}
+.navBarUserBox .iconWrapper-2 > svg {
+  padding: 10px;
+
+  width: 40px;
+  height: 40px;
+  background-color: var(--background-gray-color);
+  border-radius: 50%;
+}
+.navBarUserBox .iconWrapper-2 > svg:hover {
+  background-color: var(--hover-overlay-2);
+}
+.userProfileCard {
+  cursor: pointer;
+  border-radius: 150px;
+}
+.userProfileCard:hover {
+  background-color: var(--hover-overlay);
+}
+.userProfileCard img {
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  margin: 3px 5px;
+  object-fit: cover;
+}
+.userProfileCard p {
+  font-size: 14px;
+  font-weight: 500;
+  margin: 3px 10px;
+  margin-left: 0;
+  padding-top: 7px;
+  font-weight: bold;
+}
+.accountMenuContainer,
+.notificationsContainer {
+  position: absolute;
+  min-width: 330px;
+  margin-right: 15px;
+  width: 15vw;
+  top: 50px;
+  right: 0;
+  background-color: var(--primary-background);
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px var(--shadow-1), 0 8px 18px var(--shadow-2);
+  z-index: 1;
+}
+.notificationsContainer {
+  right: 0px;
+}
+.accountMenuContainer hr {
+  border-color: var(--shadow-1);
+}
+.accountMenuContainer::after,
+.notificationsContainer::after {
+  content: "";
+  width: 15px;
+  height: 15px;
+  position: absolute;
+  top: -5px;
+  right: 12px;
+  background-color: var(--primary-background);
+  transform: rotate(45deg);
+}
+.notificationsContainer::after {
+  right: 62px;
+}
+.darkModeBox,
+.accessibilityBox {
+  justify-content: flex-start;
+  padding: 5px 10px;
+  border-radius: 8px;
+  margin: 5px;
+}
+.darkModeBox > p {
+  padding-top: 8px;
+}
+.accessibilityBox > p {
+  padding-top: 8px;
+}
+.darkModeBox:hover,
+.accessibilityBox:hover {
+  background-color: var(--hover-overlay);
+}
+.darkModeBox .darkModeIcon {
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  background-color: var(--shadow-1);
+  margin-right: 10px;
+}
+.accessibilityBox .alertIcon {
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  background-color: var(--shadow-1);
+  margin-right: 10px;
+  stroke: none !important;
+}
+/* .themeButton,
+.accessibilityButton {
+  fill: var(--primary-1);
+  width: 40px;
+  height: 20px;
+  border-radius: 500px;
+  background-color: var(--secondary-background-1);
+  margin: 0 15px;
+  border: 1px solid teal;
+} */
+.themeButtonBubble,
+.accessibilityButtonBubble {
+  background-color: var(--supplementary-3);
+  height: 18px;
+  width: 18px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+.AccountMenuUserProfileCard {
+  justify-content: flex-start;
+  padding: 5px 10px;
+  border-radius: 8px;
+  margin: 5px;
+}
+.AccountMenuUserProfileCard:hover {
+  background-color: var(--hover-overlay);
+}
+.AccountMenuUserProfileCard img {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  margin-right: 15px;
+  object-fit: cover;
+}
+.AccountMenuUserProfileCard p {
+  font-size: 16px;
+  text-align: left;
+}
+small {
+  font-size: 12px;
+  text-align: left;
+  color: var(--secondary-text);
+}
+.logoutIconWrap {
+  padding: 5px;
+  border-radius: 50%;
+  width: 35px;
+  height: 35px;
+  background-color: var(--shadow-1);
+  margin-right: 10px;
+}
+.logOutBox svg {
+  width: 30px;
+  height: 30px;
+}
+.notificationsHeader {
+  justify-content: space-between;
+  margin: 10px;
+}
+.notificationsHeader h1 {
+  font-size: 20px;
+  font-weight: 600;
+}
+.notificationsHeader svg {
+  fill: var(--secondary-icon);
+}
+.notificationAuthorImage {
+  position: relative;
+  margin: 10px;
+}
+.notificationAuthorImage img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+.notificationAuthorImage svg,
+.notificationAuthorImage .imageIcon {
+  position: absolute;
+  bottom: 0px;
+  right: -5px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+}
+.tagIconWrap svg {
+  width: 12px;
+  height: 12px;
+}
+.notificationAuthorImage .likeIcon {
+  fill: var(--primary-1);
+}
+.notificationsBox {
+  flex-direction: column;
+  align-items: flex-start;
+  max-height: 60vh;
+  justify-content: flex-start;
+}
+.notificationDetails {
+  text-align: left;
+}
+.notificationCardBox {
+  margin: 5px;
+  border-radius: 8px;
+  width: 250px;
+  justify-content: flex-start;
+  position: relative;
+}
+.notificationCardBox:hover {
+  background-color: var(--hover-overlay);
+}
+.notificationDetails h5 {
+  font-size: 12px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  max-width: 180px;
+}
+.notificationDetails h5 span {
+  font-size: 12px;
+  font-weight: 300;
+}
+.notificationDetails small {
+  font-size: 12px;
+  font-weight: 300;
+}
+.notificationDetails p {
+  font-size: 12px;
+  color: var(--primary-1);
+}
+.notificationMenuBox {
+  position: relative;
+}
+.notificationMenuBox .dotsIcon {
+  border-radius: 50%;
+  width: 25px;
+  height: 25px;
+}
+.notificationMenuBox .dotsIcon:hover {
+  background-color: var(--secondary-background-1);
+}
+.notificationMenu {
+  position: absolute;
+  top: 23px;
+  right: -30px;
+  min-width: 300px;
+  background-color: var(--primary-background);
+  z-index: 3333;
+  border: 1px solid var(--shadow-1);
+  border-radius: 8px;
+  padding: 10px;
+  box-shadow: 0px 0px 5px var(--shadow-2);
+}
+.notificationMenu::after {
+  content: "";
+  width: 10px;
+  height: 10px;
+  position: absolute;
+  border-left: 1px solid var(--shadow-1);
+  border-top: 1px solid var(--shadow-1);
+  top: -7px;
+  right: 35px;
+  background-color: var(--primary-background);
+  transform: rotate(45deg);
+}
+.notificationMenuOption {
+  justify-content: flex-start;
+  padding: 5px 10px;
+  border-radius: 8px;
+  width: 90%;
+}
+.notificationMenuOption:hover {
+  background-color: var(--hover-overlay);
+}
+.notificationMenu svg {
+  fill: var(--primary-icon);
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  margin: 0 5px;
+}
+.notificationMenu .closeIcon {
+  stroke: var(--primary-icon);
+  border: 1px solid var(--primary-icon);
+}
+.noNotifications {
+  margin-left: 10px;
+}
+@media only screen and (max-width: 992px) {
+  .navBarSearchBoxInput,
+  .userProfileCard {
+    display: none;
+  }
+  .navBarSearchBox {
+    cursor: pointer;
+    width: 40px;
+  }
+  .mainSearchIconResponse,
+  .navBarMenu {
+    display: flex;
+  }
+}
+
+/* searchResultContainer */
+
+.searchResultContainer {
+  position: absolute;
+  padding: 10px;
+  background-color: var(--primary-background);
+  border: 1px solid var(--shadow-1);
+  top: calc(var(--navBar-height) - 1px);
+  left: 0;
+  border-radius: 0 0 8px 8px;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  min-width: 300px;
+  box-shadow: 2px 5px 5px var(--shadow-1);
+  border-top: none;
+  max-height: 60vh;
+}
+.searchResultCard {
+  padding: 5px 10px;
+  padding-left: 0;
+  border-radius: 8px;
+  margin: 5px 0;
+  cursor: pointer;
+  width: 100%;
+  justify-content: flex-start;
+}
+.searchResultCard:hover {
+  background-color: var(--hover-overlay);
+}
+.searchResultCard img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin: 0 10px;
+}
+.searchResultCardUserDetails {
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+.searchResultCardUserDetails small {
+  font-size: 12px;
+  color: var(--secondary-text);
+}
+.emptyResult {
+  padding: 10px;
+}
+@media only screen and (max-width: 768px) {
+  .navBarMainHeader {
+    display: none;
+  }
+}
