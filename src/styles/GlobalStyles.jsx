@@ -205,6 +205,8 @@ export const GlobalStyles = createGlobalStyle`
 } */
 
 //for bottom border of profile page menu
+
+
 .menuBorder-bottom{
     border-bottom:4px solid var(--primary-color);
     color: var(--primary-color) !important;

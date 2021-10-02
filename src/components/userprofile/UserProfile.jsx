@@ -17,10 +17,13 @@ import EmojiMart from "../EmojiMart/EmojiMart";
 import { MainPostLayout } from "../../styles/layouts";
 import AboutCompo from "./AboutCompo";
 import AllFriendsCompo from "./AllFriendsCompo";
+import TextField from "@mui/material/TextField";
 import AllPhotosCompo from "./AllPhotosCompo";
+import { updateUser } from "../../redux/auth/action";
+import { useDispatch } from 'react-redux'
 function UserProfile() {
 
-
+  const dispatch = useDispatch();
 
   // console.log(user)
   const [posts, setPosts] = useState(true);
@@ -29,6 +32,9 @@ function UserProfile() {
   const [about, setAbout] = useState(false);
   const [title, setTitle] = useState("");
   const [btnText, setBtnText] = useState("");
+  const [editBio, setEditBio] = useState(false);
+
+
   const refreshPage = () => {
     window.location.reload();
   };
@@ -69,7 +75,17 @@ function UserProfile() {
       ? getData("userData").user
       : getData("userData").userOnline
   );
+  const [bio, setBio] = useState(userData.bio)
+  const [remainingChar, setRemainingChar] = useState(100 - userData.bio.length)
+  const handleBioChange = (e) => {
+    setBio(e.target.value)
+    setRemainingChar(100 - e.target.value.length)
+  }
+  const handleEditBio = () => {
+    setEditBio(!editBio)
+    setBio(userData.bio)
 
+  }
   // async function getusersData(id) {
   //   await axios.get(`http://localhost:2424/api/user/${id}`).then(({ data }) => {
   //     handleUserDataContext(data)
@@ -77,7 +93,13 @@ function UserProfile() {
   // }
   // getusersData(id)
 
+  const handleUpdateBio = () => {
+    dispatch(updateUser({ "bio": bio }, userData._id))
+    setTimeout(() => {
+      refreshPage()
+    }, 1000)
 
+  }
   const [open, setOpen] = useState(false);
   const handleCoverPhotoModalOpen = () => {
     setTitle("Edit Cover Photo");
@@ -184,12 +206,40 @@ function UserProfile() {
             <div className="Bio">
               <div>
                 <h1>{userData.first_name + " " + userData.last_name}</h1>
-                <div>
-                  <p>You have to be odd to be number one</p>
-                  <p>Commited with life</p>
-                  <p>Dreamer,quick learner,proud son</p>
-                  <span className="editBio">Edit</span>
-                </div>
+                {editBio ? <EditBioStyled>
+                  <div>
+                    <TextField
+                      id="outlined-multiline-flexible"
+
+                      multiline
+                      minRows={2}
+                      maxRows={2}
+                      maxLength={4}
+                      fullWidth
+                      value={bio}
+                      onChange={handleBioChange}
+                      defaultValue={bio}
+                      inputProps={{
+                        maxLength: 100
+                      }}
+                    />
+
+                  </div>
+                  <div><span>{remainingChar} Characters remaining</span></div>
+                  <div>
+                    <div></div>
+                    <div>
+                      <button onClick={handleEditBio} >Cancel</button>
+                    </div>
+                    <div>
+                      <button onClick={handleUpdateBio}>Save</button>
+                    </div>
+                  </div>
+                </EditBioStyled> : <div>
+                  <p>{userData.bio}</p>
+                  <span onClick={handleEditBio} className="editBio">Edit</span>
+                </div>}
+
               </div>
             </div>
             <div className="profileMenuItems">
@@ -227,6 +277,7 @@ function UserProfile() {
                   className="menuflex editFont"
                 >
                   <EditIcon /> <span>Edit Profile</span>
+
                 </div>
               </div>
               <div className="menu">
@@ -267,6 +318,59 @@ function UserProfile() {
     </UserProfileStyles>
   );
 }
+
+
+const EditBioStyled = styled.div`
+
+
+display: grid;
+  
+    justify-content: center;
+    align-items: center;
+&>div:nth-child(1){
+      width: 20rem;
+    height: 4rem;
+
+}
+&>div:nth-child(2){
+height: 1.2rem;
+    text-align: end;
+    margin-top: 6px;
+    span{
+      font-size: 11px !important;
+      color: var(--font-light-color) !important;
+      :hover{
+        text-decoration:none !important;
+      }
+    }
+
+}
+&>div:nth-child(3){
+    height: 2.7rem;
+    grid-template: 1fr 1fr;
+    display: grid;
+    grid-template-columns: 3fr 1fr 1fr;
+    grid-gap: 1rem;
+    margin-top: 2px;
+    &>div{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      button{
+     height: 2rem;
+    padding: 5px;
+    border: none;
+    background-color: var(--background-gray-color);
+    :hover{
+      background-color: var(--hover-effect)
+    }
+
+      }
+    }
+}
+
+
+`
 const PostCompoSyled = styled.div`
 display: flex;
 margin-top:1rem;
@@ -285,7 +389,7 @@ margin-top:1rem;
 const UserProfileStyles = styled.div`
   .mainProfile {
     width: 100%;
-    height: 36.3125rem;
+    height: 37.3125rem;
     box-shadow: 0px -1px 9px var(--font-dark-color);
     background-color: var(--primary-background-color);
     .profilePhotos {
@@ -365,7 +469,7 @@ const UserProfileStyles = styled.div`
 
       .Bio {
         width: inherit;
-        height: 11.2rem;
+        height: 12.2rem;
 
         flex-basis: 60%;
         & > div {
@@ -377,10 +481,17 @@ const UserProfileStyles = styled.div`
             font-size: 2em;
           }
           & > div {
-            line-height: 25px;
-            margin-top: 0px;
-            font-size: 1.1rem;
-            color: var(--font-light-color);
+               line-height: 25px;
+    margin-top: 0px;
+    font-size: 1.1rem;
+    color: var(--font-light-color);
+    display: grid;
+    justify-content: center;
+            p{
+              min-height: 6rem;
+              width: 22rem;
+              word-wrap: break-word;
+            }
             span {
               color: var(--primary-color);
               font-size: 0.9rem;
@@ -401,7 +512,7 @@ const UserProfileStyles = styled.div`
 
         height: 3.4rem;
 
-        column-gap: 6px;
+        column-gap: 11px;
 
         align-items: center;
         .specialC {

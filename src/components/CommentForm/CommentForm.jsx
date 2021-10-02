@@ -23,7 +23,7 @@ const getPost = async (id) => {
   return axios.get(`${url}/api/posts/${id}`);
 };
 
-const CommentForm = ({ post_id }) => {
+const CommentForm = ({ post_id,setComments }) => {
   const [body, setBody] = useState("Write a comment...");
   const handleChange = (e) => {
     setBody(e.target.value);
@@ -42,7 +42,8 @@ const CommentForm = ({ post_id }) => {
       .then((resp) => {
         updatePost(post_id, comments + 1).then(({ data }) => {
           comments = data.post.no_of_comments;
-        });
+          
+        })
       });
   };
   return (

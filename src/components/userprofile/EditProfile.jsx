@@ -183,6 +183,9 @@ export default function EditProfieModal({
                             multiline
                             rows={4}
                             name="bio"
+                            inputProps={{
+                                maxLength: 100
+                            }}
                             defaultValue={userData.bio}
                             onChange={handleChange}
                             key={uuidv4()}
