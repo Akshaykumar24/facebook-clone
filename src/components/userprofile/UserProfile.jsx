@@ -14,7 +14,10 @@ import PhotosComp from "./PhotosComp";
 import FriendsCompo from "./FriendsCompo";
 import { getData } from "../../utils/localStorage";
 import EmojiMart from "../EmojiMart/EmojiMart";
-
+import { MainPostLayout } from "../../styles/layouts";
+import AboutCompo from "./AboutCompo";
+import AllFriendsCompo from "./AllFriendsCompo";
+import AllPhotosCompo from "./AllPhotosCompo";
 function UserProfile() {
 
 
@@ -23,7 +26,7 @@ function UserProfile() {
   const [posts, setPosts] = useState(true);
   const [friends, setFriends] = useState(false);
   const [photos, setPhotos] = useState(false);
-
+  const [about, setAbout] = useState(false);
   const [title, setTitle] = useState("");
   const [btnText, setBtnText] = useState("");
   const refreshPage = () => {
@@ -87,19 +90,38 @@ function UserProfile() {
     setOpen(true);
   };
   const handlePhotoModalClose = () => setOpen(false);
-
+  const handleSeeAllfriends = () => {
+    setFriends(true);
+    setPosts(false);
+    setAbout(false)
+    setPhotos(false);
+  }
+  const handleSeeAllPhotos = () => {
+    setPhotos(true);
+    setFriends(false);
+    setPosts(false);
+    setAbout(false)
+  }
   const handleProfilesMenu = (e) => {
     if (e.target.textContent === "Posts") {
       setPosts(true);
       setPhotos(false);
+      setAbout(false)
       setFriends(false);
     } else if (e.target.textContent === "Friends") {
       setFriends(true);
       setPosts(false);
+      setAbout(false)
       setPhotos(false);
     } else if (e.target.textContent === "Photos") {
       setPhotos(true);
       setFriends(false);
+      setPosts(false);
+      setAbout(false)
+    } else if (e.target.textContent === "About") {
+      setPhotos(false);
+      setFriends(false);
+      setAbout(true)
       setPosts(false);
     }
   };
@@ -177,7 +199,7 @@ function UserProfile() {
               >
                 Posts
               </div>
-              <div onClick={handleProfilesMenu}>About</div>
+              <div className={`${about ? "menuBorder-bottom" : ""}`} onClick={handleProfilesMenu}>About</div>
               <div
                 className={`${friends ? "menuBorder-bottom" : ""}`}
                 onClick={handleProfilesMenu}
@@ -216,23 +238,49 @@ function UserProfile() {
           </div>
         </MainLayout>
       </div>
-      <Intro
-        work1={userData.work1}
-        work2={userData.work2}
-        education1={userData.education1}
-        education2={userData.education2}
-        livesIn={userData.city1}
-        from={userData.city2}
-        joined={userData.createdAt}
-        followedBy={userData.friendRequestRecieved.length}
-        handleEditProfileOpen={handleEditProfileOpen}
-      />
-      <PhotosComp />
-      <FriendsCompo friends={userData.friends} userData={userData} />
+      <MainPostLayout>
+        {posts ? <PostCompoSyled>
+          <div>
+            <Intro
+              work1={userData.work1}
+              work2={userData.work2}
+              education1={userData.education1}
+              education2={userData.education2}
+              livesIn={userData.city1}
+              from={userData.city2}
+              joined={userData.createdAt}
+              followedBy={userData.friendRequestRecieved.length}
+              handleEditProfileOpen={handleEditProfileOpen}
+            />
+            <PhotosComp handleSeeAllPhotos={handleSeeAllPhotos} />
+            <FriendsCompo handleSeeAllfriends={handleSeeAllfriends} friends={userData.friends} userData={userData} />
+          </div>
+          <div>
+
+          </div>
+        </PostCompoSyled> : ""}
+        {about ? <AboutCompo handleEditProfileOpen={handleEditProfileOpen} /> : ""}
+        {friends ? <AllFriendsCompo /> : ""}
+        {photos ? <AllPhotosCompo /> : ""}
+      </MainPostLayout>
       {/* <EmojiMart /> */}
     </UserProfileStyles>
   );
 }
+const PostCompoSyled = styled.div`
+display: flex;
+margin-top:1rem;
+&>div:nth-child(1){
+  display: flex;
+  flex-direction: column;
+  row-gap: 1rem;
+}
+
+
+
+
+
+`
 
 const UserProfileStyles = styled.div`
   .mainProfile {

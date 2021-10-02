@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-function PhotosComp() {
+function PhotosComp({ handleSeeAllPhotos }) {
   const photosData = [
     "https://scontent.fpnq7-4.fna.fbcdn.net/v/t1.6435-9/35799287_2073684202954764_7545216993050230784_n.jpg?_nc_cat=111&ccb=1-5&_nc_sid=174925&_nc_ohc=_hZCbwLIc6wAX9Gebht&_nc_ht=scontent.fpnq7-4.fna&oh=f56970935bc300864b0c21ee0de0ea95&oe=61791D41",
     "https://scontent.fpnq7-1.fna.fbcdn.net/v/t1.6435-9/32368897_2037243136515560_6592291929071812608_n.jpg?_nc_cat=109&ccb=1-5&_nc_sid=19026a&_nc_ohc=0aVwZHV9O0AAX-rnVH0&_nc_ht=scontent.fpnq7-1.fna&oh=820f7fe731575d81a96080e7d0a23929&oe=617A3B05",
@@ -16,7 +16,7 @@ function PhotosComp() {
     <PhotosCompStyles>
       <div className="linksForPhotos">
         <span>Photos</span>
-        <div>See All Photos</div>
+        <div onClick={handleSeeAllPhotos}>See All Photos</div>
       </div>
       <div className="photosGrid">
         {photosData.map((el) => {

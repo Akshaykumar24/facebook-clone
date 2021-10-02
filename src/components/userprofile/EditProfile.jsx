@@ -337,7 +337,7 @@ export default function EditProfieModal({
                                 // dispatch(getUser(userData._id));
                                 console.log(payload2, "from update");
                                 setTimeout(() => {
-                                    // refreshPage()
+                                    refreshPage()
                                     handleEditProfileClose()
                                 }, 2000)
 

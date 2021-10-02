@@ -47,10 +47,11 @@ export default function BasicModal({ title, btnText, handleClose, open, userData
     const [imageLoading, setImageLoading] = useState(false);
     const handleErrorModalOpen = () => setErrorModalOpen(true);
     const handleErrorModalClose = () => {
-        setErrorModalOpen(false);
         if (!imageUrl === "" || !coverImageUrl === "") {
             refreshPage()
         }
+
+        setErrorModalOpen(false);
 
     }
     const [message, setMessage] = useState("")

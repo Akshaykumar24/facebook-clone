@@ -27,7 +27,7 @@ export const GlobalStyles = createGlobalStyle`
   --secondary-3: rgb(219, 26, 139);
   --secondary-4: #42b72a;
   --secondary-5: #32af19;
-  --secondary-6: #146fe7;
+  --secondary-6: #3869aa;
 
   --primary-background: #fff;
   --secondary-background-1: #f0f2f5;

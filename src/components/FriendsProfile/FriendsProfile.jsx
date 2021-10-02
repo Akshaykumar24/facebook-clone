@@ -2,172 +2,190 @@ import React from "react";
 import styled from "styled-components";
 import { MainLayout } from "../../styles/layouts";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
-
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import { useState, useEffect } from "react";
-import ChatIcon from '@mui/icons-material/Chat';
+import ChatIcon from "@mui/icons-material/Chat";
 import Intro from "./Intro";
 import PhotosComp from "./PhotosComp";
+import DoneAllIcon from "@mui/icons-material/DoneAll";
 import FriendsCompo from "./FriendsCompo";
 // import PhotosComp from "../userprofile/PhotosComp";
 // import FriendsCompo from "../userprofile/FriendsCompo";
-import axios from 'axios'
 // import Intro from "./Intro";
 // import PhotosComp from "./PhotosComp";
 // import FriendsCompo from "./FriendsCompo";
-import { useParams } from 'react-router-dom'
+import { useParams } from "react-router-dom";
 import { getData } from "../../utils/localStorage";
-
+import { MainPostLayout } from "../../styles/layouts";
+import AboutCompo from "./AboutCompo";
+import AllFriendsCompo from "./AllFriendsCompo";
+import AllPhotosCompo from "./AllPhotosCompo";
 function FriendsProfile() {
+  const { id } = useParams();
+  console.log(id);
 
-    const { id } = useParams()
-    console.log(id)
+  // console.log(user)
+  const [posts, setPosts] = useState(true);
+  const [friends, setFriends] = useState(false);
+  const [photos, setPhotos] = useState(false);
+  const [about, setAbout] = useState(false);
+  const refreshPage = () => {
+    window.location.reload();
+  };
 
-    // console.log(user)
-    const [posts, setPosts] = useState(true);
-    const [friends, setFriends] = useState(false);
-    const [photos, setPhotos] = useState(false);
-    const refreshPage = () => {
-        window.location.reload();
-    };
+  const defaultUserPic = {
+    coverPic:
+      "https://th.bing.com/th/id/R.b60ebb76818e10a1ffeb1d76ef807568?rik=BfJWM%2bFjq3YsSA&riu=http%3a%2f%2fthewowstyle.com%2fwp-content%2fuploads%2f2015%2f01%2fFacebook-Covers-004.jpg&ehk=QyHMcIYCHj1%2bqMrmjGWLcUOKe7Zi8kTKnVJ2G1zuQqA%3d&risl=&pid=ImgRaw&r=0",
+    profilePic:
+      "https://th.bing.com/th/id/R.56fa805242ca705c112c21e9142391c6?rik=0FGHjmAsLgoKhQ&riu=http%3a%2f%2fsguru.org%2fwp-content%2fuploads%2f2017%2f04%2fattitude-boys-profile-pics-for-Facebook-20.jpg&ehk=A%2bCtAIdAM172Ttozp8O2Yieal74Rvzj2O%2fHwjJnGrkQ%3d&risl=&pid=ImgRaw&r=0",
+  };
 
+  const [userData, setUserData] = useState(
+    getData("frndData").user
+      ? getData("frndData").user
+      : getData("frndData").userOnline
+  );
+  const handleSeeAllfriends = () => {
+    setFriends(true);
+    setPosts(false);
+    setAbout(false)
+    setPhotos(false);
+  }
+  const handleSeeAllPhotos = () => {
+    setPhotos(true);
+    setFriends(false);
+    setPosts(false);
+    setAbout(false)
+  }
+  const handleProfilesMenu = (e) => {
+    if (e.target.textContent === "Posts") {
+      setPosts(true);
+      setPhotos(false);
+      setAbout(false)
+      setFriends(false);
+    } else if (e.target.textContent === "Friends") {
+      setFriends(true);
+      setPosts(false);
+      setAbout(false)
+      setPhotos(false);
+    } else if (e.target.textContent === "Photos") {
+      setPhotos(true);
+      setFriends(false);
+      setPosts(false);
+      setAbout(false)
+    } else if (e.target.textContent === "About") {
+      setPhotos(false);
+      setFriends(false);
+      setAbout(true)
+      setPosts(false);
+    }
+  };
 
-
-    const defaultUserPic = {
-        coverPic:
-            "https://th.bing.com/th/id/R.b60ebb76818e10a1ffeb1d76ef807568?rik=BfJWM%2bFjq3YsSA&riu=http%3a%2f%2fthewowstyle.com%2fwp-content%2fuploads%2f2015%2f01%2fFacebook-Covers-004.jpg&ehk=QyHMcIYCHj1%2bqMrmjGWLcUOKe7Zi8kTKnVJ2G1zuQqA%3d&risl=&pid=ImgRaw&r=0",
-        profilePic:
-            "https://th.bing.com/th/id/R.56fa805242ca705c112c21e9142391c6?rik=0FGHjmAsLgoKhQ&riu=http%3a%2f%2fsguru.org%2fwp-content%2fuploads%2f2017%2f04%2fattitude-boys-profile-pics-for-Facebook-20.jpg&ehk=A%2bCtAIdAM172Ttozp8O2Yieal74Rvzj2O%2fHwjJnGrkQ%3d&risl=&pid=ImgRaw&r=0",
-    };
-
-
-    const [userData, setUserData] = useState(
-        getData("frndData").user
-            ? getData("frndData").user
-            : getData("frndData").userOnline
-    );
-
-
-
-
-    const handleProfilesMenu = (e) => {
-        if (e.target.textContent === "Posts") {
-            setPosts(true);
-            setPhotos(false);
-            setFriends(false);
-        } else if (e.target.textContent === "Friends") {
-            setFriends(true);
-            setPosts(false);
-            setPhotos(false);
-        } else if (e.target.textContent === "Photos") {
-            setPhotos(true);
-            setFriends(false);
-            setPosts(false);
-        }
-    };
-
-    return (
-        <UserProfileStyles>
-            <div className="mainProfile">
-                <MainLayout>
-                    <div className="profilePhotos">
-                        <div className="coverPhoto">
-                            <img
-                                src={
-                                    userData?.cover ? userData?.cover : defaultUserPic.coverPic
-                                }
-                                alt="coverPhoto"
-                            />
-
-                        </div>
-                        <div className="avatar">
-                            <img
-                                src={
-                                    userData.profile === undefined
-                                        ? defaultUserPic.profilePic
-                                        : userData.profile
-                                }
-                                alt="profilePhoto"
-                            />
-
-                        </div>
-                    </div>
-
-
-
-                    <div className="profileBio">
-                        <div className="Bio">
-                            <div>
-                                <h1>{userData.first_name + " " + userData.last_name}</h1>
-                                <div>
-                                    <p>You have to be odd to be number one</p>
-                                    <p>Commited with life</p>
-                                    <p>Dreamer,quick learner,proud son</p>
-
-                                </div>
-                            </div>
-                        </div>
-                        <div className="profileMenuItems">
-                            <div
-                                className={`${posts ? "menuBorder-bottom" : ""}`}
-                                onClick={handleProfilesMenu}
-                            >
-                                Posts
-                            </div>
-                            <div onClick={handleProfilesMenu}>About</div>
-                            <div
-                                className={`${friends ? "menuBorder-bottom" : ""}`}
-                                onClick={handleProfilesMenu}
-                            >
-                                Friends
-                            </div>
-                            <div
-                                className={`${photos ? "menuBorder-bottom" : ""}`}
-                                onClick={handleProfilesMenu}
-                            >
-                                Photos
-                            </div>
-                            <div>Stories Archive</div>
-                            <div>
-                                <span>More</span> <ArrowDropDownIcon />
-                            </div>
-                            <div className="specialC">
-                                <div className="menuflex primarybgc">
-                                    <ChatIcon /> <span> Friends </span>
-                                </div>
-                            </div>
-                            <div className="specialC">
-                                <div
-
-                                >
-                                    <span>Message</span>
-                                </div>
-                            </div>
-                            <div className="menu">
-                                <div>
-                                    <MoreHorizIcon />
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </MainLayout>
+  return (
+    <UserProfileStyles>
+      <div className="mainProfile">
+        <MainLayout>
+          <div className="profilePhotos">
+            <div className="coverPhoto">
+              <img
+                src={
+                  userData?.cover ? userData?.cover : defaultUserPic.coverPic
+                }
+                alt="coverPhoto"
+              />
             </div>
-            <Intro
-                work1={userData.work1}
-                work2={userData.work2}
-                education1={userData.education1}
-                education2={userData.education2}
-                livesIn={userData.city1}
-                from={userData.city2}
-                joined={userData.createdAt}
-                followedBy={userData.friendRequestRecieved.length}
+            <div className="avatar">
+              <img
+                src={
+                  userData.profile === undefined
+                    ? defaultUserPic.profilePic
+                    : userData.profile
+                }
+                alt="profilePhoto"
+              />
+            </div>
+          </div>
 
+          <div className="profileBio">
+            <div className="Bio">
+              <div>
+                <h1>{userData.first_name + " " + userData.last_name}</h1>
+                <div>
+                  <p>You have to be odd to be number one</p>
+                  <p>Commited with life</p>
+                  <p>Dreamer,quick learner,proud son</p>
+                </div>
+              </div>
+            </div>
+            <div className="profileMenuItems">
+              <div
+                className={`${posts ? "menuBorder-bottom" : ""}`}
+                onClick={handleProfilesMenu}
+              >
+                Posts
+              </div>
+              <div onClick={handleProfilesMenu}>About</div>
+              <div
+                className={`${friends ? "menuBorder-bottom" : ""}`}
+                onClick={handleProfilesMenu}
+              >
+                Friends
+              </div>
+              <div
+                className={`${photos ? "menuBorder-bottom" : ""}`}
+                onClick={handleProfilesMenu}
+              >
+                Photos
+              </div>
+              <div>Stories Archive</div>
+              <div>
+                <span>More</span> <ArrowDropDownIcon />
+              </div>
+              <div className="specialC">
+                <div className="menuflex primarybgc">
+                  <DoneAllIcon fontSize="medium" /> <span> Friends </span>
+                </div>
+              </div>
+              <div className="specialC">
+                <div>
+                  <ChatIcon /> <span>Message</span>
+                </div>
+              </div>
+              <div className="menu">
+                <div>
+                  <MoreHorizIcon />
+                </div>
+              </div>
+            </div>
+          </div>
+        </MainLayout>
+      </div>
+      <MainPostLayout>
+        {posts ? <PostCompoSyled>
+          <div>
+            <Intro
+              work1={userData.work1}
+              work2={userData.work2}
+              education1={userData.education1}
+              education2={userData.education2}
+              livesIn={userData.city1}
+              from={userData.city2}
+              joined={userData.createdAt}
+              followedBy={userData.friendRequestRecieved.length}
             />
-            <PhotosComp />
-            <FriendsCompo friends={userData.friends} refreshPage={refreshPage} />
-            {/* <EmojiMart /> */}
-        </UserProfileStyles>
-    );
+            <PhotosComp handleSeeAllPhotos={handleSeeAllPhotos} />
+            <FriendsCompo handleSeeAllfriends={handleSeeAllfriends} refreshPage={refreshPage} friends={userData.friends} userData={userData} />
+          </div>
+          <div>
+
+          </div>
+        </PostCompoSyled> : ""}
+        {about ? <AboutCompo /> : ""}
+        {friends ? <AllFriendsCompo /> : ""}
+        {photos ? <AllPhotosCompo /> : ""}
+      </MainPostLayout>
+    </UserProfileStyles>
+  );
 }
 
 const UserProfileStyles = styled.div`
@@ -298,6 +316,20 @@ const UserProfileStyles = styled.div`
           :hover {
             background-color: var(--primary-background-color);
           }
+          & > div {
+            display: flex;
+            justify-content: space-between;
+            width: 7.3rem;
+            padding: 8px;
+            align-items: center;
+            background-color: var(--primary-color);
+            height: 2.4rem;
+            border-radius: 9px;
+            color: var(--border-color);
+            :hover {
+              background-color: var(--secondary-6);
+            }
+          }
         }
         & > div {
           min-width: 3rem;
@@ -338,8 +370,12 @@ const UserProfileStyles = styled.div`
           padding: 0 3px;
           font-size: 14px;
           font-weight: 650;
+          justify-content: space-around;
           span {
             color: var(--primary-background-color);
+          }
+          :hover {
+            background-color: var(--secondary-6);
           }
         }
         .editFont {
@@ -364,5 +400,22 @@ const UserProfileStyles = styled.div`
     }
   }
 `;
+const PostCompoSyled = styled.div`
+display: flex;
+margin-top:1rem;
+&>div:nth-child(1){
+  display: flex;
+  flex-direction: column;
+  row-gap: 1rem;
+}
+
+
+
+
+
+`
 
 export default FriendsProfile;
+
+
+

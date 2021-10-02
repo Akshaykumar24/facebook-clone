@@ -29,8 +29,6 @@ function Intro({ work1, work2, education1, education2, livesIn, from, joined, fo
             {joined ? <div><AccessTimeFilledIcon /><span>Joined {joined}</span></div> : ""}
             {followedBy ? <div><WifiIcon /><span>Followed by {followedBy} people</span></div> : ""}
 
-            <div className="editDetailsBtn" onClick={handleEditProfileOpen}>Edit Details</div>
-            <div className="editDetailsBtn">Add Hobbies</div>
         </IntroStyles>
     )
 }

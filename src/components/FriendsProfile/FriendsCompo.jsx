@@ -14,7 +14,7 @@ import { getData } from '../../utils/localStorage'
 //       alt="profile"
 //     />
 
-function FriendsCompo({ friends, refreshPage }) {
+function FriendsCompo({ friends, refreshPage, handleSeeAllfriends }) {
     const dispatch = useDispatch();
     const history = useHistory();
     const [userData, setUserData] = useState(
@@ -72,7 +72,7 @@ function FriendsCompo({ friends, refreshPage }) {
                     <span>{friends.length} friends</span>
                 </div>
 
-                <div>See All Friends</div>
+                <div onClick={handleSeeAllfriends}>See All Friends</div>
             </div>
             <div className="photosGrid">
                 {friends.map((el) => {
