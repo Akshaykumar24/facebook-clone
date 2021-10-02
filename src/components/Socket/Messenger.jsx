@@ -21,7 +21,7 @@ const Messenger = () => {
   const [onlineUsers, setOnlineUsers] = useState([]);
   const [emoji, setEmoji] = useState(false);
   const socket = useRef();
-
+  console.log(currentChat, "Curr");
   const scrollRef = useRef();
   const state = useSelector((state) => state);
   let user = state.auth.user;

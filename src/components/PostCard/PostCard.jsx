@@ -6,6 +6,7 @@ import CommentForm from "../CommentForm/CommentForm";
 import CommentCard from "../CommentCard/CommentCard";
 
 import { Box, Button, Avatar, Divider } from "@mui/material";
+import { useSelector } from "react-redux";
 
 import { AiOutlineLike } from "react-icons/ai";
 import { FaRegCommentAlt } from "react-icons/fa";
@@ -25,7 +26,7 @@ const getCommentOfThisPost = (id) => {
 };
 
 const PostCard = ({ post, user }) => {
-  console.log('user:', user)
+  console.log("user:", user);
   // console.log('post:', post)
   const {
     body_text,
@@ -42,8 +43,8 @@ const PostCard = ({ post, user }) => {
   const [noOfLikes, setNoOfLikes] = useState(0);
   const [noOfComments, setNoOfComments] = useState(0);
   // const [hadLiked, setHadLiked] = useState(false);
-
-
+  const state = useSelector((state) => state);
+  const me = state.auth.user;
   // useEffect(()=>{
   //   const userId = user_id._id;
   //   setHadLiked(liked_by.includes(userId));
@@ -62,7 +63,6 @@ const PostCard = ({ post, user }) => {
       .then(({ data }) => {
         likes = data.post.no_of_likes;
         likedBy = data.post.liked_by;
-        // console.log('likedBy:get: ', likedBy)
       })
       .catch((err) => console.log(err))
       .then((resp) => {
@@ -73,6 +73,13 @@ const PostCard = ({ post, user }) => {
           setNoOfLikes(likes);
         });
       });
+    axios
+      .post(`${url}/api/notification`, {
+        to: user._id,
+        from: me._id,
+        message: "Liked Your Post",
+      })
+      .then((res) => console.log(res));
   };
 
   const handleShowComments = () => {
@@ -84,11 +91,18 @@ const PostCard = ({ post, user }) => {
       setComments(commentsArr);
     });
   };
+  const sendCommentNotification = () => {
+    axios
+      .post(`${url}/api/notification`, {
+        to: user._id,
+        from: me._id,
+        message: "Commented On Your Post",
+      })
+      .then((res) => console.log(res));
+  };
 
   return (
-    <Box
-      sx={{ backgroundColor: "#FFFFFF", padding: "0 2rem", margin: "1rem 0" }}
-    >
+    <Box sx={{ backgroundColor: "#FFFFFF", padding: "0 ", margin: "1rem 0" }}>
       {/* header */}
       <Box
         sx={{
@@ -109,7 +123,7 @@ const PostCard = ({ post, user }) => {
           }}
         >
           <Box>
-            <Avatar sx={{ m: "0 1rem 0 0" }} alt="R" src={body_photo} />
+            <Avatar sx={{ m: "0 1rem" }} alt="R" src={body_photo} />
           </Box>
           <Box>
             <Box>{user_id.first_name} </Box>
@@ -119,8 +133,8 @@ const PostCard = ({ post, user }) => {
         <Box>{/* <MoreHorizOutlined /> */}</Box>
       </Box>
       {/* post body */}
-      <Box sx={{ margin: "1rem 0" }}>{body_text}</Box>
-      <Box sx={{ margin: "1rem 0" }}>
+      <Box sx={{ margin: "1rem" }}>{body_text}</Box>
+      <Box sx={{ margin: "0" }}>
         <img src={body_photo} alt="" />
       </Box>
       {/* post stat */}
@@ -149,16 +163,14 @@ const PostCard = ({ post, user }) => {
         }}
       >
         <Box>
-          
-            <Button
-              variant="text"
-              color="inherit"
-              onClick={handleLike}
-              startIcon={<AiOutlineLike size='2rem'/>}
-            >
-              Like
-            </Button>
-          
+          <Button
+            variant="text"
+            color="inherit"
+            onClick={handleLike}
+            startIcon={<AiOutlineLike size="2rem" />}
+          >
+            Like
+          </Button>
         </Box>
 
         {/* <Box>
@@ -206,7 +218,11 @@ const PostCard = ({ post, user }) => {
       </Box>
       {isComment && (
         <Box>
-          <CommentForm post_id={_id} setComments={setComments} />
+          <CommentForm
+            post_id={_id}
+            setComments={setComments}
+            sendCommentNotification={sendCommentNotification}
+          />
         </Box>
       )}
       {showComments && (

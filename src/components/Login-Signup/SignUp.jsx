@@ -75,6 +75,7 @@ function SignUp() {
 
   const handleLogin = () => {
     console.log(logInForm);
+    setData("login", logInForm);
     dispatch(logUser(logInForm));
   };
   if (all.reg && !all.Load && !all.Error) {

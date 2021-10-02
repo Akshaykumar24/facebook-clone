@@ -34,6 +34,13 @@ const recieverId = currentChat?.members.find((m) => m !== user._id);
           text: "Sent Friend Request",
         })
       );
+    await axios
+      .post(`${url}/api/notification`, {
+        to: p._id,
+        from: id,
+        message: "Sent Friend Request",
+      })
+      .then((res) => console.log(res));
   };
   const remove = () => {
     update(data, p._id);

@@ -123,7 +123,7 @@ const FriendsAll = () => {
       {find && (
         <Cont>
           {data.map((p) => (
-            <FriendMessageCard p={p} />
+            <FriendMessageCard p={p} id={id} />
           ))}
         </Cont>
       )}
