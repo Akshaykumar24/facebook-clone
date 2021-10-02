@@ -9,38 +9,16 @@ import WifiIcon from '@mui/icons-material/Wifi';
 import SchoolIcon from '@mui/icons-material/School';
 import BusinessIcon from '@mui/icons-material/Business';
 function Intro({ work1, work2, education1, education2, livesIn, from, joined, followedBy, handleEditProfileOpen }) {
-    let month = {
-        "Jan": 1,
-        "Feb": 2,
-        "Mar": 3,
-        "Apr": 4,
-        "May": 5,
-        "Jun": 6,
-        "Jul": 7,
-        "Aug": 8,
-        "Sep": 9,
-        "Oct": 10,
-        "Nov": 11,
-        "Dec": 12,
-    }
-    const year = joined.toString().slice(0, 4) || "2021";
-    const monthNum = joined.toString().slice(5, 7);
-    let monthname = "Oct"
-    for (let key in month) {
-        if (month[key] === Number(monthNum)) {
-            monthname = key
 
-        }
-    }
     return (
         <IntroStyles>
             <div>
                 <span>Intro</span>
             </div>
-            {work1 && work1.length > 0 ? <div key={uuidv4()}><BusinessIcon /><span>worked at {work1}</span></div> : ""}
-            {work2 && work2.length > 0 ? <div key={uuidv4()}><BusinessIcon /><span>worked at {work2}</span></div> : ""}
-            {education1 && education1.length > 0 ? <div key={uuidv4()}><SchoolIcon /><span>studied at {education1}</span></div> : ""}
-            {education2 && education2.length > 0 ? <div key={uuidv4()}><SchoolIcon /><span>studied at {education2}</span></div> : ""}
+            {work1 && work1.length > 0 ? <div key={uuidv4()}><BusinessIcon /><span>worked at{work1}</span></div> : ""}
+            {work2 && work2.length > 0 ? <div key={uuidv4()}><BusinessIcon /><span>worked at{work2}</span></div> : ""}
+            {education1 && education1.length > 0 ? <div key={uuidv4()}><SchoolIcon /><span>studied at{education1}</span></div> : ""}
+            {education2 && education2.length > 0 ? <div key={uuidv4()}><SchoolIcon /><span>studied at{education2}</span></div> : ""}
             {/* {work.map((el) => {
                 return <div key={uuidv4()}><BusinessIcon /><span>worked at{el}</span></div>
             })} */}
@@ -48,10 +26,8 @@ function Intro({ work1, work2, education1, education2, livesIn, from, joined, fo
             {livesIn ? <div><HomeIcon /><span>Lives in {livesIn}</span></div> : ""}
             {from ? <div><LocationOnIcon /><span>From {from}</span></div> : ""}
             <div><FavoriteIcon /><span>Single</span></div>
-            {joined ? <div><AccessTimeFilledIcon /><span>Joined {monthname + " " + year}</span></div> : ""}
+            {joined ? <div><AccessTimeFilledIcon /><span>Joined {joined}</span></div> : ""}
             {followedBy ? <div><WifiIcon /><span>Followed by {followedBy} people</span></div> : ""}
-
-            <div className="editDetailsBtn" onClick={handleEditProfileOpen}>Edit Details</div>
 
         </IntroStyles>
     )

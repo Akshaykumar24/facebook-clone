@@ -19,7 +19,7 @@ import MenuIcon from "@mui/icons-material/Menu";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 
-const NavBar = ({ menu, setMenu }) => {
+const NavBar = ({ themeToggler, checked, menu, setMenu }) => {
   const [account, setAccount] = React.useState(false);
   const [notification, setNotification] = React.useState(false);
 
@@ -122,7 +122,7 @@ const NavBar = ({ menu, setMenu }) => {
           </IconWrapperCircle>
         </div>
       </div>
-      {account && <AccountMenu />}
+      {account && <AccountMenu themeToggler={themeToggler} checked={checked} />}
       {notification && <Notification />}
     </>
   );

@@ -5,7 +5,7 @@ import { ReactComponent as SettingIcon } from "../../Icons/setting.svg";
 import Switch from "@mui/material/Switch";
 import '../../styles/SideBar/SideBar.css'
 
-const AccountMenu = () => {
+const AccountMenu = ({ themeToggler, checked }) => {
   const label = { inputProps: { "aria-label": "Switch demo" } };
   return (
     <div className="accountMenuContainer">
@@ -26,16 +26,20 @@ const AccountMenu = () => {
       <div className="darkModeBox flexBox">
         <DarkModeIcon />
         <p>Dark Mode</p>
-        <Switch {...label} defaultChecked />
+        <Switch value=""
+          checked={checked}
+          onClick={themeToggler}
+          inputProps={{ "aria-label": "" }}
+          size="medium" />
       </div>
       <div className="darkModeBox flexBox">
         <div className="logoutIconWrap flexBox">
           <LogoutIcon />
         </div>
         <p>Log Out</p>
-      </div>   
+      </div>
       <small>Privacy  · Terms  · Advertising  · Ad choices   · Cookies  ·   · Facebook © 2021</small>
-    </div> 
+    </div>
   );
 };
 

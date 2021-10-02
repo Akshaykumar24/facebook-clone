@@ -1,6 +1,6 @@
 import axios from "axios";
 import { url } from "../../utils/url";
-
+import { setData } from '../../utils/localStorage'
 import {
   LOG_FAILURE,
   LOG_REQUEST,
@@ -8,6 +8,7 @@ import {
   REG_FAILURE,
   REG_REQUEST,
   REG_SUCCESS,
+  FRND_SUCCESS,
 } from "./actionTypes";
 
 export const logReq = () => {
@@ -29,6 +30,9 @@ export const regReq = () => {
 export const regSuccess = (data) => {
   return { type: REG_SUCCESS, payload: data };
 };
+export const frndSuccess = (data) => {
+  return { type: FRND_SUCCESS, payload: data };
+};
 export const regFail = (err) => {
   return {
     type: REG_FAILURE,
@@ -41,7 +45,7 @@ export const logUser = (data) => (dispatch) => {
   axios
     .post(`${url}/api/login`, data)
     .then(({ data }) => {
-      console.log(data);
+      setData("userData", data)
       return dispatch(logSuccess(data));
     })
     .catch((err) => dispatch(logFail(err)));
@@ -52,8 +56,59 @@ export const regUser = (data) => (dispatch) => {
   axios
     .post(`${url}/api/register`, data)
     .then(({ data }) => {
-      console.log(data);
+      setData("userData", data)
       return dispatch(regSuccess(data));
+    })
+    .catch((err) => dispatch(regFail(err)));
+};
+export const updateUser = (data, id) => (dispatch) => {
+  console.log(data, "hjskdfhkioju")
+  dispatch(regReq());
+  axios
+    .patch(`${url}/api/user/${id}`, data)
+    .then(({ data }) => {
+      dispatch(getUser(id))
+      return dispatch(regSuccess(data));
+    })
+    .catch((err) => dispatch(regFail(err)));
+};
+
+
+// export const getUser = (id) => (dispatch) => {
+//   dispatch(regReq());
+//   if (!id) {
+//     const failureAction = regFail("no results");
+//     dispatch(failureAction);
+//   }
+//   return axios.get(`${url}/api/user/${id}`)
+//     .then((res) => {
+//       dispatch(regSuccess(res.data));
+//     })
+//     .catch((err) => {
+//       const failureAction = regFail(err);
+//       dispatch(failureAction);
+//     });
+// };
+
+export const getUser = (id) => (dispatch) => {
+  dispatch(regReq());
+  axios
+    .get(`${url}/api/user/${id}`)
+    .then(({ data }) => {
+      console.log(data, "ihi from updateUser");
+      setData("userData", data)
+      return dispatch(regSuccess(data));
+    })
+    .catch((err) => dispatch(regFail(err)));
+};
+export const getAnotherUser = (id) => (dispatch) => {
+  dispatch(regReq());
+  axios
+    .get(`${url}/api/user/${id}`)
+    .then(({ data }) => {
+      console.log(data, "ihi from updateUser");
+      setData("frndData", data)
+      return dispatch(frndSuccess(data));
     })
     .catch((err) => dispatch(regFail(err)));
 };

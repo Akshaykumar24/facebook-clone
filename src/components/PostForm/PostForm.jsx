@@ -1,51 +1,69 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { url } from "../../utils/url";
-import Box from "@mui/material/Box";
 
-import Divider from "@mui/material/Divider";
-import Avatar from "@mui/material/Avatar";
-import Modal from "@mui/material/Modal";
-import TextField from "@mui/material/TextField";
-import Button from "@mui/material/Button";
+// import {useSelector} from 'react-redux'
+
+import { url } from "../../utils/url";
+
+import { Box, Button, Divider, Avatar, Modal, TextField } from "@mui/material";
+
 import PhotoUploadForm from "../PhotoUploadForm/PhotoUploadForm";
 import { FcStackOfPhotos } from "react-icons/fc";
 import { BiSmile } from "react-icons/bi";
 import { BsPersonPlusFill } from "react-icons/bs";
 import { FaTimes } from "react-icons/fa";
-
+// import { getData } from "../../utils/localStorage";
 const modalStyle = {
+  // position: "absolute",
+  // top: "50%",
+  // left: "50%",
+  // transform: "translate(-50%, -10%)",
+  // width: '500px',
+  // maxHeight:'80vh',
+  // bgcolor: "background.paper",
+  // // border: "2px solid #df1313",
+  // boxShadow: 24,
+  // p: "2rem 1.5rem",
+  // overflowY: "scroll"
   position: "absolute",
-  top: "50%",
+  top: '50% !important',
   left: "50%",
   transform: "translate(-50%, -50%)",
-  width: 400,
+  width: "30rem",
   bgcolor: "background.paper",
-  border: "2px solid #000",
-  boxShadow: 24,
-  p: 4,
+  borderRadius: " 0.9rem",
+  boxShadow: `0px 0px 10px var(--font-light-color)`,
+  maxHeight: "35rem",
+  overflowY: "scroll",
+
 };
 
-const PostForm = () => {
+const PostForm = ({ user }) => {
+  // console.log('user in form comp:', user.first_name)
   // modal control
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   // text form control
-  const [body_text, setBodyText] = useState("What's on your mind?");
+  const [body_text, setBodyText] = useState(`What's on your mind?`);
   const [buttonDisabled, setButtonDisabled] = useState(true);
   const [body_photo, setBody_photo] = useState("");
+ 
+  const refreshPage = () => {
+    window.location.reload();
+  };
 
   const handleChange = (e) => {
     const value = e.target.value;
-    if (value.length > 0) {
+    if (value.length > 0 || body_photo!=='') {
       setButtonDisabled(false);
     }
     setBodyText(value);
   };
   const writePost = (body_text, body_photo) => {
+    // console.log(user._id)
     return axios.post(`${url}/api/posts`, {
-      user_id: "Ravi Ranjan kumar",
+      user_id: user._id,
       body_text: body_text,
       body_photo: body_photo,
     });
@@ -60,6 +78,7 @@ const PostForm = () => {
         console.log(resp);
         if (resp.status === 201) {
           console.log("succes");
+          refreshPage();
           handleClose();
         }
       })
@@ -67,6 +86,9 @@ const PostForm = () => {
         console.log(err);
       });
   };
+  // if (loading) {
+  //   return <></>;
+  // }
 
   return (
     <Box
@@ -131,16 +153,18 @@ const PostForm = () => {
               <Box sx={{ width: "90%", textAlign: "center" }}>
                 <h3>Create Post</h3>
               </Box>
-              <Button sx={{ width: "10%" }} startIcon={<FaTimes onClick={handleClose} size="1.5rem" />}/>
-                
+              <Button
+                sx={{ width: "10%" }}
+                startIcon={<FaTimes onClick={handleClose} size="1.5rem" />}
+              />
             </Box>
             <Divider />
-            <Box sx={{display:'flex',alignItems:'center',m:'1rem 0'}}>
+            <Box sx={{ display: "flex", alignItems: "center", m: "1rem 0" }}>
               <Box>
                 <Avatar sx={{ m: "0 1rem 0 0" }} alt="R" src={body_photo} />
               </Box>
               <Box>
-                <Box>Ravi Ranjan Kumar</Box>
+                {/* <Box>{user.first_name}</Box> */}
                 <Box>Public</Box>
               </Box>
             </Box>
@@ -150,14 +174,18 @@ const PostForm = () => {
                 multiline
                 rows={3}
                 fullWidth
-                defaultValue={body_text}
+                // placeholder={user.first_name}
+                value={body_text}
                 onChange={handleChange}
               />
             </Box>
             <Box></Box>
-            <Box>
-              Add to your post <PhotoUploadForm setBody_photo={setBody_photo} />
+            <Box sx={{display:'flex', justifyContent:'space-between', alignItems:'center', m:'1rem 0' }}>
+              <Box>Add to your post </Box>
+
+              <PhotoUploadForm setBody_photo={setBody_photo} />
             </Box>
+            <Box sx={{textAlign:'center'}}> <img src={body_photo} height='200px'  alt="" /> </Box>
             <Box>
               <Button
                 disabled={buttonDisabled}

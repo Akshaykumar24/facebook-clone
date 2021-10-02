@@ -6,6 +6,10 @@ const Wall = () => {
     <div>
       Welcome to Your Wall
       <Link to="/friends">Friends</Link>
+      Go to home
+      <Link to="/home">home</Link>
+      <Link to="/profile">profile</Link>
+
     </div>
   );
 };

@@ -1,34 +1,35 @@
 import React from "react";
 import styled from "styled-components";
 import { MainLayout } from "../../styles/layouts";
-import CameraAltIcon from "@mui/icons-material/CameraAlt";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
-import AddCircleIcon from "@mui/icons-material/AddCircle";
-import EditIcon from "@mui/icons-material/Edit";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import { useState, useEffect } from "react";
-import BasicModal from "./BasicModal";
-import EditProfieModal from "./EditProfile";
+import ChatIcon from "@mui/icons-material/Chat";
 import Intro from "./Intro";
 import PhotosComp from "./PhotosComp";
+import PersonAddIcon from '@mui/icons-material/PersonAdd';
+import DoneAllIcon from "@mui/icons-material/DoneAll";
 import FriendsCompo from "./FriendsCompo";
+// import PhotosComp from "../userprofile/PhotosComp";
+// import FriendsCompo from "../userprofile/FriendsCompo";
+// import Intro from "./Intro";
+// import PhotosComp from "./PhotosComp";
+// import FriendsCompo from "./FriendsCompo";
+import { useParams } from "react-router-dom";
 import { getData } from "../../utils/localStorage";
-import EmojiMart from "../EmojiMart/EmojiMart";
 import { MainPostLayout } from "../../styles/layouts";
 import AboutCompo from "./AboutCompo";
 import AllFriendsCompo from "./AllFriendsCompo";
 import AllPhotosCompo from "./AllPhotosCompo";
-function UserProfile() {
-
-
+function FriendsProfile() {
+  const { id } = useParams();
+  console.log(id);
 
   // console.log(user)
   const [posts, setPosts] = useState(true);
   const [friends, setFriends] = useState(false);
   const [photos, setPhotos] = useState(false);
   const [about, setAbout] = useState(false);
-  const [title, setTitle] = useState("");
-  const [btnText, setBtnText] = useState("");
   const refreshPage = () => {
     window.location.reload();
   };
@@ -40,56 +41,27 @@ function UserProfile() {
       "https://th.bing.com/th/id/R.56fa805242ca705c112c21e9142391c6?rik=0FGHjmAsLgoKhQ&riu=http%3a%2f%2fsguru.org%2fwp-content%2fuploads%2f2017%2f04%2fattitude-boys-profile-pics-for-Facebook-20.jpg&ehk=A%2bCtAIdAM172Ttozp8O2Yieal74Rvzj2O%2fHwjJnGrkQ%3d&risl=&pid=ImgRaw&r=0",
   };
 
-  const [editProfileOpen, setEditProfileOpen] = useState(false);
-
-  const handleEditProfileOpen = () => setEditProfileOpen(true);
-  const handleEditProfileClose = () => setEditProfileOpen(false);
-
-  // useEffect(() => {
-
-  // }, []);
-  // function getUsersData() {
-  //   const id = getData("userId")
-  //   console.log(id, "id")
-  //   dispatch(getUser(id))
-  // }
-
-  // ;
-  // getUsersData();
-  // useEffect(() => {
-  //   const id = getData("userId")
-  //   dispatch(getUser(id))
-  // }, [dispatch])
-  // const {
-  //   auth: { user },
-  // } = useSelector((state) => state, shallowEqual);
-
   const [userData, setUserData] = useState(
+    getData("frndData").user
+      ? getData("frndData").user
+      : getData("frndData").userOnline
+  );
+  const [mainuser, setMainuser] = useState(
     getData("userData").user
       ? getData("userData").user
       : getData("userData").userOnline
   );
+  const id2 = userData._id
 
-  // async function getusersData(id) {
-  //   await axios.get(`http://localhost:2424/api/user/${id}`).then(({ data }) => {
-  //     handleUserDataContext(data)
-  //   })
-  // }
-  // getusersData(id)
-
-
-  const [open, setOpen] = useState(false);
-  const handleCoverPhotoModalOpen = () => {
-    setTitle("Edit Cover Photo");
-    setBtnText("Cover Photo");
-    setOpen(true);
+  const check = (id2, mainuser) => {
+    for (let i = 0; i < mainuser.friends.length; i++) {
+      if (mainuser.friends[i]._id === userData._id) {
+        return true
+      }
+    }
+    return false
   };
-  const handleProfilePhotoModalOpen = () => {
-    setTitle("Edit Profile Photo");
-    setBtnText("Profile Photo");
-    setOpen(true);
-  };
-  const handlePhotoModalClose = () => setOpen(false);
+
   const handleSeeAllfriends = () => {
     setFriends(true);
     setPosts(false);
@@ -138,47 +110,18 @@ function UserProfile() {
                 }
                 alt="coverPhoto"
               />
-              <div onClick={handleCoverPhotoModalOpen} className="cameraBtn">
-                <CameraAltIcon /> <span>Edit Cover Photo</span>
-              </div>
             </div>
             <div className="avatar">
               <img
                 src={
                   userData.profile === undefined
-                    ? `https://avatars.dicebear.com/api/micah/${userData.first_name}.svg`
+                    ? defaultUserPic.profilePic
                     : userData.profile
                 }
                 alt="profilePhoto"
               />
-              <div onClick={handleProfilePhotoModalOpen} className="cameraBtn">
-                <CameraAltIcon />
-              </div>
             </div>
           </div>
-          {open ? (
-            <BasicModal
-              title={title}
-              btnText={btnText}
-              handleClose={handlePhotoModalClose}
-              open={open}
-              userData={userData}
-              refreshPage={refreshPage}
-            />
-          ) : (
-            ""
-          )}
-          {editProfileOpen ? (
-            <EditProfieModal
-              handleEditProfileClose={handleEditProfileClose}
-              editProfileOpen={editProfileOpen}
-              userData={userData}
-
-              refreshPage={refreshPage}
-            />
-          ) : (
-            ""
-          )}
 
           <div className="profileBio">
             <div className="Bio">
@@ -188,7 +131,6 @@ function UserProfile() {
                   <p>You have to be odd to be number one</p>
                   <p>Commited with life</p>
                   <p>Dreamer,quick learner,proud son</p>
-                  <span className="editBio">Edit</span>
                 </div>
               </div>
             </div>
@@ -199,7 +141,7 @@ function UserProfile() {
               >
                 Posts
               </div>
-              <div className={`${about ? "menuBorder-bottom" : ""}`} onClick={handleProfilesMenu}>About</div>
+              <div onClick={handleProfilesMenu}>About</div>
               <div
                 className={`${friends ? "menuBorder-bottom" : ""}`}
                 onClick={handleProfilesMenu}
@@ -218,15 +160,12 @@ function UserProfile() {
               </div>
               <div className="specialC">
                 <div className="menuflex primarybgc">
-                  <AddCircleIcon /> <span> Add to Story</span>
+                  {check(id2, mainuser) ? <><DoneAllIcon fontSize="medium" /> <span> Friends </span></> : <><PersonAddIcon /><span>Add Friend</span></>}
                 </div>
               </div>
               <div className="specialC">
-                <div
-                  onClick={handleEditProfileOpen}
-                  className="menuflex editFont"
-                >
-                  <EditIcon /> <span>Edit Profile</span>
+                <div>
+                  <ChatIcon /> <span>Message</span>
                 </div>
               </div>
               <div className="menu">
@@ -250,37 +189,21 @@ function UserProfile() {
               from={userData.city2}
               joined={userData.createdAt}
               followedBy={userData.friendRequestRecieved.length}
-              handleEditProfileOpen={handleEditProfileOpen}
             />
             <PhotosComp handleSeeAllPhotos={handleSeeAllPhotos} />
-            <FriendsCompo handleSeeAllfriends={handleSeeAllfriends} friends={userData.friends} userData={userData} />
+            <FriendsCompo handleSeeAllfriends={handleSeeAllfriends} refreshPage={refreshPage} friends={userData.friends} userData={userData} />
           </div>
           <div>
 
           </div>
         </PostCompoSyled> : ""}
-        {about ? <AboutCompo handleEditProfileOpen={handleEditProfileOpen} /> : ""}
+        {about ? <AboutCompo /> : ""}
         {friends ? <AllFriendsCompo /> : ""}
         {photos ? <AllPhotosCompo /> : ""}
       </MainPostLayout>
-      {/* <EmojiMart /> */}
     </UserProfileStyles>
   );
 }
-const PostCompoSyled = styled.div`
-display: flex;
-margin-top:1rem;
-&>div:nth-child(1){
-  display: flex;
-  flex-direction: column;
-  row-gap: 1rem;
-}
-
-
-
-
-
-`
 
 const UserProfileStyles = styled.div`
   .mainProfile {
@@ -410,6 +333,20 @@ const UserProfileStyles = styled.div`
           :hover {
             background-color: var(--primary-background-color);
           }
+          & > div {
+            display: flex;
+            justify-content: space-between;
+            width: 7.3rem;
+            padding: 8px;
+            align-items: center;
+            background-color: var(--primary-color);
+            height: 2.4rem;
+            border-radius: 9px;
+            color: var(--border-color);
+            :hover {
+              background-color: var(--secondary-6);
+            }
+          }
         }
         & > div {
           min-width: 3rem;
@@ -450,8 +387,12 @@ const UserProfileStyles = styled.div`
           padding: 0 3px;
           font-size: 14px;
           font-weight: 650;
+          justify-content: space-around;
           span {
             color: var(--primary-background-color);
+          }
+          :hover {
+            background-color: var(--secondary-6);
           }
         }
         .editFont {
@@ -476,5 +417,22 @@ const UserProfileStyles = styled.div`
     }
   }
 `;
+const PostCompoSyled = styled.div`
+display: flex;
+margin-top:1rem;
+&>div:nth-child(1){
+  display: flex;
+  flex-direction: column;
+  row-gap: 1rem;
+}
 
-export default UserProfile;
+
+
+
+
+`
+
+export default FriendsProfile;
+
+
+

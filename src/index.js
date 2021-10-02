@@ -6,14 +6,16 @@ import { GlobalStyles } from "./styles/GlobalStyles";
 import { BrowserRouter } from "react-router-dom";
 import { Provider } from "react-redux";
 import { store } from "./redux/store";
-
+import { UserDataContextProvider } from "./components/Context/UserDataContext"
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-      <BrowserRouter>
-        <GlobalStyles />
-        <App />
-      </BrowserRouter>
+      <UserDataContextProvider>
+        <BrowserRouter>
+          <GlobalStyles />
+          <App />
+        </BrowserRouter>
+      </UserDataContextProvider>
     </Provider>
   </React.StrictMode>,
   document.getElementById("root")

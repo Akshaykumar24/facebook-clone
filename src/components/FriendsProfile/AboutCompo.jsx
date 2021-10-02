@@ -3,12 +3,11 @@ import React from "react";
 import styled from "styled-components";
 import { useState } from "react";
 import { getData } from "../../utils/localStorage";
-import EditIcon from "@mui/icons-material/Edit";
 function AboutCompo({ handleEditProfileOpen }) {
     const [userData, setUserData] = useState(
-        getData("userData").user
-            ? getData("userData").user
-            : getData("userData").userOnline
+        getData("frndData").user
+            ? getData("frndData").user
+            : getData("frndData").userOnline
     );
 
     return (
@@ -28,9 +27,7 @@ function AboutCompo({ handleEditProfileOpen }) {
                         {userData.last_name ? (
                             userData.last_name
                         ) : (
-                            <EditCompoStyled onClick={handleEditProfileOpen}>
-                                <EditIcon />
-                            </EditCompoStyled>
+                            ""
                         )}
                     </div>
                 </div>
@@ -41,9 +38,7 @@ function AboutCompo({ handleEditProfileOpen }) {
                         {userData.email ? (
                             userData.email
                         ) : (
-                            <EditCompoStyled onClick={handleEditProfileOpen}>
-                                <EditIcon />
-                            </EditCompoStyled>
+                            ""
                         )}
                     </div>
                 </div>
@@ -53,9 +48,7 @@ function AboutCompo({ handleEditProfileOpen }) {
                         {userData.dob ? (
                             userData.dob
                         ) : (
-                            <EditCompoStyled onClick={handleEditProfileOpen}>
-                                <EditIcon />
-                            </EditCompoStyled>
+                            ""
                         )}
                     </div>
                 </div>
@@ -65,9 +58,7 @@ function AboutCompo({ handleEditProfileOpen }) {
                         {userData.gender ? (
                             userData.gender
                         ) : (
-                            <EditCompoStyled onClick={handleEditProfileOpen}>
-                                <EditIcon />
-                            </EditCompoStyled>
+                            ""
                         )}
                     </div>
                 </div>
@@ -77,9 +68,7 @@ function AboutCompo({ handleEditProfileOpen }) {
                         {userData.mobile ? (
                             userData.mobile
                         ) : (
-                            <EditCompoStyled onClick={handleEditProfileOpen}>
-                                <EditIcon />
-                            </EditCompoStyled>
+                            ""
                         )}
                     </div>
                 </div>
@@ -92,9 +81,7 @@ function AboutCompo({ handleEditProfileOpen }) {
                         {userData.work1 ? (
                             userData.work1
                         ) : (
-                            <EditCompoStyled onClick={handleEditProfileOpen}>
-                                <EditIcon />
-                            </EditCompoStyled>
+                            ""
                         )}
                     </div>
                 </div>
@@ -104,9 +91,7 @@ function AboutCompo({ handleEditProfileOpen }) {
                         {userData.work2 ? (
                             userData.work2
                         ) : (
-                            <EditCompoStyled onClick={handleEditProfileOpen}>
-                                <EditIcon />
-                            </EditCompoStyled>
+                            ""
                         )}
                     </div>
                 </div>
@@ -119,9 +104,7 @@ function AboutCompo({ handleEditProfileOpen }) {
                         {userData.education1 ? (
                             userData.education1
                         ) : (
-                            <EditCompoStyled onClick={handleEditProfileOpen}>
-                                <EditIcon />
-                            </EditCompoStyled>
+                            ""
                         )}
                     </div>
                 </div>
@@ -131,9 +114,7 @@ function AboutCompo({ handleEditProfileOpen }) {
                         {userData.education2 ? (
                             userData.education2
                         ) : (
-                            <EditCompoStyled onClick={handleEditProfileOpen}>
-                                <EditIcon />
-                            </EditCompoStyled>
+                            ""
                         )}
                     </div>
                 </div>
@@ -146,9 +127,7 @@ function AboutCompo({ handleEditProfileOpen }) {
                         {userData.bio ? (
                             userData.bio
                         ) : (
-                            <EditCompoStyled onClick={handleEditProfileOpen}>
-                                <EditIcon />
-                            </EditCompoStyled>
+                            ""
                         )}
                     </div>
                 </div>
@@ -158,9 +137,7 @@ function AboutCompo({ handleEditProfileOpen }) {
                         {userData.relationship ? (
                             userData.relationship
                         ) : (
-                            <EditCompoStyled onClick={handleEditProfileOpen}>
-                                <EditIcon />
-                            </EditCompoStyled>
+                            ""
                         )}
                     </div>
                 </div>
@@ -174,9 +151,7 @@ function AboutCompo({ handleEditProfileOpen }) {
                                 "Men"
                             )
                         ) : (
-                            <EditCompoStyled onClick={handleEditProfileOpen}>
-                                <EditIcon />
-                            </EditCompoStyled>
+                            ""
                         )}
                     </div>
                 </div>
@@ -233,18 +208,5 @@ border-top: 1px solid var(--font-light-color);
     }
   }
 `;
-const EditCompoStyled = styled.p`
-  width: 35px;
-  height: 35px;
-  border-radius: 50%;
 
-  justify-content: center;
-  align-items: center;
-  display: flex;
-  cursor: pointer;
-  box-shadow: 1px 1px 4px var(--icons-gray-color);
-  :hover{
-      background-color: var(--hover-effect)
-  }
-`;
 export default AboutCompo;
