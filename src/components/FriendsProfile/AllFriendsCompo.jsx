@@ -48,6 +48,7 @@ function AllFriendsCompo() {
 
                     if (el._id === mainuser._id) {
                       history.push('/profile')
+                      return;
                     }
                     dispatch(getAnotherUser(el._id))
                     setTimeout(() => {
@@ -68,6 +69,7 @@ function AllFriendsCompo() {
 
                   if (el._id === mainuser._id) {
                     history.push('/profile')
+                    return;
                   }
                   dispatch(getAnotherUser(el._id))
                   setTimeout(() => {

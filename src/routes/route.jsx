@@ -8,17 +8,28 @@ import Intro from "../components/userprofile/Intro";
 import PhotosComp from "../components/userprofile/PhotosComp";
 import UserProfile from "../components/userprofile/UserProfile";
 import Wall from "../components/Wall/Wall";
-<<<<<<< HEAD
 import FriendsProfile from "../components/FriendsProfile/FriendsProfile";
-=======
 import NavBar from "../components/navbar/NavBar";
 import UserPage from "./UserPage";
-
->>>>>>> f335be3c19877c038da90ae0445a397398075688
+import { useEffect, useState } from "react";
 const Router = () => {
   const [menu, setMenu] = React.useState(false);
+  const [theme, setTheme] = useState('light-theme')
+  const [checked, setChecked] = useState(false)
+  const themeToggler = () => {
+    if (theme === "light-theme") {
+      setTheme('dark-theme')
+      setChecked(true)
+    } else {
+      setTheme('light-theme')
+      setChecked(false)
+    }
+  }
+  useEffect(() => {
+    document.documentElement.className = theme;
+  }, [theme])
   return (
-    <div>
+    <div className="theme">
       <Switch>
         <Route path="/login">
           <SignUp />
@@ -28,15 +39,15 @@ const Router = () => {
           <HomePage />
         </Route>
         <Route path="/friends">
-          <NavBar setMenu={setMenu} menu={setMenu} />
+          <NavBar themeToggler={themeToggler} checked={checked} setMenu={setMenu} menu={setMenu} />
           <FriendsAll />
         </Route>
         <Route path="/messenger">
-          <NavBar setMenu={setMenu} menu={setMenu} />
+          <NavBar themeToggler={themeToggler} checked={checked} setMenu={setMenu} menu={setMenu} />
           <Wall />
         </Route>
         <Route path="/profile">
-          <NavBar setMenu={setMenu} menu={setMenu} />
+          <NavBar themeToggler={themeToggler} checked={checked} setMenu={setMenu} menu={setMenu} />
           <UserProfile />
 
         </Route>
@@ -44,7 +55,7 @@ const Router = () => {
           <FriendsProfile />
         </Route>
         <Route path="/user/:id">
-          <UserPage/>
+          <UserPage />
         </Route>
       </Switch>
     </div>

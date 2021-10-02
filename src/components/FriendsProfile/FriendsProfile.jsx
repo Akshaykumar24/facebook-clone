@@ -7,6 +7,7 @@ import { useState, useEffect } from "react";
 import ChatIcon from "@mui/icons-material/Chat";
 import Intro from "./Intro";
 import PhotosComp from "./PhotosComp";
+import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import DoneAllIcon from "@mui/icons-material/DoneAll";
 import FriendsCompo from "./FriendsCompo";
 // import PhotosComp from "../userprofile/PhotosComp";
@@ -45,6 +46,22 @@ function FriendsProfile() {
       ? getData("frndData").user
       : getData("frndData").userOnline
   );
+  const [mainuser, setMainuser] = useState(
+    getData("userData").user
+      ? getData("userData").user
+      : getData("userData").userOnline
+  );
+  const id2 = userData._id
+
+  const check = (id2, mainuser) => {
+    for (let i = 0; i < mainuser.friends.length; i++) {
+      if (mainuser.friends[i]._id === userData._id) {
+        return true
+      }
+    }
+    return false
+  };
+
   const handleSeeAllfriends = () => {
     setFriends(true);
     setPosts(false);
@@ -143,7 +160,7 @@ function FriendsProfile() {
               </div>
               <div className="specialC">
                 <div className="menuflex primarybgc">
-                  <DoneAllIcon fontSize="medium" /> <span> Friends </span>
+                  {check(id2, mainuser) ? <><DoneAllIcon fontSize="medium" /> <span> Friends </span></> : <><PersonAddIcon /><span>Add Friend</span></>}
                 </div>
               </div>
               <div className="specialC">

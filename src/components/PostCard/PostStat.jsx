@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import {Link} from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { url } from "../../utils/url";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
@@ -37,18 +37,18 @@ const PostStat = ({
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const [likers, setLikers] = useState([]);
-  
-  useEffect(() => {
-    liked_by.forEach((id) => {
-      console.log("id of liked:", id);
-      axios.get(`${url}/api/user/${id}`).then(({ data }) => {
-        
-        setLikers((prev) => {
-          return [...prev, data.user];
-        });
-      });
-    });
-  }, [liked_by]);
+
+  // useEffect(() => {
+  //   liked_by.forEach((id) => {
+  //     console.log("id of liked:", id);
+  //     axios.get(`${url}/api/user/${id}`).then(({ data }) => {
+
+  //       setLikers((prev) => {
+  //         return [...prev, data.user];
+  //       });
+  //     });
+  //   });
+  // }, [liked_by]);
 
 
 
@@ -126,7 +126,7 @@ const PostStat = ({
         >
           <Box sx={style}>
             {likers.map((liker) => {
-             
+
               return <div key={liker._id}><Link to={`/user/${liker._id}`} >  {liker.first_name} </Link></div>;
             })}
           </Box>
