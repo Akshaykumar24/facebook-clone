@@ -9,7 +9,6 @@ import {
   FormContainer,
   PostsContainer,
 } from "./HomePageCenter.styles";
-
 const HomePageCenter = () => {
   const [posts, setPosts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -21,45 +20,46 @@ const HomePageCenter = () => {
 
   useEffect(() => {
     let res = getData('userId')
-      //  console.log('res:', res)
-       axios.get(`${url}/api/user/${res}`).then(({data})=>{
-        
-         setUser(data.user)
-       })
-     
-   }, []);
+    //  console.log('res:', res)
+    axios.get(`${url}/api/user/${res}`).then(({ data }) => {
+
+      setUser(data.user)
+    })
+
+  }, []);
 
 
   useEffect(() => {
     setIsLoading(true);
-    getPosts()
-      .then(({ data }) => {
-        // console.log('data:', data.posts)
-        
-        setPosts(data.posts);
-        setIsLoading(false);
-      })
-      .catch((err) => {
-        setIsError(true);
-        console.log('err:', err)
-        
-      });
-    }, []);
+    setPosts(getData("allUserPosts").posts)
+    // getPosts()
+    //   .then(({ data }) => {
+    //     // console.log('data:', data.posts)
 
-    // console.log('posts:', posts)
+    //     setPosts(data.posts);
+    //     setIsLoading(false);
+    //   })
+    //   .catch((err) => {
+    //     setIsError(true);
+    //     console.log('err:', err)
+
+    //   });
+  }, []);
+
+  // console.log('posts:', posts)
 
   return (
     <Wrapper>
-   <FormContainer>
-        <PostForm user={user}/>
-      </FormContainer> 
-       <PostsContainer>
+      <FormContainer>
+        <PostForm user={user} />
+      </FormContainer>
+      <PostsContainer>
         {isLoading
           ? "Loading posts"
           : isError
-          ? "Some errors"
-          : posts.map((post) => {
-              
+            ? "Some errors"
+            : posts.map((post) => {
+
               return <PostCard key={post._id} user={user} post={post} />;
             })}
       </PostsContainer>

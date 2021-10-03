@@ -3,10 +3,15 @@ import SideBarContent from "./SideBarContent";
 import { Link } from "react-router-dom";
 import "../../styles/SideBar/SideBar.css";
 import { useSelector } from "react-redux";
+import { useState } from "react";
+import { getData } from '../../utils/localStorage'
 
 function SideBar() {
   const state = useSelector((state) => state);
-  const user = state.auth.user;
+  const [user, setUser] = useState(getData("userData").user
+    ? getData("userData").user
+    : getData("userData").userOnline)
+
   return (
     <>
       <div className="sideBarContainer">

@@ -4,86 +4,88 @@ import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import { getData } from "../../utils/localStorage";
 import { useState } from "react";
 import { useDispatch } from "react-redux"
-import { getAnotherUser } from "../../redux/auth/action";
+import { getAnotherUser, getUserPosts } from "../../redux/auth/action";
 import { useHistory } from 'react-router-dom'
 import { v4 as uuidv4 } from "uuid";
 function AllFriendsCompo() {
-    const dispatch = useDispatch();
-    const history = useHistory();
-    const [userData, setUserData] = useState(
-        getData("userData").user
-            ? getData("userData").user
-            : getData("userData").userOnline
-    );
-    const [friendsList, setFriendsList] = useState(userData.friends);
+  const dispatch = useDispatch();
+  const history = useHistory();
+  const [userData, setUserData] = useState(
+    getData("userData").user
+      ? getData("userData").user
+      : getData("userData").userOnline
+  );
+  const [friendsList, setFriendsList] = useState(userData.friends);
 
-    const getMutual = (data, arr) => {
-        let count = 0;
-        for (let i = 0; i < arr.length; i++) {
-            for (let j = 0; j < data.length; j++) {
-                if (Number(arr[i]) === Number(data[j]._id)) {
-                    count++;
-                }
-            }
+  const getMutual = (data, arr) => {
+    let count = 0;
+    for (let i = 0; i < arr.length; i++) {
+      for (let j = 0; j < data.length; j++) {
+        if (Number(arr[i]) === Number(data[j]._id)) {
+          count++;
         }
-        return count;
-    };
-    return (
-        <AllFriendsCompoStyled>
-            <div>
-                <h1>Friends</h1>
+      }
+    }
+    return count;
+  };
+  return (
+    <AllFriendsCompoStyled>
+      <div>
+        <h1>Friends</h1>
+      </div>
+      <MainFriendDivStled>
+        {friendsList.map((el) => {
+          return (
+            <div key={uuidv4()}>
+              <div className="imageDiv">
+                <img
+                  onClick={() => {
+
+                    if (el._id === userData._id) {
+                      dispatch(getUserPosts(el._id))
+                      history.push('/profile')
+                    }
+                    dispatch(getAnotherUser(el._id))
+                    setTimeout(() => {
+                      history.push(`/facebook/${el._id}`)
+                    }, 1000)
+
+                  }}
+                  src={
+                    el.profile
+                      ? el.profile
+                      : "https://scontent.fpnq7-4.fna.fbcdn.net/v/t1.6435-9/35799287_2073684202954764_7545216993050230784_n.jpg?_nc_cat=111&ccb=1-5&_nc_sid=174925&_nc_ohc=_hZCbwLIc6wAX9Gebht&_nc_ht=scontent.fpnq7-4.fna&oh=f56970935bc300864b0c21ee0de0ea95&oe=61791D41"
+                  }
+                  alt=""
+                />
+              </div>
+              <div className="nameMutualFrnd">
+                <span onClick={() => {
+
+                  if (el._id === userData._id) {
+                    dispatch(getUserPosts(el._id))
+                    history.push('/profile')
+                  }
+                  dispatch(getAnotherUser(el._id))
+                  setTimeout(() => {
+                    history.push(`/facebook/${el._id}`)
+                  }, 1000)
+
+                }}>{el.first_name + " " + el.last_name}</span>
+                <span>{getMutual(el.friends, userData)} mutual friends</span>
+              </div>
+
+              <div className="moreDiv">
+                <CheckMoreOptions>
+                  <MoreHorizIcon />
+                </CheckMoreOptions>
+              </div>
             </div>
-            <MainFriendDivStled>
-                {friendsList.map((el) => {
-                    return (
-                        <div key={uuidv4()}>
-                            <div className="imageDiv">
-                                <img
-                                    onClick={() => {
-
-                                        if (el._id === userData._id) {
-                                            history.push('/profile')
-                                        }
-                                        dispatch(getAnotherUser(el._id))
-                                        setTimeout(() => {
-                                            history.push(`/facebook/${el._id}`)
-                                        }, 1000)
-
-                                    }}
-                                    src={
-                                        el.profile
-                                            ? el.profile
-                                            : "https://scontent.fpnq7-4.fna.fbcdn.net/v/t1.6435-9/35799287_2073684202954764_7545216993050230784_n.jpg?_nc_cat=111&ccb=1-5&_nc_sid=174925&_nc_ohc=_hZCbwLIc6wAX9Gebht&_nc_ht=scontent.fpnq7-4.fna&oh=f56970935bc300864b0c21ee0de0ea95&oe=61791D41"
-                                    }
-                                    alt=""
-                                />
-                            </div>
-                            <div className="nameMutualFrnd">
-                                <span onClick={() => {
-
-                                    if (el._id === userData._id) {
-                                        history.push('/profile')
-                                    }
-                                    dispatch(getAnotherUser(el._id))
-                                    setTimeout(() => {
-                                        history.push(`/facebook/${el._id}`)
-                                    }, 1000)
-
-                                }}>{el.first_name + " " + el.last_name}</span>
-                                <span>{getMutual(el.friends, userData)} mutual friends</span>
-                            </div>
-
-                            <div className="moreDiv">
-                                <CheckMoreOptions>
-                                    <MoreHorizIcon />
-                                </CheckMoreOptions>
-                            </div>
-                        </div>
-                    );
-                })}
-            </MainFriendDivStled>
-        </AllFriendsCompoStyled>
-    );
+          );
+        })}
+      </MainFriendDivStled>
+    </AllFriendsCompoStyled>
+  );
 }
 const AllFriendsCompoStyled = styled.div`
   width: 55rem;
@@ -118,6 +120,7 @@ const MainFriendDivStled = styled.div`
         border-radius:5px;
         height: 100%;
         cursor: pointer;
+        object-fit: cover;
       }
     }
     .nameMutualFrnd {
@@ -139,10 +142,10 @@ const MainFriendDivStled = styled.div`
       span:nth-child(1) {
         font-size: 1rem;
         font-weight: 600;
-        color: var(--font-dark-color);
+        color: var(--ofont-dark-color);
       }
       span:nth-child(2) {
-        color: var(--font-light-color);
+        color: var(--ofont-color1);
       }
     }
     .moreDiv {

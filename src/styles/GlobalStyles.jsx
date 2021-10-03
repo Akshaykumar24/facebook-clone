@@ -112,13 +112,27 @@ export const GlobalStyles = createGlobalStyle`
   --filter-placeholder-icon: invert(59%) sepia(11%) saturate(200%)
     saturate(135%) hue-rotate(176deg) brightness(96%) contrast(94%);
 
+/* Ravi */
+
+--rbgprimary:#000000;
+    --rcprimary:#ffffff;
 }
 .light-theme{
+//fonts color
+    --ofont-color1:rgb(101,103,107);
+      --ofont-dark-color:rgb(5,5,5);
+   --ofont-primary-color:rgb(24,119,242);
+   --ofont-color2:rgb(255,255,255);
+
     --primary-color:rgb(24,119,242);
+ 
     --font-light-color:rgb(101,103,107);
+ 
     --font-dark-color:rgb(5,5,5);
+
     --background-gray-color:rgb(228,230,235);
     --primary-background-color:rgb(255,255,255);
+
     --secondary-background-color:rgb(240,242,245);
     --border-color:rgb(255,255,255);
     --border-color2:rgb(204,206,210);
@@ -199,12 +213,23 @@ export const GlobalStyles = createGlobalStyle`
   --filter-invert: 0;
   --filter-placeholder-icon: invert(59%) sepia(11%) saturate(200%)
     saturate(135%) hue-rotate(176deg) brightness(96%) contrast(94%);
+
+
+    /* Ravi */
+
+    --rbgprimary:#ffffff;
+    --rcprimary:#000000;
+
+    /* --rbgprimary:#000000;
+    --rcprimary:#ffffff; */
 }
 /* :root{
 
 } */
 
 //for bottom border of profile page menu
+
+
 .menuBorder-bottom{
     border-bottom:4px solid var(--primary-color);
     color: var(--primary-color) !important;
@@ -233,4 +258,4 @@ textarea {
 button {
   cursor: pointer;
 } 
-`
+`;

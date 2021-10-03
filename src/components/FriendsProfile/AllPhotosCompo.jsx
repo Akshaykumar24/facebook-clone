@@ -7,7 +7,7 @@ import { useDispatch } from "react-redux"
 import { getAnotherUser } from "../../redux/auth/action";
 import { useHistory } from 'react-router-dom'
 import { v4 as uuidv4 } from "uuid";
-function AllPhotosCompo({ handleSeeAllPhotos }) {
+function AllPhotosCompo() {
     const dispatch = useDispatch();
     const history = useHistory();
 

@@ -128,9 +128,8 @@ function FriendsProfile() {
               <div>
                 <h1>{userData.first_name + " " + userData.last_name}</h1>
                 <div>
-                  <p>You have to be odd to be number one</p>
-                  <p>Commited with life</p>
-                  <p>Dreamer,quick learner,proud son</p>
+                  <p>{userData.bio}</p>
+
                 </div>
               </div>
             </div>

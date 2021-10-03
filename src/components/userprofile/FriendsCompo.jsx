@@ -3,7 +3,8 @@ import styled from 'styled-components'
 import { useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
-import { getAnotherUser } from '../../redux/auth/action'
+import { getAnotherUser, getUserPosts } from '../../redux/auth/action'
+
 import { getData } from '../../utils/localStorage'
 //   <img
 //       src={
@@ -80,7 +81,9 @@ function FriendsCompo({ friends, handleSeeAllfriends }) {
                         <img onClick={() => {
 
                             if (el._id === userData._id) {
+                                dispatch(getUserPosts(el._id))
                                 history.push('/profile')
+
                             }
                             dispatch(getAnotherUser(el._id))
                             setTimeout(() => {
@@ -100,7 +103,7 @@ function FriendsCompo({ friends, handleSeeAllfriends }) {
     )
 }
 const FriendsCompoStyled = styled.div`
-  width: 23rem;
+  width: 100%;
   margin: auto;
   height: auto;
   display: grid;
@@ -125,7 +128,7 @@ const FriendsCompoStyled = styled.div`
       }
     }
     &>span:nth-child(2){
-         color:var(--font-light-color)
+         color:var(--ofont-color1)
     }
 }
     & > div:nth-child(2) {
@@ -134,7 +137,7 @@ const FriendsCompoStyled = styled.div`
       display: flex;
       align-items: center;
       justify-content: center;
-      color: var(--primary-color);
+      color: var(--ofont-primary-color);
       :hover {
         background-color: var(--background-gray-color);
         cursor: pointer;
@@ -154,6 +157,7 @@ const FriendsCompoStyled = styled.div`
       height: 6.6rem;
       border-radius: 10px;
       cursor: pointer;
+      object-fit: cover;
     }
     span{
         text-align: left;

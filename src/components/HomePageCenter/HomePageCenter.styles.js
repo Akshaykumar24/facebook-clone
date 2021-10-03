@@ -3,7 +3,7 @@ import styled from "styled-components";
 export const Wrapper = styled.div`
   width: 50%;
   margin: auto;
-
+ 
   img {
     max-width: 100%;
   }
@@ -14,6 +14,22 @@ export const Wrapper = styled.div`
     max-width: 100%;
   }
 `;
-export const FormContainer = styled.div``;
+export const FormContainer = styled.div`
+/* background-color:#000000;
+  div{
+    
+    background-color:#000000;
+  } */
+`;
 
-export const PostsContainer = styled.div``;
+export const PostsContainer = styled.div`
+/* &>div{
+  margin-top:1rem;
+  
+} */
+/* background-color:#000000;
+  div{
+    
+    background-color:#000000;
+  } */
+`;

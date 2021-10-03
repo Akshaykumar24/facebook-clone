@@ -7,7 +7,8 @@ import { useDispatch } from "react-redux"
 import { getAnotherUser } from "../../redux/auth/action";
 import { useHistory } from 'react-router-dom'
 import { v4 as uuidv4 } from "uuid";
-function AllPhotosCompo() {
+function AllPhotosCompo({ userPosts }) {
+    console.log(userPosts)
     const dispatch = useDispatch();
     const history = useHistory();
 
@@ -22,21 +23,23 @@ function AllPhotosCompo() {
         "https://scontent.fpnq7-4.fna.fbcdn.net/v/t31.18172-8/27982749_2004441323146362_7572999494274059494_o.jpg?_nc_cat=111&ccb=1-5&_nc_sid=8bfeb9&_nc_ohc=pIAfAknp0NYAX8rMOJJ&_nc_ht=scontent.fpnq7-4.fna&oh=c99b7fea322e5232f3ead4e5a8ebc80c&oe=61783394",
         "https://scontent.fpnq7-4.fna.fbcdn.net/v/t1.18169-9/26231609_1987217571535404_8550689058995090995_n.jpg?_nc_cat=107&ccb=1-5&_nc_sid=8bfeb9&_nc_ohc=e_XD2SY3qKAAX8_60EM&_nc_ht=scontent.fpnq7-4.fna&oh=724a4dab9a947a10f8d1359332f36e15&oe=617A5CDD",
     ];
-
+    const [photos, setPhotos] = useState(userPosts.filter((el) => {
+        return el.body_photo.length > 0
+    }))
     return (
         <AllPhotosCompoStyled>
             <div>
                 <h1>Photos</h1>
             </div>
             <MainFriendDivStled>
-                {photosData.map((el) => {
+                {photos.length > 0 ? photos.map((el) => {
                     return (
                         <div key={uuidv4()}>
-                            <img src={el} alt="" />
+                            <img src={el.body_photo} alt="" />
 
                         </div>
                     );
-                })}
+                }) : <h1>No Photos to show</h1>}
             </MainFriendDivStled>
         </AllPhotosCompoStyled>
     );
@@ -70,6 +73,7 @@ img{
     width: 100%;
     height: 100%;
     border-radius: 1rem;
+    object-fit: cover;
 }
    
 

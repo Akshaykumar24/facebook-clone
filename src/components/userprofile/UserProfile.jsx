@@ -17,11 +17,18 @@ import EmojiMart from "../EmojiMart/EmojiMart";
 import { MainPostLayout } from "../../styles/layouts";
 import AboutCompo from "./AboutCompo";
 import AllFriendsCompo from "./AllFriendsCompo";
+import TextField from "@mui/material/TextField";
 import AllPhotosCompo from "./AllPhotosCompo";
+import { updateUser, getAllUserPosts, getOtherUsersPosts, getUserPosts } from "../../redux/auth/action";
+import { useDispatch } from 'react-redux'
+import PostCard from '../PostCard/PostCard'
 import { logUser } from "../../redux/auth/action";
-import { useDispatch, useSelector } from "react-redux";
-
+import PostForm from "../PostForm/PostForm";
+import FilterListIcon from '@mui/icons-material/FilterList';
 function UserProfile() {
+
+  const dispatch = useDispatch();
+
   // console.log(user)
   const [posts, setPosts] = useState(true);
   const [friends, setFriends] = useState(false);
@@ -29,6 +36,9 @@ function UserProfile() {
   const [about, setAbout] = useState(false);
   const [title, setTitle] = useState("");
   const [btnText, setBtnText] = useState("");
+  const [editBio, setEditBio] = useState(false);
+
+
   const refreshPage = () => {
     window.location.reload();
   };
@@ -44,7 +54,6 @@ function UserProfile() {
 
   const handleEditProfileOpen = () => setEditProfileOpen(true);
   const handleEditProfileClose = () => setEditProfileOpen(false);
-  const dispatch = useDispatch();
   // useEffect(() => {
 
   // }, []);
@@ -69,7 +78,25 @@ function UserProfile() {
       ? getData("userData").user
       : getData("userData").userOnline
   );
+  const [userPosts, setUserPosts] = useState(
+    getData("userPosts")?.posts ? getData("userPosts").posts : []
+  )
+  const [mainuserPosts, setMainuserPosts] = useState(
+    getData("userPosts")?.posts ? getData("userPosts").posts : []
+  )
 
+
+  const [bio, setBio] = useState(userData.bio ? userData.bio : "")
+  const [remainingChar, setRemainingChar] = useState(100 - (userData?.bio?.length ? userData?.bio?.length : 0))
+  const handleBioChange = (e) => {
+    setBio(e.target.value)
+    setRemainingChar(100 - e.target.value.length)
+  }
+  const handleEditBio = () => {
+    setEditBio(!editBio)
+    setBio(userData.bio)
+
+  }
   // async function getusersData(id) {
   //   await axios.get(`http://localhost:2424/api/user/${id}`).then(({ data }) => {
   //     handleUserDataContext(data)
@@ -77,6 +104,13 @@ function UserProfile() {
   // }
   // getusersData(id)
 
+  const handleUpdateBio = () => {
+    dispatch(updateUser({ "bio": bio }, userData._id))
+    setTimeout(() => {
+      refreshPage()
+    }, 1000)
+
+  }
   const [open, setOpen] = useState(false);
   const handleCoverPhotoModalOpen = () => {
     setTitle("Edit Cover Photo");
@@ -182,12 +216,40 @@ function UserProfile() {
             <div className="Bio">
               <div>
                 <h1>{userData.first_name + " " + userData.last_name}</h1>
-                <div>
-                  <p>You have to be odd to be number one</p>
-                  <p>Commited with life</p>
-                  <p>Dreamer,quick learner,proud son</p>
-                  <span className="editBio">Edit</span>
-                </div>
+                {editBio ? <EditBioStyled>
+                  <div>
+                    <TextField
+                      id="outlined-multiline-flexible"
+
+                      multiline
+                      minRows={2}
+                      maxRows={2}
+                      maxLength={4}
+                      fullWidth
+                      value={bio}
+                      onChange={handleBioChange}
+                      defaultValue={bio}
+                      inputProps={{
+                        maxLength: 100
+                      }}
+                    />
+
+                  </div>
+                  <div><span>{remainingChar} Characters remaining</span></div>
+                  <div>
+                    <div></div>
+                    <div>
+                      <button onClick={handleEditBio} >Cancel</button>
+                    </div>
+                    <div>
+                      <button onClick={handleUpdateBio}>Save</button>
+                    </div>
+                  </div>
+                </EditBioStyled> : <div>
+                  <p>{userData.bio}</p>
+                  <span onClick={handleEditBio} className="editBio">Edit</span>
+                </div>}
+
               </div>
             </div>
             <div className="profileMenuItems">
@@ -230,6 +292,7 @@ function UserProfile() {
                   className="menuflex editFont"
                 >
                   <EditIcon /> <span>Edit Profile</span>
+
                 </div>
               </div>
               <div className="menu">
@@ -242,58 +305,192 @@ function UserProfile() {
         </MainLayout>
       </div>
       <MainPostLayout>
-        {posts ? (
-          <PostCompoSyled>
-            <div>
-              <Intro
-                work1={userData.work1}
-                work2={userData.work2}
-                education1={userData.education1}
-                education2={userData.education2}
-                livesIn={userData.city1}
-                from={userData.city2}
-                joined={userData.createdAt}
-                followedBy={userData.friendRequestRecieved.length}
-                handleEditProfileOpen={handleEditProfileOpen}
-              />
-              <PhotosComp handleSeeAllPhotos={handleSeeAllPhotos} />
-              <FriendsCompo
-                handleSeeAllfriends={handleSeeAllfriends}
-                friends={userData.friends}
-                userData={userData}
-              />
-            </div>
-            <div></div>
-          </PostCompoSyled>
-        ) : (
-          ""
-        )}
-        {about ? (
-          <AboutCompo handleEditProfileOpen={handleEditProfileOpen} />
-        ) : (
-          ""
-        )}
+        {posts ? <PostCompoSyled>
+          <div>
+            <Intro
+              work1={userData.work1}
+              work2={userData.work2}
+              education1={userData.education1}
+              education2={userData.education2}
+              livesIn={userData.city1}
+              from={userData.city2}
+              joined={userData.createdAt}
+              followedBy={userData.friendRequestRecieved.length}
+              handleEditProfileOpen={handleEditProfileOpen}
+            />
+            <PhotosComp userPosts={mainuserPosts} handleSeeAllPhotos={handleSeeAllPhotos} />
+            <FriendsCompo handleSeeAllfriends={handleSeeAllfriends} friends={userData.friends} userData={userData} />
+          </div>
+          <div>
+            <PostForm user={userData} />
+            <FilterPostsStyled>
+              <div><h3>Posts</h3></div>
+              <div>
+                <div><span>Filter By</span></div>
+                <div><button onClick={() => {
+                  dispatch(getUserPosts(userData._id))
+                  setUserPosts(getData("userPosts")?.posts ? getData("userPosts").posts : [])
+
+                }}>You</button><button onClick={() => {
+                  dispatch(getAllUserPosts())
+                  setUserPosts(getData("allUserPosts")?.posts ? getData("allUserPosts").posts : [])
+
+                }}>Anyone</button><button onClick={() => {
+                  dispatch(getOtherUsersPosts(userData._id))
+                  setUserPosts(getData("otherUserPosts")?.posts ? getData("otherUserPosts").posts : [])
+
+                }}>Others</button></div>
+              </div>
+            </FilterPostsStyled>
+            {userPosts.reverse().map((el) => {
+              return <PostCard post={el} user={userData} />
+            })}
+
+          </div>
+        </PostCompoSyled> : ""}
+        {about ? <AboutCompo handleEditProfileOpen={handleEditProfileOpen} /> : ""}
         {friends ? <AllFriendsCompo /> : ""}
-        {photos ? <AllPhotosCompo /> : ""}
+        {photos ? <AllPhotosCompo userPosts={mainuserPosts} /> : ""}
       </MainPostLayout>
       {/* <EmojiMart /> */}
     </UserProfileStyles>
   );
 }
-const PostCompoSyled = styled.div`
+
+const FilterPostsStyled = styled.div`
+    width: 100%;
+    display: grid;
+    height: 8rem;
+padding: 15px;
+box-shadow: 0px 0px 4px var(--icons-gray-color);
+  border-radius: 1rem;
+    background-color: var(--border-color);
+    grid-template-rows: 1fr 2fr;
+&>div:nth-child(1) {
   display: flex;
+  justify-content:start;
+  align-items: center;
+  h3{
+    font-size: 1.4rem;
+    color:var(--ofont-dark-color) ;
+}
+}
+&>div:nth-child(2) {
+  display: flex;
+  justify-content:space-between;
+  align-items: center;
+  &>div:nth-child(1){
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    span{
+
+    color: var(--ofont-color1);
+    font-weight: 600;
+
+    }
+  }
+  &>div:nth-child(2){
+    width: 20rem;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    button{
+         height: 2rem;
+    width: 6rem;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--primary-color);
+    color: var(--ofont-color2);
+    cursor: pointer;
+    font-weight: bold;
+    outline: none;
+    border: none;
+    font-size: 1.1rem;
+    }
+
+  }
+}
+
+
+
+
+`
+
+const EditBioStyled = styled.div`
+
+
+display: grid;
+  
+    justify-content: center;
+    align-items: center;
+&>div:nth-child(1){
+      width: 20rem;
+    height: 4rem;
+
+}
+&>div:nth-child(2){
+height: 1.2rem;
+    text-align: end;
+    margin-top: 6px;
+    span{
+      font-size: 11px !important;
+      color: var(--ofont-color1) !important;
+      :hover{
+        text-decoration:none !important;
+      }
+    }
+
+}
+&>div:nth-child(3){
+    height: 2.7rem;
+    grid-template: 1fr 1fr;
+    display: grid;
+    grid-template-columns: 3fr 1fr 1fr;
+    grid-gap: 1rem;
+    margin-top: 2px;
+    &>div{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      button{
+     height: 2rem;
+    padding: 5px;
+    border: none;
+    background-color: var(--background-gray-color);
+    :hover{
+      background-color: var(--hover-effect)
+    }
+
+      }
+    }
+}
+
+
+`
+const PostCompoSyled = styled.div`
+  display: grid;
+  grid-template-columns: 3fr 5fr;
   margin-top: 1rem;
+  grid-gap:1rem;
   & > div:nth-child(1) {
     display: flex;
     flex-direction: column;
     row-gap: 1rem;
+
+    height: fit-content;
   }
 `;
+
+
+
 
 const UserProfileStyles = styled.div`
   .mainProfile {
     width: 100%;
-    height: 36.3125rem;
+    height: 37.3125rem;
     box-shadow: 0px -1px 9px var(--font-dark-color);
     background-color: var(--primary-background-color);
     .profilePhotos {
@@ -331,7 +528,7 @@ const UserProfileStyles = styled.div`
             cursor: pointer;
           }
           span {
-            color: var(--font-dark-color);
+            color: var(--ofont-dark-color);
             padding-bottom: 3px;
             font-size: 14px;
             font-weight: 650;
@@ -373,7 +570,7 @@ const UserProfileStyles = styled.div`
 
       .Bio {
         width: inherit;
-        height: 11.2rem;
+        height: 12.2rem;
 
         flex-basis: 60%;
         & > div {
@@ -381,16 +578,23 @@ const UserProfileStyles = styled.div`
           height: 8.6rem;
           padding-top: 18px;
           h1 {
-            color: var(--font-dark-color);
+            color: var(--ofont-dark-color);
             font-size: 2em;
           }
           & > div {
-            line-height: 25px;
-            margin-top: 0px;
-            font-size: 1.1rem;
-            color: var(--font-light-color);
+               line-height: 25px;
+    margin-top: 0px;
+    font-size: 1.1rem;
+    color: var(--ofont-color1);
+    display: grid;
+    justify-content: center;
+            p{
+              min-height: 6rem;
+              width: 22rem;
+              word-wrap: break-word;
+            }
             span {
-              color: var(--primary-color);
+              color: var(--ofont-primary-color);
               font-size: 0.9rem;
               font-weight: 650;
               :hover {
@@ -409,7 +613,7 @@ const UserProfileStyles = styled.div`
 
         height: 3.4rem;
 
-        column-gap: 6px;
+        column-gap: 11px;
 
         align-items: center;
         .specialC {
@@ -423,7 +627,7 @@ const UserProfileStyles = styled.div`
           min-width: 3rem;
           padding: 0px 0.6rem;
           height: 100%;
-          color: var(--font-light-color);
+          color: var(--ofont-color1);
           display: flex;
 
           align-items: center;
@@ -453,17 +657,17 @@ const UserProfileStyles = styled.div`
         .primarybgc {
           border-radius: 8px;
           background-color: var(--primary-color);
-          color: var(--primary-background-color);
+          color: var(--ofont-color2);
           height: 2rem;
           padding: 0 3px;
           font-size: 14px;
           font-weight: 650;
           span {
-            color: var(--primary-background-color);
+            color: var(--ofont-color2);
           }
         }
         .editFont {
-          color: var(--font-dark-color);
+          color: var(--ofont-dark-color);
         }
         .menu {
           min-width: 3rem;

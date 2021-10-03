@@ -5,12 +5,7 @@ import AllFriendsCompo from "./components/userprofile/AllFriendsCompo";
 import AllPhotosCompo from "./components/userprofile/AllPhotosCompo";
 import { useState, useEffect } from "react";
 function App() {
-  const [theme, setTheme] = useState('dark-theme')
-  const [checked, setChecked] = useState(false)
 
-  useEffect(() => {
-    document.documentElement.className = theme;
-  }, [theme])
   return (
     <div className="App">
 

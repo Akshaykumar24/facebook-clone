@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-function PhotosComp({ handleSeeAllPhotos }) {
+import { useState } from "react";
+function PhotosComp({ handleSeeAllPhotos, userPosts }) {
   const photosData = [
     "https://scontent.fpnq7-4.fna.fbcdn.net/v/t1.6435-9/35799287_2073684202954764_7545216993050230784_n.jpg?_nc_cat=111&ccb=1-5&_nc_sid=174925&_nc_ohc=_hZCbwLIc6wAX9Gebht&_nc_ht=scontent.fpnq7-4.fna&oh=f56970935bc300864b0c21ee0de0ea95&oe=61791D41",
     "https://scontent.fpnq7-1.fna.fbcdn.net/v/t1.6435-9/32368897_2037243136515560_6592291929071812608_n.jpg?_nc_cat=109&ccb=1-5&_nc_sid=19026a&_nc_ohc=0aVwZHV9O0AAX-rnVH0&_nc_ht=scontent.fpnq7-1.fna&oh=820f7fe731575d81a96080e7d0a23929&oe=617A3B05",
@@ -12,6 +13,9 @@ function PhotosComp({ handleSeeAllPhotos }) {
     "https://scontent.fpnq7-4.fna.fbcdn.net/v/t31.18172-8/27982749_2004441323146362_7572999494274059494_o.jpg?_nc_cat=111&ccb=1-5&_nc_sid=8bfeb9&_nc_ohc=pIAfAknp0NYAX8rMOJJ&_nc_ht=scontent.fpnq7-4.fna&oh=c99b7fea322e5232f3ead4e5a8ebc80c&oe=61783394",
     "https://scontent.fpnq7-4.fna.fbcdn.net/v/t1.18169-9/26231609_1987217571535404_8550689058995090995_n.jpg?_nc_cat=107&ccb=1-5&_nc_sid=8bfeb9&_nc_ohc=e_XD2SY3qKAAX8_60EM&_nc_ht=scontent.fpnq7-4.fna&oh=724a4dab9a947a10f8d1359332f36e15&oe=617A5CDD",
   ];
+  const [photos, setPhotos] = useState(userPosts.filter((el) => {
+    return el.body_photo.length > 0
+  }))
   return (
     <PhotosCompStyles>
       <div className="linksForPhotos">
@@ -19,18 +23,19 @@ function PhotosComp({ handleSeeAllPhotos }) {
         <div onClick={handleSeeAllPhotos}>See All Photos</div>
       </div>
       <div className="photosGrid">
-        {photosData.map((el) => {
-          return <img src={el} alt="" />;
-        })}
+        {photos.length > 0 ? photos.map((el) => {
+
+          return <img src={el.body_photo} alt="" />;
+        }) : "No photos to show"}
       </div>
     </PhotosCompStyles>
   );
 }
 
 const PhotosCompStyles = styled.div`
-  width: 23rem;
+  width: 100%;
   margin: auto;
-    height: 27.18rem;
+    height: auto;
   display: grid;
   padding: 15px;
   grid-gap: 1rem;
@@ -56,7 +61,7 @@ const PhotosCompStyles = styled.div`
       display: flex;
       align-items: center;
       justify-content: center;
-      color: var(--primary-color);
+      color: var(--ofont-primary-color);
       :hover {
         background-color: var(--background-gray-color);
         cursor: pointer;
@@ -68,11 +73,13 @@ const PhotosCompStyles = styled.div`
     grid-template-columns: 1fr 1fr 1fr;
     grid-gap: 0.5rem;
     width: 100%;
-
+justify-content:center;
     img {
       width: 100%;
       height: 6.6rem;
+      object-fit: cover;
     }
+    
   }
 `;
 
