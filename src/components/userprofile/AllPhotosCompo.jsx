@@ -8,6 +8,7 @@ import { getAnotherUser } from "../../redux/auth/action";
 import { useHistory } from 'react-router-dom'
 import { v4 as uuidv4 } from "uuid";
 function AllPhotosCompo({ userPosts }) {
+    console.log(userPosts)
     const dispatch = useDispatch();
     const history = useHistory();
 
@@ -72,6 +73,7 @@ img{
     width: 100%;
     height: 100%;
     border-radius: 1rem;
+    object-fit: cover;
 }
    
 

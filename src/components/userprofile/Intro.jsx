@@ -59,7 +59,7 @@ function Intro({ work1, work2, education1, education2, livesIn, from, joined, fo
 
 
 const IntroStyles = styled.div`
-width: 23rem;
+width: 100%;
 margin: auto;
 display: grid;
 grid-template-columns:1fr;
@@ -93,7 +93,7 @@ box-shadow: 0px 0px 4px var(--icons-gray-color);
     align-items: center;
     height: 2.18rem;
     background-color:var(--background-gray-color);
-    color: var(--font-dark-color);
+    color: var(--ofont-dark-color);
     font-weight: 600;
     :hover {
         cursor:pointer;

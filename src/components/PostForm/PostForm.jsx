@@ -69,6 +69,7 @@ const PostForm = ({ user }) => {
       user_id: user._id,
       body_text: body_text,
       body_photo: body_photo,
+      time: new Date(),
     });
   };
   // const handelbodyPhoto = ()=>{

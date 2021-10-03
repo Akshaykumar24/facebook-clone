@@ -120,6 +120,7 @@ const MainFriendDivStled = styled.div`
         border-radius:5px;
         height: 100%;
         cursor: pointer;
+        object-fit: cover;
       }
     }
     .nameMutualFrnd {
@@ -141,10 +142,10 @@ const MainFriendDivStled = styled.div`
       span:nth-child(1) {
         font-size: 1rem;
         font-weight: 600;
-        color: var(--font-dark-color);
+        color: var(--ofont-dark-color);
       }
       span:nth-child(2) {
-        color: var(--font-light-color);
+        color: var(--ofont-color1);
       }
     }
     .moreDiv {

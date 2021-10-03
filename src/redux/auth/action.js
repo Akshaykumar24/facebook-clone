@@ -52,6 +52,8 @@ export const logUser = (data) => (dispatch) => {
       setData("userData", data)
 
       dispatch(getUserPosts(data.userOnline._id))
+      dispatch(getOtherUsersPosts(data.userOnline._id))
+      dispatch(getAllUserPosts())
       return dispatch(logSuccess(data));
     })
     .catch((err) => dispatch(logFail(err)));
@@ -63,13 +65,12 @@ export const regUser = (data) => (dispatch) => {
     .post(`${url}/api/register`, data)
     .then(({ data }) => {
       setData("userData", data)
-
+      dispatch(getAllUserPosts())
       return dispatch(regSuccess(data));
     })
     .catch((err) => dispatch(regFail(err)));
 };
 export const updateUser = (data, id) => (dispatch) => {
-  console.log(data, "hjskdfhkioju")
   dispatch(regReq());
   axios
     .patch(`${url}/api/user/${id}`, data)
@@ -102,7 +103,6 @@ export const getUser = (id) => (dispatch) => {
   axios
     .get(`${url}/api/user/${id}`)
     .then(({ data }) => {
-      console.log(data, "ihi from updateUser");
       dispatch(getUserPosts(id))
       setData("userData", data)
       return dispatch(regSuccess(data));
@@ -114,7 +114,6 @@ export const getAnotherUser = (id) => (dispatch) => {
   axios
     .get(`${url}/api/user/${id}`)
     .then(({ data }) => {
-      console.log(data, "ihi from updateUser");
       dispatch(getUserPosts(id))
       setData("frndData", data)
       return dispatch(frndSuccess(data));
@@ -126,8 +125,27 @@ export const getUserPosts = (id) => (dispatch) => {
   axios
     .get(`${url}/api/posts/user/${id}`)
     .then(({ data }) => {
-      console.log(data, "ihi from updateUser");
       setData("userPosts", data)
+      return dispatch(postSuccess(data));
+    })
+    .catch((err) => dispatch(regFail(err)));
+};
+export const getOtherUsersPosts = (id) => (dispatch) => {
+  dispatch(regReq());
+  axios
+    .get(`${url}/api/posts/otherusers/${id}`)
+    .then(({ data }) => {
+      setData("otherUserPosts", data)
+      return dispatch(postSuccess(data));
+    })
+    .catch((err) => dispatch(regFail(err)));
+};
+export const getAllUserPosts = () => (dispatch) => {
+  dispatch(regReq());
+  axios
+    .get(`${url}/api/posts`)
+    .then(({ data }) => {
+      setData("allUserPosts", data)
       return dispatch(postSuccess(data));
     })
     .catch((err) => dispatch(regFail(err)));

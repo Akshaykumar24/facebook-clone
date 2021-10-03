@@ -33,7 +33,7 @@ function PhotosComp({ handleSeeAllPhotos, userPosts }) {
 }
 
 const PhotosCompStyles = styled.div`
-  width: 23rem;
+  width: 100%;
   margin: auto;
     height: auto;
   display: grid;
@@ -61,7 +61,7 @@ const PhotosCompStyles = styled.div`
       display: flex;
       align-items: center;
       justify-content: center;
-      color: var(--primary-color);
+      color: var(--ofont-primary-color);
       :hover {
         background-color: var(--background-gray-color);
         cursor: pointer;
@@ -77,6 +77,7 @@ justify-content:center;
     img {
       width: 100%;
       height: 6.6rem;
+      object-fit: cover;
     }
     
   }

@@ -19,11 +19,12 @@ import AboutCompo from "./AboutCompo";
 import AllFriendsCompo from "./AllFriendsCompo";
 import TextField from "@mui/material/TextField";
 import AllPhotosCompo from "./AllPhotosCompo";
-import { updateUser } from "../../redux/auth/action";
+import { updateUser, getAllUserPosts, getOtherUsersPosts, getUserPosts } from "../../redux/auth/action";
 import { useDispatch } from 'react-redux'
 import PostCard from '../PostCard/PostCard'
 import { logUser } from "../../redux/auth/action";
-
+import PostForm from "../PostForm/PostForm";
+import FilterListIcon from '@mui/icons-material/FilterList';
 function UserProfile() {
 
   const dispatch = useDispatch();
@@ -80,6 +81,10 @@ function UserProfile() {
   const [userPosts, setUserPosts] = useState(
     getData("userPosts")?.posts ? getData("userPosts").posts : []
   )
+  const [mainuserPosts, setMainuserPosts] = useState(
+    getData("userPosts")?.posts ? getData("userPosts").posts : []
+  )
+
 
   const [bio, setBio] = useState(userData.bio ? userData.bio : "")
   const [remainingChar, setRemainingChar] = useState(100 - (userData?.bio?.length ? userData?.bio?.length : 0))
@@ -313,11 +318,31 @@ function UserProfile() {
               followedBy={userData.friendRequestRecieved.length}
               handleEditProfileOpen={handleEditProfileOpen}
             />
-            <PhotosComp userPosts={userPosts} handleSeeAllPhotos={handleSeeAllPhotos} />
+            <PhotosComp userPosts={mainuserPosts} handleSeeAllPhotos={handleSeeAllPhotos} />
             <FriendsCompo handleSeeAllfriends={handleSeeAllfriends} friends={userData.friends} userData={userData} />
           </div>
           <div>
-            {userPosts.map((el) => {
+            <PostForm user={userData} />
+            <FilterPostsStyled>
+              <div><h3>Posts</h3></div>
+              <div>
+                <div><span>Filter By</span></div>
+                <div><button onClick={() => {
+                  dispatch(getUserPosts(userData._id))
+                  setUserPosts(getData("userPosts")?.posts ? getData("userPosts").posts : [])
+
+                }}>You</button><button onClick={() => {
+                  dispatch(getAllUserPosts())
+                  setUserPosts(getData("allUserPosts")?.posts ? getData("allUserPosts").posts : [])
+
+                }}>Anyone</button><button onClick={() => {
+                  dispatch(getOtherUsersPosts(userData._id))
+                  setUserPosts(getData("otherUserPosts")?.posts ? getData("otherUserPosts").posts : [])
+
+                }}>Others</button></div>
+              </div>
+            </FilterPostsStyled>
+            {userPosts.reverse().map((el) => {
               return <PostCard post={el} user={userData} />
             })}
 
@@ -325,14 +350,74 @@ function UserProfile() {
         </PostCompoSyled> : ""}
         {about ? <AboutCompo handleEditProfileOpen={handleEditProfileOpen} /> : ""}
         {friends ? <AllFriendsCompo /> : ""}
-        {photos ? <AllPhotosCompo userPosts={userPosts} /> : ""}
+        {photos ? <AllPhotosCompo userPosts={mainuserPosts} /> : ""}
       </MainPostLayout>
       {/* <EmojiMart /> */}
     </UserProfileStyles>
   );
 }
 
+const FilterPostsStyled = styled.div`
+    width: 100%;
+    display: grid;
+    height: 8rem;
+padding: 15px;
+box-shadow: 0px 0px 4px var(--icons-gray-color);
+  border-radius: 1rem;
+    background-color: var(--border-color);
+    grid-template-rows: 1fr 2fr;
+&>div:nth-child(1) {
+  display: flex;
+  justify-content:start;
+  align-items: center;
+  h3{
+    font-size: 1.4rem;
+    color:var(--ofont-dark-color) ;
+}
+}
+&>div:nth-child(2) {
+  display: flex;
+  justify-content:space-between;
+  align-items: center;
+  &>div:nth-child(1){
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    span{
 
+    color: var(--ofont-color1);
+    font-weight: 600;
+
+    }
+  }
+  &>div:nth-child(2){
+    width: 20rem;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    button{
+         height: 2rem;
+    width: 6rem;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--primary-color);
+    color: var(--ofont-color2);
+    cursor: pointer;
+    font-weight: bold;
+    outline: none;
+    border: none;
+    font-size: 1.1rem;
+    }
+
+  }
+}
+
+
+
+
+`
 
 const EditBioStyled = styled.div`
 
@@ -386,12 +471,16 @@ height: 1.2rem;
 
 `
 const PostCompoSyled = styled.div`
-  display: flex;
+  display: grid;
+  grid-template-columns: 3fr 5fr;
   margin-top: 1rem;
+  grid-gap:1rem;
   & > div:nth-child(1) {
     display: flex;
     flex-direction: column;
     row-gap: 1rem;
+
+    height: fit-content;
   }
 `;
 

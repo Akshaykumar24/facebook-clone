@@ -103,7 +103,7 @@ function FriendsCompo({ friends, handleSeeAllfriends }) {
     )
 }
 const FriendsCompoStyled = styled.div`
-  width: 23rem;
+  width: 100%;
   margin: auto;
   height: auto;
   display: grid;
@@ -128,7 +128,7 @@ const FriendsCompoStyled = styled.div`
       }
     }
     &>span:nth-child(2){
-         color:var(--font-light-color)
+         color:var(--ofont-color1)
     }
 }
     & > div:nth-child(2) {
@@ -137,7 +137,7 @@ const FriendsCompoStyled = styled.div`
       display: flex;
       align-items: center;
       justify-content: center;
-      color: var(--primary-color);
+      color: var(--ofont-primary-color);
       :hover {
         background-color: var(--background-gray-color);
         cursor: pointer;
@@ -157,6 +157,7 @@ const FriendsCompoStyled = styled.div`
       height: 6.6rem;
       border-radius: 10px;
       cursor: pointer;
+      object-fit: cover;
     }
     span{
         text-align: left;

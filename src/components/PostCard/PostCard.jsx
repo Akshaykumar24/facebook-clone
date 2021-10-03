@@ -4,14 +4,15 @@ import { url } from "../../utils/url";
 import PostStat from "./PostStat";
 import CommentForm from "../CommentForm/CommentForm";
 import CommentCard from "../CommentCard/CommentCard";
-
+import moment from 'moment';
 import { Box, Button, Avatar, Divider } from "@mui/material";
 import { useSelector } from "react-redux";
 
 import { AiOutlineLike } from "react-icons/ai";
 import { FaRegCommentAlt } from "react-icons/fa";
 import { RiShareForwardLine } from "react-icons/ri";
-
+import { useDispatch } from 'react-redux'
+import { getAllUserPosts, getOtherUsersPosts, getUserPosts } from "../../redux/auth/action";
 const updatePost = (id, no_of_likes, liked_by) => {
   return axios.patch(`${url}/api/posts/${id}`, {
     no_of_likes,
@@ -26,6 +27,7 @@ const getCommentOfThisPost = (id) => {
 };
 
 const PostCard = ({ post, user }) => {
+  const dispatch = useDispatch();
   console.log("user:", user);
   // console.log('user from post card:', user)
   // console.log('post:', post)
@@ -37,6 +39,7 @@ const PostCard = ({ post, user }) => {
     body_photo,
     user_id,
     liked_by,
+    time
   } = post;
   const [isComment, setIsComment] = useState(false);
   const [showComments, setShowComments] = useState(false);
@@ -44,6 +47,9 @@ const PostCard = ({ post, user }) => {
   const [noOfLikes, setNoOfLikes] = useState(0);
   const [noOfComments, setNoOfComments] = useState(0);
   // const [hadLiked, setHadLiked] = useState(false);
+
+  const [duration, setDuration] = useState()
+
   const state = useSelector((state) => state);
   const me = state.auth.user;
   // useEffect(()=>{
@@ -57,6 +63,20 @@ const PostCard = ({ post, user }) => {
   useEffect(() => {
     setNoOfLikes(no_of_likes);
     setNoOfComments(no_of_comments);
+
+
+    const momentDur = moment.utc(moment(new Date()).diff(moment(time), 'seconds'))
+
+
+    if (Math.floor(Number(momentDur) / 3600) >= 1) {
+      setDuration(Math.floor(Number(momentDur) / 3600) + " hr")
+    } else if (Math.floor(Number(momentDur) / 60) >= 1) {
+      setDuration(Math.floor(Number(momentDur) / 60) + " min")
+    } else {
+      setDuration(Number(momentDur) + " sec")
+    }
+
+
   }, [no_of_comments, no_of_likes]);
 
   const handleLike = () => {
@@ -72,6 +92,9 @@ const PostCard = ({ post, user }) => {
         updatePost(_id, likes + 1, likedBy).then(({ data }) => {
           likes = data.post.no_of_likes;
           setNoOfLikes(likes);
+          dispatch(getAllUserPosts())
+          dispatch(getOtherUsersPosts(_id))
+          dispatch(getUserPosts(_id))
         });
       });
     axios
@@ -124,11 +147,11 @@ const PostCard = ({ post, user }) => {
           }}
         >
           <Box>
-            <Avatar sx={{ m: "0 1rem" }} alt="R" src={body_photo} />
+            <Avatar sx={{ m: "0 1rem" }} alt="R" src={user.profile} />
           </Box>
           <Box>
             <Box>{user_id.first_name} </Box>
-            <Box>22h {/* <LanguageIcon /> */}</Box>
+            <Box>{duration}{/* <LanguageIcon /> */}</Box>
           </Box>
         </Box>
         <Box>{/* <MoreHorizOutlined /> */}</Box>
@@ -136,7 +159,7 @@ const PostCard = ({ post, user }) => {
       {/* post body */}
       <Box sx={{ margin: "1rem" }}>{body_text}</Box>
       <Box sx={{ margin: "0" }}>
-        <img src={body_photo} alt="" />
+        <img style={{ maxWidth: "100%" }} src={body_photo} alt="" />
       </Box>
       {/* post stat */}
       <Box>
