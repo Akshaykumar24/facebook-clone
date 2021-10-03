@@ -1,6 +1,6 @@
 import axios from "axios";
 import { url } from "../../utils/url";
-import { setData } from '../../utils/localStorage'
+import { setData } from "../../utils/localStorage";
 import {
   LOG_FAILURE,
   LOG_REQUEST,
@@ -9,6 +9,9 @@ import {
   REG_REQUEST,
   REG_SUCCESS,
   FRND_SUCCESS,
+  OUT_FAILURE,
+  OUT_REQUEST,
+  OUT_SUCCESS,
 } from "./actionTypes";
 
 export const logReq = () => {
@@ -40,12 +43,35 @@ export const regFail = (err) => {
   };
 };
 
+export const outReq = () => {
+  return { type: OUT_REQUEST };
+};
+export const outSuccess = (data) => {
+  return { type: OUT_SUCCESS, payload: data };
+};
+export const outFail = (err) => {
+  return {
+    type: OUT_FAILURE,
+    payload: err,
+  };
+};
+
+export const outUser = (data) => (dispatch) => {
+  dispatch(outReq());
+
+  try {
+    dispatch(outSuccess(data));
+  } catch (err) {
+    dispatch(outFail(err));
+  }
+};
+
 export const logUser = (data) => (dispatch) => {
   dispatch(logReq());
   axios
     .post(`${url}/api/login`, data)
     .then(({ data }) => {
-      setData("userData", data)
+      setData("userData", data);
       return dispatch(logSuccess(data));
     })
     .catch((err) => dispatch(logFail(err)));
@@ -56,23 +82,22 @@ export const regUser = (data) => (dispatch) => {
   axios
     .post(`${url}/api/register`, data)
     .then(({ data }) => {
-      setData("userData", data)
+      setData("userData", data);
       return dispatch(regSuccess(data));
     })
     .catch((err) => dispatch(regFail(err)));
 };
 export const updateUser = (data, id) => (dispatch) => {
-  console.log(data, "hjskdfhkioju")
+  console.log(data, "hjskdfhkioju");
   dispatch(regReq());
   axios
     .patch(`${url}/api/user/${id}`, data)
     .then(({ data }) => {
-      dispatch(getUser(id))
+      dispatch(getUser(id));
       return dispatch(regSuccess(data));
     })
     .catch((err) => dispatch(regFail(err)));
 };
-
 
 // export const getUser = (id) => (dispatch) => {
 //   dispatch(regReq());
@@ -96,7 +121,7 @@ export const getUser = (id) => (dispatch) => {
     .get(`${url}/api/user/${id}`)
     .then(({ data }) => {
       console.log(data, "ihi from updateUser");
-      setData("userData", data)
+      setData("userData", data);
       return dispatch(regSuccess(data));
     })
     .catch((err) => dispatch(regFail(err)));
@@ -107,7 +132,7 @@ export const getAnotherUser = (id) => (dispatch) => {
     .get(`${url}/api/user/${id}`)
     .then(({ data }) => {
       console.log(data, "ihi from updateUser");
-      setData("frndData", data)
+      setData("frndData", data);
       return dispatch(frndSuccess(data));
     })
     .catch((err) => dispatch(regFail(err)));
