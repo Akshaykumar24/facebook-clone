@@ -27,6 +27,7 @@ const getCommentOfThisPost = (id) => {
 
 const PostCard = ({ post, user }) => {
   console.log("user:", user);
+  // console.log('user from post card:', user)
   // console.log('post:', post)
   const {
     body_text,
@@ -220,8 +221,9 @@ const PostCard = ({ post, user }) => {
         <Box>
           <CommentForm
             post_id={_id}
-            setComments={setComments}
+            user={user}
             sendCommentNotification={sendCommentNotification}
+            setComments={setComments}
           />
         </Box>
       )}
