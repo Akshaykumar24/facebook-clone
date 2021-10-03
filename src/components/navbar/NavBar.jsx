@@ -18,13 +18,17 @@ import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { getData } from '../../utils/localStorage'
+import { useState } from "react";
 
 const NavBar = ({ themeToggler, checked, menu, setMenu }) => {
   const [account, setAccount] = React.useState(false);
   const [notification, setNotification] = React.useState(false);
 
   const state = useSelector((state) => state);
-  const p = state.auth.user;
+  const [p, setP] = useState(getData("userData").user
+    ? getData("userData").user
+    : getData("userData").userOnline)
 
   const handleMenu = () => {
     console.log(menu, "menu");

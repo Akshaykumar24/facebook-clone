@@ -9,6 +9,7 @@ import {
   REG_REQUEST,
   REG_SUCCESS,
   FRND_SUCCESS,
+  POST_SUCCESS
 } from "./actionTypes";
 
 export const logReq = () => {
@@ -33,6 +34,9 @@ export const regSuccess = (data) => {
 export const frndSuccess = (data) => {
   return { type: FRND_SUCCESS, payload: data };
 };
+export const postSuccess = (data) => {
+  return { type: POST_SUCCESS, payload: data };
+};
 export const regFail = (err) => {
   return {
     type: REG_FAILURE,
@@ -46,6 +50,8 @@ export const logUser = (data) => (dispatch) => {
     .post(`${url}/api/login`, data)
     .then(({ data }) => {
       setData("userData", data)
+
+      dispatch(getUserPosts(data.userOnline._id))
       return dispatch(logSuccess(data));
     })
     .catch((err) => dispatch(logFail(err)));
@@ -57,6 +63,7 @@ export const regUser = (data) => (dispatch) => {
     .post(`${url}/api/register`, data)
     .then(({ data }) => {
       setData("userData", data)
+
       return dispatch(regSuccess(data));
     })
     .catch((err) => dispatch(regFail(err)));
@@ -96,6 +103,7 @@ export const getUser = (id) => (dispatch) => {
     .get(`${url}/api/user/${id}`)
     .then(({ data }) => {
       console.log(data, "ihi from updateUser");
+      dispatch(getUserPosts(id))
       setData("userData", data)
       return dispatch(regSuccess(data));
     })
@@ -107,8 +115,20 @@ export const getAnotherUser = (id) => (dispatch) => {
     .get(`${url}/api/user/${id}`)
     .then(({ data }) => {
       console.log(data, "ihi from updateUser");
+      dispatch(getUserPosts(id))
       setData("frndData", data)
       return dispatch(frndSuccess(data));
+    })
+    .catch((err) => dispatch(regFail(err)));
+};
+export const getUserPosts = (id) => (dispatch) => {
+  dispatch(regReq());
+  axios
+    .get(`${url}/api/posts/user/${id}`)
+    .then(({ data }) => {
+      console.log(data, "ihi from updateUser");
+      setData("userPosts", data)
+      return dispatch(postSuccess(data));
     })
     .catch((err) => dispatch(regFail(err)));
 };

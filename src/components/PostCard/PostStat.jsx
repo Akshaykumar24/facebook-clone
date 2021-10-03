@@ -37,33 +37,18 @@ const PostStat = ({
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const [likers, setLikers] = useState([]);
-<<<<<<< HEAD
 
-  // useEffect(() => {
-  //   liked_by.forEach((id) => {
-  //     console.log("id of liked:", id);
-  //     axios.get(`${url}/api/user/${id}`).then(({ data }) => {
-
-  //       setLikers((prev) => {
-  //         return [...prev, data.user];
-  //       });
-  //     });
-  //   });
-  // }, [liked_by]);
-=======
-  
   useEffect(() => {
     liked_by.forEach((id) => {
       // console.log("id of liked:", id);
       axios.get(`${url}/api/user/${id}`).then(({ data }) => {
-        
+
         setLikers((prev) => {
           return [...prev, data.user];
         });
       });
     });
   }, [liked_by]);
->>>>>>> ddd96c2b7cf735f1d2a70ab4b978eeda8e38ae3a
 
 
 

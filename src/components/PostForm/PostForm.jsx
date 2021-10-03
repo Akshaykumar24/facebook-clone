@@ -4,6 +4,8 @@ import axios from "axios";
 // import {useSelector} from 'react-redux'
 
 import { url } from "../../utils/url";
+import { useDispatch } from 'react-redux'
+import { getUserPosts } from "../../redux/auth/action";
 
 import { Box, Button, Divider, Avatar, Modal, TextField } from "@mui/material";
 
@@ -40,6 +42,7 @@ const modalStyle = {
 
 const PostForm = ({ user }) => {
   // console.log('user in form comp:', user.first_name)
+  const dispatch = useDispatch();
   // modal control
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
@@ -48,14 +51,14 @@ const PostForm = ({ user }) => {
   const [body_text, setBodyText] = useState(`What's on your mind?`);
   const [buttonDisabled, setButtonDisabled] = useState(true);
   const [body_photo, setBody_photo] = useState("");
- 
+
   const refreshPage = () => {
     window.location.reload();
   };
 
   const handleChange = (e) => {
     const value = e.target.value;
-    if (value.length > 0 || body_photo!=='') {
+    if (value.length > 0 || body_photo !== '') {
       setButtonDisabled(false);
     }
     setBodyText(value);
@@ -76,6 +79,7 @@ const PostForm = ({ user }) => {
     writePost(body_text, body_photo)
       .then((resp) => {
         console.log(resp);
+        dispatch(getUserPosts(user._id))
         if (resp.status === 201) {
           console.log("succes");
           refreshPage();
@@ -180,12 +184,12 @@ const PostForm = ({ user }) => {
               />
             </Box>
             <Box></Box>
-            <Box sx={{display:'flex', justifyContent:'space-between', alignItems:'center', m:'1rem 0' }}>
+            <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', m: '1rem 0' }}>
               <Box>Add to your post </Box>
 
               <PhotoUploadForm setBody_photo={setBody_photo} />
             </Box>
-            <Box sx={{textAlign:'center'}}> <img src={body_photo} height='200px'  alt="" /> </Box>
+            <Box sx={{ textAlign: 'center' }}> <img src={body_photo} height='200px' alt="" /> </Box>
             <Box>
               <Button
                 disabled={buttonDisabled}

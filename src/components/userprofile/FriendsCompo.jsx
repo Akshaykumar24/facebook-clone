@@ -3,7 +3,8 @@ import styled from 'styled-components'
 import { useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
-import { getAnotherUser } from '../../redux/auth/action'
+import { getAnotherUser, getUserPosts } from '../../redux/auth/action'
+
 import { getData } from '../../utils/localStorage'
 //   <img
 //       src={
@@ -80,7 +81,9 @@ function FriendsCompo({ friends, handleSeeAllfriends }) {
                         <img onClick={() => {
 
                             if (el._id === userData._id) {
+                                dispatch(getUserPosts(el._id))
                                 history.push('/profile')
+
                             }
                             dispatch(getAnotherUser(el._id))
                             setTimeout(() => {

@@ -4,7 +4,7 @@ import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import { getData } from "../../utils/localStorage";
 import { useState } from "react";
 import { useDispatch } from "react-redux"
-import { getAnotherUser } from "../../redux/auth/action";
+import { getAnotherUser, getUserPosts } from "../../redux/auth/action";
 import { useHistory } from 'react-router-dom'
 import { v4 as uuidv4 } from "uuid";
 function AllFriendsCompo() {
@@ -47,6 +47,7 @@ function AllFriendsCompo() {
                   onClick={() => {
 
                     if (el._id === mainuser._id) {
+                      dispatch(getUserPosts(el._id))
                       history.push('/profile')
                       return;
                     }
@@ -68,6 +69,7 @@ function AllFriendsCompo() {
                 <span onClick={() => {
 
                   if (el._id === mainuser._id) {
+                    dispatch(getUserPosts(el._id))
                     history.push('/profile')
                     return;
                   }

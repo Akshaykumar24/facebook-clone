@@ -21,6 +21,7 @@ import TextField from "@mui/material/TextField";
 import AllPhotosCompo from "./AllPhotosCompo";
 import { updateUser } from "../../redux/auth/action";
 import { useDispatch } from 'react-redux'
+import PostCard from '../PostCard/PostCard'
 function UserProfile() {
 
   const dispatch = useDispatch();
@@ -75,8 +76,12 @@ function UserProfile() {
       ? getData("userData").user
       : getData("userData").userOnline
   );
-  const [bio, setBio] = useState(userData.bio)
-  const [remainingChar, setRemainingChar] = useState(100 - userData.bio.length)
+  const [userPosts, setUserPosts] = useState(
+    getData("userPosts")?.posts ? getData("userPosts").posts : []
+  )
+
+  const [bio, setBio] = useState(userData.bio ? userData.bio : "")
+  const [remainingChar, setRemainingChar] = useState(100 - (userData?.bio?.length ? userData?.bio?.length : 0))
   const handleBioChange = (e) => {
     setBio(e.target.value)
     setRemainingChar(100 - e.target.value.length)
@@ -303,16 +308,19 @@ function UserProfile() {
               followedBy={userData.friendRequestRecieved.length}
               handleEditProfileOpen={handleEditProfileOpen}
             />
-            <PhotosComp handleSeeAllPhotos={handleSeeAllPhotos} />
+            <PhotosComp userPosts={userPosts} handleSeeAllPhotos={handleSeeAllPhotos} />
             <FriendsCompo handleSeeAllfriends={handleSeeAllfriends} friends={userData.friends} userData={userData} />
           </div>
           <div>
+            {userPosts.map((el) => {
+              return <PostCard post={el} user={userData} />
+            })}
 
           </div>
         </PostCompoSyled> : ""}
         {about ? <AboutCompo handleEditProfileOpen={handleEditProfileOpen} /> : ""}
         {friends ? <AllFriendsCompo /> : ""}
-        {photos ? <AllPhotosCompo /> : ""}
+        {photos ? <AllPhotosCompo userPosts={userPosts} /> : ""}
       </MainPostLayout>
       {/* <EmojiMart /> */}
     </UserProfileStyles>
@@ -338,7 +346,7 @@ height: 1.2rem;
     margin-top: 6px;
     span{
       font-size: 11px !important;
-      color: var(--font-light-color) !important;
+      color: var(--ofont-color1) !important;
       :hover{
         text-decoration:none !important;
       }
@@ -379,7 +387,9 @@ margin-top:1rem;
   flex-direction: column;
   row-gap: 1rem;
 }
-
+&>div:nth-child(2){
+  width: 100%;
+}
 
 
 
@@ -427,7 +437,7 @@ const UserProfileStyles = styled.div`
             cursor: pointer;
           }
           span {
-            color: var(--font-dark-color);
+            color: var(--ofont-dark-color);
             padding-bottom: 3px;
             font-size: 14px;
             font-weight: 650;
@@ -477,14 +487,14 @@ const UserProfileStyles = styled.div`
           height: 8.6rem;
           padding-top: 18px;
           h1 {
-            color: var(--font-dark-color);
+            color: var(--ofont-dark-color);
             font-size: 2em;
           }
           & > div {
                line-height: 25px;
     margin-top: 0px;
     font-size: 1.1rem;
-    color: var(--font-light-color);
+    color: var(--ofont-color1);
     display: grid;
     justify-content: center;
             p{
@@ -493,7 +503,7 @@ const UserProfileStyles = styled.div`
               word-wrap: break-word;
             }
             span {
-              color: var(--primary-color);
+              color: var(--ofont-primary-color);
               font-size: 0.9rem;
               font-weight: 650;
               :hover {
@@ -526,7 +536,7 @@ const UserProfileStyles = styled.div`
           min-width: 3rem;
           padding: 0px 0.6rem;
           height: 100%;
-          color: var(--font-light-color);
+          color: var(--ofont-color1);
           display: flex;
 
           align-items: center;
@@ -556,17 +566,17 @@ const UserProfileStyles = styled.div`
         .primarybgc {
           border-radius: 8px;
           background-color: var(--primary-color);
-          color: var(--primary-background-color);
+          color: var(--ofont-color2);
           height: 2rem;
           padding: 0 3px;
           font-size: 14px;
           font-weight: 650;
           span {
-            color: var(--primary-background-color);
+            color: var(--ofont-color2);
           }
         }
         .editFont {
-          color: var(--font-dark-color);
+          color: var(--ofont-dark-color);
         }
         .menu {
           min-width: 3rem;

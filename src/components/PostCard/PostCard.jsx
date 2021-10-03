@@ -87,7 +87,7 @@ const PostCard = ({ post, user }) => {
 
   return (
     <Box
-      sx={{ backgroundColor: "#FFFFFF", padding: "0 2rem", margin: "1rem 0" }}
+      sx={{ backgroundColor: "#FFFFFF", padding: "0 2rem", margin: "1rem 0", width: "100%" }}
     >
       {/* header */}
       <Box
@@ -121,7 +121,7 @@ const PostCard = ({ post, user }) => {
       {/* post body */}
       <Box sx={{ margin: "1rem 0" }}>{body_text}</Box>
       <Box sx={{ margin: "1rem 0" }}>
-        <img src={body_photo} alt="" />
+        <img style={{ maxWidth: "109%", marginLeft: "-2rem" }} src={body_photo} alt="" />
       </Box>
       {/* post stat */}
       <Box>
@@ -149,16 +149,16 @@ const PostCard = ({ post, user }) => {
         }}
       >
         <Box>
-          
-            <Button
-              variant="text"
-              color="inherit"
-              onClick={handleLike}
-              startIcon={<AiOutlineLike size='2rem'/>}
-            >
-              Like
-            </Button>
-          
+
+          <Button
+            variant="text"
+            color="inherit"
+            onClick={handleLike}
+            startIcon={<AiOutlineLike size='2rem' />}
+          >
+            Like
+          </Button>
+
         </Box>
 
         {/* <Box>
