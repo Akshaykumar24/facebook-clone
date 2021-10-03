@@ -4,7 +4,7 @@ import { url } from "../../utils/url";
 import PostStat from "./PostStat";
 import CommentForm from "../CommentForm/CommentForm";
 import CommentCard from "../CommentCard/CommentCard";
-
+import styled from 'styled-components'
 import { Box, Button, Avatar, Divider } from "@mui/material";
 import { useSelector } from "react-redux";
 
@@ -24,6 +24,17 @@ const getPost = async (id) => {
 const getCommentOfThisPost = (id) => {
   return axios.get(`${url}/api/posts/${id}/comments`);
 };
+
+const PostCardWrapper = styled.div`
+
+div{
+    color:var(--rcprimary);
+    background-color:var(--rbgprimary)
+  }
+ 
+  
+
+`
 
 const PostCard = ({ post, user }) => {
   console.log("user:", user);
@@ -103,7 +114,8 @@ const PostCard = ({ post, user }) => {
   };
 
   return (
-    <Box sx={{ backgroundColor: "#FFFFFF", padding: "0 ", margin: "1rem 0" }}>
+    <PostCardWrapper>
+    <Box sx={{  padding: "0 ", margin: "1.5rem 0" }}>
       {/* header */}
       <Box
         sx={{
@@ -112,6 +124,7 @@ const PostCard = ({ post, user }) => {
           justifyContent: "space-between",
           alignContent: "center",
           alignItems: "center",
+          
         }}
       >
         <Box
@@ -236,6 +249,7 @@ const PostCard = ({ post, user }) => {
         </Box>
       )}
     </Box>
+    </PostCardWrapper>
   );
 };
 

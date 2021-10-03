@@ -1,25 +1,21 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Link } from 'react-router-dom'
+import { Link } from "react-router-dom";
 import { url } from "../../utils/url";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import { LikeBox } from "./PostStat.styles";
 import { AiOutlineLike } from "react-icons/ai";
+import styled from 'styled-components'
+import Popover from "@mui/material/Popover";
 
-import Modal from "@mui/material/Modal";
+const MyDiv=styled.div`
+background-color: var(--background-gray-color);
+color:var(--font-dark-color);
+padding:2rem,
 
-const style = {
-  position: "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: 400,
-  bgcolor: "background.paper",
-  border: "2px solid #000",
-  boxShadow: 24,
-  p: 4,
-};
+`
+
 const getPost = (id) => {
   return axios.get(`${url}/api/posts/${id}`);
 };
@@ -31,26 +27,30 @@ const PostStat = ({
   noOfComments,
   liked_by,
 }) => {
-  // console.log("liked_by in post stat: ", liked_by);
-
-  const [open, setOpen] = React.useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
   const [likers, setLikers] = useState([]);
+
+  const [anchorEl, setAnchorEl] = React.useState(null);
+
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const open = Boolean(anchorEl);
+  const idp = open ? "simple-popover" : undefined;
 
   useEffect(() => {
     liked_by.forEach((id) => {
-      // console.log("id of liked:", id);
       axios.get(`${url}/api/user/${id}`).then(({ data }) => {
-
         setLikers((prev) => {
           return [...prev, data.user];
         });
       });
     });
   }, [liked_by]);
-
-
 
   const [postStat, setPostStat] = useState({
     no_of_likes: 0,
@@ -86,7 +86,9 @@ const PostStat = ({
           <Button
             variant="text"
             color="inherit"
-            onClick={handleOpen}
+            // onClick={handleOpen}
+            aria-describedby={id}
+            onClick={handleClick}
             startIcon={<AiOutlineLike color="primary" />}
           >
             {noOfLikes}
@@ -117,8 +119,27 @@ const PostStat = ({
           </Box>
         </Box>
       </Box>
-      <LikeBox>
-        <Modal
+      <LikeBox >
+        {likers.length > 0 &&<Popover
+          id={idp}
+          open={open}
+          anchorEl={anchorEl}
+          onClose={handleClose}
+          anchorOrigin={{
+            vertical: "bottom",
+            horizontal: "left",
+          }}
+        >
+          {
+            likers.map((liker) => {
+              return (
+                <MyDiv  key={liker._id}>
+                  <Link to={`/user/${liker._id}`}> {liker.first_name} </Link>
+                </MyDiv>
+              );
+            })}
+        </Popover>}
+        {/* <Modal
           open={open}
           onClose={handleClose}
           aria-labelledby="modal-modal-title"
@@ -130,7 +151,7 @@ const PostStat = ({
               return <div key={liker._id}><Link to={`/user/${liker._id}`} >  {liker.first_name} </Link></div>;
             })}
           </Box>
-        </Modal>
+        </Modal> */}
       </LikeBox>
     </>
   );
