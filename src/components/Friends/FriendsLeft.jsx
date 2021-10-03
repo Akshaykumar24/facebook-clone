@@ -10,7 +10,7 @@ const FriendsLeft = ({
   setBirth,
   pendingRequest,
   setPendingRequest,
-  snetRequest,
+  sentRequest,
   setSentRequest,
 }) => {
   const changeState = (p) => {
@@ -27,35 +27,50 @@ const FriendsLeft = ({
       {/* {!suggest && !find && !birth && !request && ( */}
       <ForAll>
         <h1 style={{ padding: "18px" }}>Friends</h1>
-        <LeftDiv onClick={() => changeState(setPendingRequest)}>
+        <LeftDiv
+          style={{ backgroundColor: pendingRequest ? "#cbcbff" : "white" }}
+          onClick={() => changeState(setPendingRequest)}
+        >
           <img
             src="https://cdn-icons-png.flaticon.com/128/47/47768.png"
             alt="friendsIcon"
           />
           Friend Requests
         </LeftDiv>
-        <LeftDiv onClick={() => changeState(setSentRequest)}>
+        <LeftDiv
+          style={{ backgroundColor: sentRequest ? "#cbcbff" : "white" }}
+          onClick={() => changeState(setSentRequest)}
+        >
           <img
             src="https://cdn-icons-png.flaticon.com/128/47/47768.png"
             alt="friendsIcon"
           />
           Sent Requests
         </LeftDiv>
-        <LeftDiv onClick={() => changeState(setSuggest)}>
+        <LeftDiv
+          style={{ backgroundColor: suggest ? "#cbcbff" : "white" }}
+          onClick={() => changeState(setSuggest)}
+        >
           <img
             src="https://cdn-icons-png.flaticon.com/128/681/681494.png"
             alt="friendsIcon"
           />
           Suggestions
         </LeftDiv>
-        <LeftDiv onClick={() => changeState(setFind)}>
+        <LeftDiv
+          style={{ backgroundColor: find ? "#cbcbff" : "white" }}
+          onClick={() => changeState(setFind)}
+        >
           <img
             src="https://cdn-icons-png.flaticon.com/128/681/681494.png"
             alt="friendsIcon"
           />
           Friends
         </LeftDiv>
-        <LeftDiv onClick={() => changeState(setBirth)}>
+        <LeftDiv
+          style={{ backgroundColor: birth ? "#cbcbff" : "white" }}
+          onClick={() => changeState(setBirth)}
+        >
           <img
             src="https://cdn-icons-png.flaticon.com/128/3159/3159518.png"
             alt="friendsIcon"

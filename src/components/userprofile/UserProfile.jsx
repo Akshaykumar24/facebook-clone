@@ -22,6 +22,8 @@ import AllPhotosCompo from "./AllPhotosCompo";
 import { updateUser } from "../../redux/auth/action";
 import { useDispatch } from 'react-redux'
 import PostCard from '../PostCard/PostCard'
+import { logUser } from "../../redux/auth/action";
+
 function UserProfile() {
 
   const dispatch = useDispatch();
@@ -51,7 +53,6 @@ function UserProfile() {
 
   const handleEditProfileOpen = () => setEditProfileOpen(true);
   const handleEditProfileClose = () => setEditProfileOpen(false);
-
   // useEffect(() => {
 
   // }, []);
@@ -63,10 +64,10 @@ function UserProfile() {
 
   // ;
   // getUsersData();
-  // useEffect(() => {
-  //   const id = getData("userId")
-  //   dispatch(getUser(id))
-  // }, [dispatch])
+  useEffect(() => {
+    const data = getData("login");
+    dispatch(logUser(data));
+  }, []);
   // const {
   //   auth: { user },
   // } = useSelector((state) => state, shallowEqual);
@@ -120,35 +121,35 @@ function UserProfile() {
   const handleSeeAllfriends = () => {
     setFriends(true);
     setPosts(false);
-    setAbout(false)
+    setAbout(false);
     setPhotos(false);
-  }
+  };
   const handleSeeAllPhotos = () => {
     setPhotos(true);
     setFriends(false);
     setPosts(false);
-    setAbout(false)
-  }
+    setAbout(false);
+  };
   const handleProfilesMenu = (e) => {
     if (e.target.textContent === "Posts") {
       setPosts(true);
       setPhotos(false);
-      setAbout(false)
+      setAbout(false);
       setFriends(false);
     } else if (e.target.textContent === "Friends") {
       setFriends(true);
       setPosts(false);
-      setAbout(false)
+      setAbout(false);
       setPhotos(false);
     } else if (e.target.textContent === "Photos") {
       setPhotos(true);
       setFriends(false);
       setPosts(false);
-      setAbout(false)
+      setAbout(false);
     } else if (e.target.textContent === "About") {
       setPhotos(false);
       setFriends(false);
-      setAbout(true)
+      setAbout(true);
       setPosts(false);
     }
   };
@@ -200,7 +201,6 @@ function UserProfile() {
               handleEditProfileClose={handleEditProfileClose}
               editProfileOpen={editProfileOpen}
               userData={userData}
-
               refreshPage={refreshPage}
             />
           ) : (
@@ -254,7 +254,12 @@ function UserProfile() {
               >
                 Posts
               </div>
-              <div className={`${about ? "menuBorder-bottom" : ""}`} onClick={handleProfilesMenu}>About</div>
+              <div
+                className={`${about ? "menuBorder-bottom" : ""}`}
+                onClick={handleProfilesMenu}
+              >
+                About
+              </div>
               <div
                 className={`${friends ? "menuBorder-bottom" : ""}`}
                 onClick={handleProfilesMenu}
@@ -328,6 +333,7 @@ function UserProfile() {
 }
 
 
+
 const EditBioStyled = styled.div`
 
 
@@ -380,21 +386,17 @@ height: 1.2rem;
 
 `
 const PostCompoSyled = styled.div`
-display: flex;
-margin-top:1rem;
-&>div:nth-child(1){
   display: flex;
-  flex-direction: column;
-  row-gap: 1rem;
-}
-&>div:nth-child(2){
-  width: 100%;
-}
+  margin-top: 1rem;
+  & > div:nth-child(1) {
+    display: flex;
+    flex-direction: column;
+    row-gap: 1rem;
+  }
+`;
 
 
 
-
-`
 
 const UserProfileStyles = styled.div`
   .mainProfile {

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import FriendsLeft from "./FriendsLeft";
 import KnowCard from "./KnowCard";
 import styled from "styled-components";
@@ -8,6 +8,8 @@ import AcceptCard from "./AcceptCard";
 import axios from "axios";
 import { url } from "../../utils/url";
 import FriendMessageCard from "./FriendMessageCard";
+
+import { io } from "socket.io-client";
 
 const p = {
   first_name: "Akshay",
@@ -29,7 +31,24 @@ const FriendsAll = () => {
   const friendRequestRecieved = state.auth.user.friendRequestRecieved;
 
   const id = state.auth.user._id;
+  const user = state.auth.user;
+  //// notification socket
+  const socket = useRef();
 
+  useEffect(() => {
+    socket.current = io("ws://localhost:5000");
+    socket.current.on("getNotification", (data) => {
+      console.log("got Notification", data);
+    });
+  }, [socket.current]);
+
+  useEffect(() => {
+    socket.current.emit("addUser", user._id);
+    socket.current.on("getUsers", (users) => {
+      console.log(users);
+    });
+  }, [user]);
+  // end of socket  notification
   useEffect(() => {
     if (find) {
       setData(friends);
@@ -55,6 +74,34 @@ const FriendsAll = () => {
       });
     }
   }, [suggest, id]);
+
+  useEffect(() => {
+    if (sentRequest) {
+      axios.get(`${url}/api/user/sent/${id}`).then(({ data }) => {
+        console.log(data);
+        return setData(data.user);
+      });
+    }
+  }, [sentRequest, id]);
+
+  useEffect(() => {
+    if (pendingRequest) {
+      axios.get(`${url}/api/user/request/${id}`).then(({ data }) => {
+        console.log(data);
+        return setData(data.user);
+      });
+    }
+  }, [pendingRequest, id]);
+
+  useEffect(() => {
+    if (find) {
+      axios.get(`${url}/api/user/friends/${id}`).then(({ data }) => {
+        console.log(data);
+        return setData(data.user);
+      });
+    }
+  }, [find, id]);
+
   const update = (arr, id) => {
     setData(arr.filter((i) => i._id !== id));
   };
@@ -76,7 +123,7 @@ const FriendsAll = () => {
       {find && (
         <Cont>
           {data.map((p) => (
-            <FriendMessageCard p={p} />
+            <FriendMessageCard p={p} id={id} />
           ))}
         </Cont>
       )}
@@ -86,7 +133,13 @@ const FriendsAll = () => {
             <h2>No New Suggestions</h2>
           ) : (
             data.map((p) => (
-              <KnowCard p={p} id={id} update={update} data={data} />
+              <KnowCard
+                p={p}
+                id={id}
+                update={update}
+                data={data}
+                socket={socket}
+              />
             ))
           )}
         </Cont>

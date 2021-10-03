@@ -4,8 +4,15 @@ import SideBar from "../components/SideBar/SideBar";
 import styled from "styled-components";
 import Story from "../components/Story/Story";
 import Home from "../components/Active/Pages/Home";
+import { useHistory } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const HomePage = () => {
+  const history = useHistory();
+  const select = useSelector((state) => state);
+  if (select.auth.token === "") {
+    history.push("/login");
+  }
   return (
     // <Container>
     //   <SideBar />

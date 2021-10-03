@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import "../../styles/Navbar/Navbar.css";
 import { ReactComponent as SearchIcon } from "../../Icons/search.svg";
 import { ReactComponent as MainLogo } from "../../Icons/main-logo.svg";
@@ -19,8 +19,8 @@ import MenuIcon from "@mui/icons-material/Menu";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { getData } from '../../utils/localStorage'
-import { useState } from "react";
-
+import axios from "axios"
+import { url } from "../../utils/url";
 const NavBar = ({ themeToggler, checked, menu, setMenu }) => {
   const [account, setAccount] = React.useState(false);
   const [notification, setNotification] = React.useState(false);
@@ -29,6 +29,15 @@ const NavBar = ({ themeToggler, checked, menu, setMenu }) => {
   const [p, setP] = useState(getData("userData").user
     ? getData("userData").user
     : getData("userData").userOnline)
+
+  // for notifications
+  const [not, setNot] = useState(null);
+  useEffect(() => {
+    axios.get(`${url}/api/notification/${p._id}`).then((res) => {
+      console.log(res, "This Notify");
+      return setNot(res.data.msg);
+    });
+  }, [p._id]);
 
   const handleMenu = () => {
     console.log(menu, "menu");
@@ -127,7 +136,7 @@ const NavBar = ({ themeToggler, checked, menu, setMenu }) => {
         </div>
       </div>
       {account && <AccountMenu themeToggler={themeToggler} checked={checked} />}
-      {notification && <Notification />}
+      {notification && <Notification p={p} not={not} />}
     </>
   );
 };
