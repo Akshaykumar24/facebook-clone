@@ -112,6 +112,10 @@ export const GlobalStyles = createGlobalStyle`
   --filter-placeholder-icon: invert(59%) sepia(11%) saturate(200%)
     saturate(135%) hue-rotate(176deg) brightness(96%) contrast(94%);
 
+/* Ravi */
+
+--rbgprimary:#000000;
+    --rcprimary:#ffffff;
 }
 .light-theme{
 //fonts color
@@ -209,6 +213,15 @@ export const GlobalStyles = createGlobalStyle`
   --filter-invert: 0;
   --filter-placeholder-icon: invert(59%) sepia(11%) saturate(200%)
     saturate(135%) hue-rotate(176deg) brightness(96%) contrast(94%);
+
+
+    /* Ravi */
+
+    --rbgprimary:#ffffff;
+    --rcprimary:#000000;
+
+    /* --rbgprimary:#000000;
+    --rcprimary:#ffffff; */
 }
 /* :root{
 
@@ -245,4 +258,4 @@ textarea {
 button {
   cursor: pointer;
 } 
-`
+`;

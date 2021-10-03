@@ -5,6 +5,7 @@ import PostStat from "./PostStat";
 import CommentForm from "../CommentForm/CommentForm";
 import CommentCard from "../CommentCard/CommentCard";
 import moment from 'moment';
+import styled from 'styled-components'
 import { Box, Button, Avatar, Divider } from "@mui/material";
 import { useSelector } from "react-redux";
 
@@ -25,6 +26,17 @@ const getPost = async (id) => {
 const getCommentOfThisPost = (id) => {
   return axios.get(`${url}/api/posts/${id}/comments`);
 };
+
+const PostCardWrapper = styled.div`
+
+div{
+    color:var(--rcprimary);
+    background-color:var(--rbgprimary)
+  }
+ 
+  
+
+`
 
 const PostCard = ({ post, user }) => {
   const dispatch = useDispatch();
@@ -126,78 +138,80 @@ const PostCard = ({ post, user }) => {
   };
 
   return (
-    <Box sx={{ backgroundColor: "#FFFFFF", padding: "0 ", margin: "1rem 0" }}>
-      {/* header */}
-      <Box
-        sx={{
-          display: "flex",
-          flexDirection: "row",
-          justifyContent: "space-between",
-          alignContent: "center",
-          alignItems: "center",
-        }}
-      >
+    <PostCardWrapper>
+      <Box sx={{ padding: "0 ", margin: "1.5rem 0" }}>
+        {/* header */}
         <Box
           sx={{
             display: "flex",
             flexDirection: "row",
+            justifyContent: "space-between",
+            alignContent: "center",
+            alignItems: "center",
+
+          }}
+        >
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "row",
+              alignContent: "center",
+              alignItems: "center",
+              margin: "1rem 0",
+            }}
+          >
+            <Box>
+              <Avatar sx={{ m: "0 1rem" }} alt="R" src={user.profile} />
+            </Box>
+            <Box>
+              <Box>{user_id.first_name} </Box>
+              <Box>{duration}{/* <LanguageIcon /> */}</Box>
+            </Box>
+          </Box>
+          <Box>{/* <MoreHorizOutlined /> */}</Box>
+        </Box>
+        {/* post body */}
+        <Box sx={{ margin: "1rem" }}>{body_text}</Box>
+        <Box sx={{ margin: "0" }}>
+          <img style={{ maxWidth: "100%" }} src={body_photo} alt="" />
+        </Box>
+        {/* post stat */}
+        <Box>
+          <PostStat
+            key={_id}
+            id={_id}
+            noOfLikes={noOfLikes}
+            noOfComments={noOfComments}
+            liked_by={liked_by}
+            handleShowComments={handleShowComments}
+          />
+        </Box>
+        <Divider variant="middle" />
+        {/* like comment share */}
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "space-between",
             alignContent: "center",
             alignItems: "center",
             margin: "1rem 0",
+            padding: "0 2rem",
+            color: "#769292",
           }}
         >
           <Box>
-            <Avatar sx={{ m: "0 1rem" }} alt="R" src={user.profile} />
+            <Button
+              variant="text"
+              color="inherit"
+              onClick={handleLike}
+              startIcon={<AiOutlineLike size="2rem" />}
+            >
+              Like
+            </Button>
           </Box>
-          <Box>
-            <Box>{user_id.first_name} </Box>
-            <Box>{duration}{/* <LanguageIcon /> */}</Box>
-          </Box>
-        </Box>
-        <Box>{/* <MoreHorizOutlined /> */}</Box>
-      </Box>
-      {/* post body */}
-      <Box sx={{ margin: "1rem" }}>{body_text}</Box>
-      <Box sx={{ margin: "0" }}>
-        <img style={{ maxWidth: "100%" }} src={body_photo} alt="" />
-      </Box>
-      {/* post stat */}
-      <Box>
-        <PostStat
-          key={_id}
-          id={_id}
-          noOfLikes={noOfLikes}
-          noOfComments={noOfComments}
-          liked_by={liked_by}
-          handleShowComments={handleShowComments}
-        />
-      </Box>
-      <Divider variant="middle" />
-      {/* like comment share */}
-      <Box
-        sx={{
-          display: "flex",
-          flexDirection: "row",
-          justifyContent: "space-between",
-          alignContent: "center",
-          alignItems: "center",
-          margin: "1rem 0",
-          padding: "0 2rem",
-          color: "#769292",
-        }}
-      >
-        <Box>
-          <Button
-            variant="text"
-            color="inherit"
-            onClick={handleLike}
-            startIcon={<AiOutlineLike size="2rem" />}
-          >
-            Like
-          </Button>
-        </Box>
 
-        {/* <Box>
+          {/* <Box>
           {hadLiked ? (
             <Button
               variant="text"
@@ -218,47 +232,48 @@ const PostCard = ({ post, user }) => {
             </Button>
           )}
         </Box> */}
-        <Box>
-          <Button
-            variant="text"
-            color="inherit"
-            onClick={() => {
-              setIsComment((prev) => !prev);
-            }}
-            startIcon={<FaRegCommentAlt />}
-          >
-            Comment
-          </Button>
+          <Box>
+            <Button
+              variant="text"
+              color="inherit"
+              onClick={() => {
+                setIsComment((prev) => !prev);
+              }}
+              startIcon={<FaRegCommentAlt />}
+            >
+              Comment
+            </Button>
+          </Box>
+          <Box>
+            <Button
+              variant="text"
+              color="inherit"
+              startIcon={<RiShareForwardLine />}
+            >
+              Share
+            </Button>
+          </Box>
         </Box>
-        <Box>
-          <Button
-            variant="text"
-            color="inherit"
-            startIcon={<RiShareForwardLine />}
-          >
-            Share
-          </Button>
-        </Box>
+        {isComment && (
+          <Box>
+            <CommentForm
+              post_id={_id}
+              user={user}
+              sendCommentNotification={sendCommentNotification}
+              setComments={setComments}
+            />
+          </Box>
+        )}
+        {showComments && (
+          <Box>
+            {comments.length > 0 &&
+              comments.map((comment) => {
+                return <CommentCard post_id={_id * 2} comment={comment} />;
+              })}
+          </Box>
+        )}
       </Box>
-      {isComment && (
-        <Box>
-          <CommentForm
-            post_id={_id}
-            user={user}
-            sendCommentNotification={sendCommentNotification}
-            setComments={setComments}
-          />
-        </Box>
-      )}
-      {showComments && (
-        <Box>
-          {comments.length > 0 &&
-            comments.map((comment) => {
-              return <CommentCard post_id={_id * 2} comment={comment} />;
-            })}
-        </Box>
-      )}
-    </Box>
+    </PostCardWrapper>
   );
 };
 
