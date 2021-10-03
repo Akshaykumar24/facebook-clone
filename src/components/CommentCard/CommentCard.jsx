@@ -2,8 +2,9 @@ import React from "react";
 import Box from "@mui/material/Box";
 import Avatar from "@mui/material/Avatar";
 const CommentCard = ({ comment }) => {
+  console.log('comment card :', comment)
   
-  const { body_text } = comment;
+  const { body_text,body_photo,commentd_by } = comment;
 
   return (
     <Box sx={{ margin: "1rem 0" }}>
@@ -13,8 +14,9 @@ const CommentCard = ({ comment }) => {
         </Box>
         <Box>
           <Box>
-            <h3>Ravi</h3>
+            <h3>{commentd_by.first_name}</h3>
             <p>{body_text}</p>
+            <img src={body_photo} alt="" />
           </Box>
           <Box>Like Reply</Box>
         </Box>
