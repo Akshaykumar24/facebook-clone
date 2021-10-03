@@ -9,7 +9,7 @@ import {
   POST_SUCCESS
 } from "./actionTypes";
 
-const init = { user: {}, Load: false, Error: false, token: "", reg: false, frndData: {}, postData: [] };
+const init = { user: {}, Load: false, user2: {}, Error: false, token: "", reg: false, frndData: {}, postData: [] };
 
 export const authReducer = (state = { ...init }, { type, payload }) => {
   switch (type) {
@@ -57,7 +57,7 @@ export const authReducer = (state = { ...init }, { type, payload }) => {
       return {
         ...state,
         Load: false,
-        user: payload.user,
+        user2: payload.user,
         token: payload.token,
         frndData: payload.user,
       };
@@ -65,7 +65,7 @@ export const authReducer = (state = { ...init }, { type, payload }) => {
       return {
         ...state,
         Load: false,
-        user: payload.user,
+        user2: payload.user,
         token: payload.token,
         frndData: payload.frndData,
         postData: payload.postData,
