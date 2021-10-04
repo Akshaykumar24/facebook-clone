@@ -16,7 +16,7 @@ import { useDispatch } from 'react-redux'
 import { getAllUserPosts, getOtherUsersPosts, getUserPosts, getAnotherUser, getAnotherUserPosts } from "../../redux/auth/action";
 import { useHistory } from "react-router-dom";
 const updatePost = (id, no_of_likes, liked_by) => {
-  return axios.patch(`${url}/api/posts/${id}`, {
+  return axios.patch(`${url}/api/posts/update/${id}`, {
     no_of_likes,
     liked_by,
   });
@@ -25,7 +25,7 @@ const getPost = async (id) => {
   return axios.get(`${url}/api/posts/${id}`);
 };
 const getCommentOfThisPost = (id) => {
-  return axios.get(`${url}/api/posts/${id}/comments`);
+  return axios.get(`${url}/api/posts/comments/${id}`);
 };
 
 const PostCardWrapper = styled.div`
@@ -83,7 +83,6 @@ const PostCard = ({ post, user }) => {
     setNoOfLikes(no_of_likes);
     setNoOfComments(no_of_comments);
 
-
     const momentDur = moment.utc(moment(new Date()).diff(moment(time), 'seconds'))
 
 
@@ -96,7 +95,9 @@ const PostCard = ({ post, user }) => {
     }
 
 
-  }, [no_of_comments, no_of_likes]);
+  }, [no_of_comments, no_of_likes, time]);
+
+
 
   const handleLike = () => {
     getPost(_id)
