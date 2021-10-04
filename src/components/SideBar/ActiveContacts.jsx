@@ -1,23 +1,36 @@
-import React from "react";
+import React, { useEffect } from "react";
 import SideBarContent from "./SideBarContent";
 import { ReactComponent as SearchIcon } from "../../Icons/search.svg";
 import "../../styles/SideBar/SideBar.css";
+import axios from "axios";
+import { url } from "../../utils/url";
 
-const ActiveContacts = () => {
-  const [activeState, setActiveState] = React.useState(true);
+const ActiveContacts = ({ id }) => {
+  const [data, setData] = React.useState([true]);
+  useEffect(() => {
+    axios.get(`${url}/api/user/all/${id}`).then(({ data }) => {
+      console.log(data, "Here");
+      return setData(data.user);
+    });
+  }, [id]);
   return (
     <div className="sideBarContainer">
       <div className="activeContactHeader">
-        <h3>Contacts</h3>
+        <h3>People You May Know</h3>
         <SearchIcon />
       </div>
-      <div className="flexBox sideBarContentLink">
-        <SideBarContent
-          label="Vaibhav"
-          src="https://lh3.googleusercontent.com/a-/AOh14GhRn5Z0k4yIPKiZRdd8cTmkzDbqswy-A1yJjMTMBw=s576-p-rw-no"
-          active={activeState}
-        />
-      </div>
+      {data.map((p) => (
+        <div className="flexBox sideBarContentLink">
+          <SideBarContent
+            label={p.first_name}
+            src={
+              p.profile === undefined || ""
+                ? `https://avatars.dicebear.com/api/micah/${p.first_name}.svg`
+                : p.profile
+            }
+          />
+        </div>
+      ))}
     </div>
   );
 };

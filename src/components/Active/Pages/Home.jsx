@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import SideBar from "../../SideBar/SideBar";
 import ActiveContacts from "../../SideBar/ActiveContacts";
 import "../../../styles/Home/Home.css";
@@ -6,9 +6,14 @@ import Story from "../../Story/Story";
 import Navbar from "../../navbar/NavBar";
 import Drawer from "@mui/material/Drawer";
 import HomePageCenter from "../../HomePageCenter/HomePageCenter";
+import axios from "axios";
+import { url } from "../../../utils/url";
+import { getData } from "../../../utils/localStorage";
 
 const Home = () => {
   const [menu, setMenu] = React.useState(false);
+  const [data, setData] = useState([]);
+  const id = getData("userId");
 
   return (
     <>
@@ -32,7 +37,7 @@ const Home = () => {
           <HomePageCenter className="width" />
         </div>
         <div className="mainRightSidebarContainer hidden right">
-          <ActiveContacts />
+          <ActiveContacts id={id} />;
         </div>
       </div>
     </>
