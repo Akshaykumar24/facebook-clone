@@ -4,16 +4,22 @@ import { url } from "../../utils/url";
 import PostStat from "./PostStat";
 import CommentForm from "../CommentForm/CommentForm";
 import CommentCard from "../CommentCard/CommentCard";
-import moment from 'moment';
-import styled from 'styled-components'
+import moment from "moment";
+import styled from "styled-components";
 import { Box, Button, Avatar, Divider } from "@mui/material";
 import { useSelector } from "react-redux";
 import { getData } from "../../utils/localStorage";
 import { AiOutlineLike } from "react-icons/ai";
 import { FaRegCommentAlt } from "react-icons/fa";
 import { RiShareForwardLine } from "react-icons/ri";
-import { useDispatch } from 'react-redux'
-import { getAllUserPosts, getOtherUsersPosts, getUserPosts, getAnotherUser, getAnotherUserPosts } from "../../redux/auth/action";
+import { useDispatch } from "react-redux";
+import {
+  getAllUserPosts,
+  getOtherUsersPosts,
+  getUserPosts,
+  getAnotherUser,
+  getAnotherUserPosts,
+} from "../../redux/auth/action";
 import { useHistory } from "react-router-dom";
 const updatePost = (id, no_of_likes, liked_by) => {
   return axios.patch(`${url}/api/posts/update/${id}`, {
@@ -29,15 +35,11 @@ const getCommentOfThisPost = (id) => {
 };
 
 const PostCardWrapper = styled.div`
-
-div{
-    color:var(--rcprimary);
-    background-color:var(--rbgprimary)
+  div {
+    color: var(--rcprimary);
+    background-color: var(--rbgprimary);
   }
- 
-  
-
-`
+`;
 
 const PostCard = ({ post, user }) => {
   const history = useHistory();
@@ -53,7 +55,7 @@ const PostCard = ({ post, user }) => {
     body_photo,
     user_id,
     liked_by,
-    time
+    time,
   } = post;
   const [isComment, setIsComment] = useState(false);
   const [showComments, setShowComments] = useState(false);
@@ -62,7 +64,7 @@ const PostCard = ({ post, user }) => {
   const [noOfComments, setNoOfComments] = useState(0);
   // const [hadLiked, setHadLiked] = useState(false);
 
-  const [duration, setDuration] = useState()
+  const [duration, setDuration] = useState();
 
   const [userData, setUserData] = useState(
     getData("userData").user
@@ -83,21 +85,22 @@ const PostCard = ({ post, user }) => {
     setNoOfLikes(no_of_likes);
     setNoOfComments(no_of_comments);
 
-    const momentDur = moment.utc(moment(new Date()).diff(moment(time), 'seconds'))
-
+    const momentDur = moment.utc(
+      moment(new Date()).diff(moment(time), "seconds")
+    );
 
     if (Math.floor(Number(momentDur) / 3600) >= 1) {
-      setDuration(Math.floor(Number(momentDur) / 3600) + " hr")
+      setDuration(Math.floor(Number(momentDur) / 3600) + " hr");
     } else if (Math.floor(Number(momentDur) / 60) >= 1) {
-      setDuration(Math.floor(Number(momentDur) / 60) + " min")
+      setDuration(Math.floor(Number(momentDur) / 60) + " min");
     } else {
-      setDuration(Number(momentDur) + " sec")
+      if (momentDur === 0) {
+        setDuration("Just Now");
+      } else {
+        setDuration(Number(momentDur) + " sec");
+      }
     }
-
-
   }, [no_of_comments, no_of_likes, time]);
-
-
 
   const handleLike = () => {
     getPost(_id)
@@ -112,9 +115,9 @@ const PostCard = ({ post, user }) => {
         updatePost(_id, likes + 1, likedBy).then(({ data }) => {
           likes = data.post.no_of_likes;
           setNoOfLikes(likes);
-          dispatch(getAllUserPosts())
-          dispatch(getOtherUsersPosts(_id))
-          dispatch(getUserPosts(_id))
+          dispatch(getAllUserPosts());
+          dispatch(getOtherUsersPosts(_id));
+          dispatch(getUserPosts(_id));
         });
       });
     axios
@@ -156,7 +159,6 @@ const PostCard = ({ post, user }) => {
             justifyContent: "space-between",
             alignContent: "center",
             alignItems: "center",
-
           }}
         >
           <Box
@@ -169,53 +171,51 @@ const PostCard = ({ post, user }) => {
             }}
           >
             <Box>
-              <Avatar sx={{ m: "0 1rem", cursor: "pointer" }} onClick={() => {
+              <Avatar
+                sx={{ m: "0 1rem", cursor: "pointer" }}
+                onClick={() => {
+                  if (user._id === userData._id) {
+                    history.push(`/profile`);
 
-                if (user._id === userData._id) {
-
-
-
-                  history.push(`/profile`)
-
-
-                  return
-                } else {
-                  dispatch(getAnotherUser(user._id))
-                  dispatch(getAnotherUserPosts(user._id))
-                  setTimeout(() => {
-
-                    history.push(`/facebook/${user._id}`)
-
-                  }, 2000)
-                }
-
-
-              }} alt="R" src={user_id.profile} />
+                    return;
+                  } else {
+                    dispatch(getAnotherUser(user._id));
+                    dispatch(getAnotherUserPosts(user._id));
+                    setTimeout(() => {
+                      history.push(`/facebook/${user._id}`);
+                    }, 2000);
+                  }
+                }}
+                alt="R"
+                src={user_id.profile}
+              />
             </Box>
             <Box>
-              <Box sx={{ cursor: "pointer" }} > <span onClick={() => {
+              <Box sx={{ cursor: "pointer" }}>
+                {" "}
+                <span
+                  onClick={() => {
+                    if (user._id === userData._id) {
+                      history.push(`/profile`);
 
-                if (user._id === userData._id) {
-
-
-
-                  history.push(`/profile`)
-
-
-                  return
-                } else {
-                  dispatch(getAnotherUser(user._id))
-                  dispatch(getAnotherUserPosts(user._id))
-                  setTimeout(() => {
-
-                    history.push(`/facebook/${user._id}`)
-
-                  }, 2000)
-                }
-
-
-              }} style={{ cursor: "pointer" }}>{user_id.first_name} </span></Box>
-              <Box>{duration}{/* <LanguageIcon /> */}</Box>
+                      return;
+                    } else {
+                      dispatch(getAnotherUser(user._id));
+                      dispatch(getAnotherUserPosts(user._id));
+                      setTimeout(() => {
+                        history.push(`/facebook/${user._id}`);
+                      }, 2000);
+                    }
+                  }}
+                  style={{ cursor: "pointer" }}
+                >
+                  {user_id.first_name}{" "}
+                </span>
+              </Box>
+              <Box>
+                {duration}
+                {/* <LanguageIcon /> */}
+              </Box>
             </Box>
           </Box>
           <Box>{/* <MoreHorizOutlined /> */}</Box>
@@ -323,7 +323,7 @@ const PostCard = ({ post, user }) => {
           </Box>
         )}
       </Box>
-    </PostCardWrapper >
+    </PostCardWrapper>
   );
 };
 
