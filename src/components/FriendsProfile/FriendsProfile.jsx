@@ -21,6 +21,8 @@ import { MainPostLayout } from "../../styles/layouts";
 import AboutCompo from "./AboutCompo";
 import AllFriendsCompo from "./AllFriendsCompo";
 import AllPhotosCompo from "./AllPhotosCompo";
+import PostCard from "../PostCard/PostCard";
+import { getUserPosts } from "../../redux/auth/action";
 function FriendsProfile() {
   const { id } = useParams();
   console.log(id);
@@ -50,6 +52,11 @@ function FriendsProfile() {
     getData("userData").user
       ? getData("userData").user
       : getData("userData").userOnline
+  );
+  const [userPosts, setUserPosts] = useState(
+    getData("userPosts").posts
+      ? getData("userPosts").posts
+      : []
   );
   const id2 = userData._id
 
@@ -193,7 +200,9 @@ function FriendsProfile() {
             <FriendsCompo handleSeeAllfriends={handleSeeAllfriends} refreshPage={refreshPage} friends={userData.friends} userData={userData} />
           </div>
           <div>
-
+            {userPosts.length >= 1 ? userPosts.reverse().map((el) => {
+              return <PostCard post={el} user={userData} />
+            }) : <h1>This user has not posted yet.</h1>}
           </div>
         </PostCompoSyled> : ""}
         {about ? <AboutCompo /> : ""}
@@ -302,9 +311,9 @@ const UserProfileStyles = styled.div`
             line-height: 25px;
             margin-top: 0px;
             font-size: 1.1rem;
-            color: var(--font-light-color);
+            color: var(--ofont-color1);
             span {
-              color: var(--primary-color);
+              color: var(--ofont-primary-color);
               font-size: 0.9rem;
               font-weight: 650;
               :hover {
@@ -351,7 +360,7 @@ const UserProfileStyles = styled.div`
           min-width: 3rem;
           padding: 0px 0.6rem;
           height: 100%;
-          color: var(--font-light-color);
+          color: var(--ofont-color1);
           display: flex;
 
           align-items: center;
@@ -381,14 +390,14 @@ const UserProfileStyles = styled.div`
         .primarybgc {
           border-radius: 8px;
           background-color: var(--primary-color);
-          color: var(--primary-background-color);
+          color: var(--ofont-color2);
           height: 2rem;
           padding: 0 3px;
           font-size: 14px;
           font-weight: 650;
           justify-content: space-around;
           span {
-            color: var(--primary-background-color);
+            color: var(--ofont-color2);
           }
           :hover {
             background-color: var(--secondary-6);
@@ -417,19 +426,19 @@ const UserProfileStyles = styled.div`
   }
 `;
 const PostCompoSyled = styled.div`
-display: flex;
-margin-top:1rem;
-&>div:nth-child(1){
-  display: flex;
-  flex-direction: column;
-  row-gap: 1rem;
-}
+  display: grid;
+  grid-template-columns: 3fr 5fr;
+  margin-top: 1rem;
+  grid-gap:1rem;
+  & > div:nth-child(1) {
+    display: flex;
+    flex-direction: column;
+    row-gap: 1rem;
 
+    height: fit-content;
+  }
+`;
 
-
-
-
-`
 
 export default FriendsProfile;
 

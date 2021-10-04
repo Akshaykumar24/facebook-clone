@@ -48,11 +48,17 @@ function AllFriendsCompo() {
 
                     if (el._id === mainuser._id) {
                       dispatch(getUserPosts(el._id))
-                      history.push('/profile')
-                      return;
+                      setTimeout(() => {
+
+                        history.push(`/profile`)
+
+                      }, 1000)
+
+                      return
                     }
                     dispatch(getAnotherUser(el._id))
                     setTimeout(() => {
+                      dispatch(getUserPosts(el._id))
                       history.push(`/facebook/${el._id}`)
                     }, 1000)
 
@@ -70,11 +76,17 @@ function AllFriendsCompo() {
 
                   if (el._id === mainuser._id) {
                     dispatch(getUserPosts(el._id))
-                    history.push('/profile')
+                    setTimeout(() => {
+
+                      history.push(`/profile`)
+
+                    }, 1000)
+
                     return;
                   }
                   dispatch(getAnotherUser(el._id))
                   setTimeout(() => {
+                    dispatch(getUserPosts(el._id))
                     history.push(`/facebook/${el._id}`)
                   }, 1000)
 
@@ -151,7 +163,7 @@ const MainFriendDivStled = styled.div`
         color: var(--font-dark-color);
       }
       span:nth-child(2) {
-        color: var(--font-light-color);
+        color: var(--ofont-color1);
       }
     }
     .moreDiv {

@@ -97,6 +97,8 @@ function UserProfile() {
     setBio(userData.bio)
 
   }
+
+
   // async function getusersData(id) {
   //   await axios.get(`http://localhost:2424/api/user/${id}`).then(({ data }) => {
   //     handleUserDataContext(data)
@@ -318,7 +320,7 @@ function UserProfile() {
               followedBy={userData.friendRequestRecieved.length}
               handleEditProfileOpen={handleEditProfileOpen}
             />
-            <PhotosComp userPosts={mainuserPosts} handleSeeAllPhotos={handleSeeAllPhotos} />
+            <PhotosComp handleSeeAllPhotos={handleSeeAllPhotos} />
             <FriendsCompo handleSeeAllfriends={handleSeeAllfriends} friends={userData.friends} userData={userData} />
           </div>
           <div>

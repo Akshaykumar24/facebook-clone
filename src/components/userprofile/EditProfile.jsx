@@ -374,7 +374,7 @@ const UpdateBtnStyled = styled.div`
     align-items: center;
     justify-content: center;
     background-color: var(--primary-color);
-    color: var(--primary-background-color);
+    color: var(--ofont-color2);
     cursor: pointer;
     font-weight: bold;
     outline: none;
@@ -406,7 +406,7 @@ const EditDetailsStyled = styled.div`
 
 const WorkTextStyled = styled.div`
   span {
-    color: var(--font-dark-color);
+    color: var(--ofont-dark-color);
     font-size: 16px;
     font-weight: bold;
     display: flex;

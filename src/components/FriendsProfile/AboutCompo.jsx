@@ -199,11 +199,11 @@ border-top: 1px solid var(--font-light-color);
     grid-template-columns: 1fr 2fr;
     width: 100%;
     &>div:nth-child(1){
-        color: var(--font-dark-color);
+        color: var(--ofont-dark-color);
         font-weight: 600;
     }
       &>div:nth-child(2){
-        color: var(--font-light-color);
+        color: var(--ofont-color1);
         font-weight: 600;
     }
   }

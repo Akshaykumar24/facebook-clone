@@ -31,19 +31,19 @@ const HomePageCenter = () => {
 
   useEffect(() => {
     setIsLoading(true);
-    setPosts(getData("allUserPosts").posts)
-    // getPosts()
-    //   .then(({ data }) => {
-    //     // console.log('data:', data.posts)
+    // setPosts(getData("allUserPosts").posts)
+    getPosts()
+      .then(({ data }) => {
+        // console.log('data:', data.posts)
 
-    //     setPosts(data.posts);
-    //     setIsLoading(false);
-    //   })
-    //   .catch((err) => {
-    //     setIsError(true);
-    //     console.log('err:', err)
+        setPosts(data.posts);
+        setIsLoading(false);
+      })
+      .catch((err) => {
+        setIsError(true);
+        console.log('err:', err)
 
-    //   });
+      });
   }, []);
 
   // console.log('posts:', posts)

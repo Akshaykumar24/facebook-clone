@@ -56,7 +56,7 @@ const PhotosCompStyles = styled.div`
       display: flex;
       align-items: center;
       justify-content: center;
-      color: var(--primary-color);
+      color: var(--ofont-primary-color);
       :hover {
         background-color: var(--background-gray-color);
         cursor: pointer;

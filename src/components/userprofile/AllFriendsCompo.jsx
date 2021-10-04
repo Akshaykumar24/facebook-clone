@@ -47,6 +47,7 @@ function AllFriendsCompo() {
                     }
                     dispatch(getAnotherUser(el._id))
                     setTimeout(() => {
+                      dispatch(getUserPosts(el._id))
                       history.push(`/facebook/${el._id}`)
                     }, 1000)
 
@@ -68,6 +69,7 @@ function AllFriendsCompo() {
                   }
                   dispatch(getAnotherUser(el._id))
                   setTimeout(() => {
+                    dispatch(getUserPosts(el._id))
                     history.push(`/facebook/${el._id}`)
                   }, 1000)
 

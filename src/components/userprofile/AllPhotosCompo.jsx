@@ -3,14 +3,14 @@ import styled from "styled-components";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import { getData } from "../../utils/localStorage";
 import { useState } from "react";
-import { useDispatch } from "react-redux"
-import { getAnotherUser } from "../../redux/auth/action";
-import { useHistory } from 'react-router-dom'
+// import { useDispatch } from "react-redux"
+// import { getAnotherUser } from "../../redux/auth/action";
+// import { useHistory } from 'react-router-dom'
 import { v4 as uuidv4 } from "uuid";
-function AllPhotosCompo({ userPosts }) {
-    console.log(userPosts)
-    const dispatch = useDispatch();
-    const history = useHistory();
+function AllPhotosCompo() {
+
+    // const dispatch = useDispatch();
+    // const history = useHistory();
 
     const photosData = [
         "https://scontent.fpnq7-4.fna.fbcdn.net/v/t1.6435-9/35799287_2073684202954764_7545216993050230784_n.jpg?_nc_cat=111&ccb=1-5&_nc_sid=174925&_nc_ohc=_hZCbwLIc6wAX9Gebht&_nc_ht=scontent.fpnq7-4.fna&oh=f56970935bc300864b0c21ee0de0ea95&oe=61791D41",
@@ -23,7 +23,11 @@ function AllPhotosCompo({ userPosts }) {
         "https://scontent.fpnq7-4.fna.fbcdn.net/v/t31.18172-8/27982749_2004441323146362_7572999494274059494_o.jpg?_nc_cat=111&ccb=1-5&_nc_sid=8bfeb9&_nc_ohc=pIAfAknp0NYAX8rMOJJ&_nc_ht=scontent.fpnq7-4.fna&oh=c99b7fea322e5232f3ead4e5a8ebc80c&oe=61783394",
         "https://scontent.fpnq7-4.fna.fbcdn.net/v/t1.18169-9/26231609_1987217571535404_8550689058995090995_n.jpg?_nc_cat=107&ccb=1-5&_nc_sid=8bfeb9&_nc_ohc=e_XD2SY3qKAAX8_60EM&_nc_ht=scontent.fpnq7-4.fna&oh=724a4dab9a947a10f8d1359332f36e15&oe=617A5CDD",
     ];
-    const [photos, setPhotos] = useState(userPosts.filter((el) => {
+    const [mainuserPosts, setMainuserPosts] = useState(
+        getData("userPosts")?.posts ? getData("userPosts").posts : []
+    )
+
+    const [photos, setPhotos] = useState(mainuserPosts.filter((el) => {
         return el.body_photo.length > 0
     }))
     return (

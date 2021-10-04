@@ -81,11 +81,18 @@ function FriendsCompo({ friends, refreshPage, handleSeeAllfriends }) {
 
                             if (el._id === userData._id) {
                                 dispatch(getUserPosts(el._id))
-                                history.push('/profile')
+                                setTimeout(() => {
+
+                                    history.push(`/profile`)
+
+                                }, 1000)
+
                                 return
                             }
                             dispatch(getAnotherUser(el._id))
+                            dispatch(getUserPosts(el._id))
                             setTimeout(() => {
+
                                 history.push(`/facebook/${el._id}`)
                                 refreshPage()
                             }, 2000)
@@ -128,7 +135,7 @@ const FriendsCompoStyled = styled.div`
       }
     }
     &>span:nth-child(2){
-         color:var(--font-light-color)
+         color:var(--ofont-color1)
     }
 }
     & > div:nth-child(2) {
@@ -137,7 +144,7 @@ const FriendsCompoStyled = styled.div`
       display: flex;
       align-items: center;
       justify-content: center;
-      color: var(--primary-color);
+      color: var(--ofont-primary-color);
       :hover {
         background-color: var(--background-gray-color);
         cursor: pointer;
