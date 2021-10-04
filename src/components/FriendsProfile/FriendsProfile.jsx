@@ -22,8 +22,10 @@ import AboutCompo from "./AboutCompo";
 import AllFriendsCompo from "./AllFriendsCompo";
 import AllPhotosCompo from "./AllPhotosCompo";
 import PostCard from "../PostCard/PostCard";
-import { getUserPosts } from "../../redux/auth/action";
+import { useDispatch } from "react-redux";
+import { getAnotherUserPosts } from "../../redux/auth/action";
 function FriendsProfile() {
+  const dispatch = useDispatch();
   const { id } = useParams();
   console.log(id);
 
@@ -54,10 +56,15 @@ function FriendsProfile() {
       : getData("userData").userOnline
   );
   const [userPosts, setUserPosts] = useState(
-    getData("userPosts").posts
-      ? getData("userPosts").posts
+    getData("frndsPosts").posts
+      ? getData("frndsPosts").posts
       : []
   );
+  useEffect(() => {
+
+    dispatch(getAnotherUserPosts(userData._id))
+  }, [])
+
   const id2 = userData._id
 
   const check = (id2, mainuser) => {
@@ -120,9 +127,10 @@ function FriendsProfile() {
             </div>
             <div className="avatar">
               <img
+                style={{ backgroundColor: "white" }}
                 src={
                   userData.profile === undefined
-                    ? defaultUserPic.profilePic
+                    ? `https://avatars.dicebear.com/api/micah/${userData.first_name}.svg`
                     : userData.profile
                 }
                 alt="profilePhoto"
@@ -147,7 +155,7 @@ function FriendsProfile() {
               >
                 Posts
               </div>
-              <div onClick={handleProfilesMenu}>About</div>
+              <div className={`${about ? "menuBorder-bottom" : ""}`} onClick={handleProfilesMenu}>About</div>
               <div
                 className={`${friends ? "menuBorder-bottom" : ""}`}
                 onClick={handleProfilesMenu}
@@ -201,18 +209,29 @@ function FriendsProfile() {
           </div>
           <div>
             {userPosts.length >= 1 ? userPosts.reverse().map((el) => {
-              return <PostCard post={el} user={userData} />
-            }) : <h1>This user has not posted yet.</h1>}
+              return <PostCard post={el} user={el.user_id} />
+            }) : <UserNotPostingStyled><h1>This user has not posted yet.</h1></UserNotPostingStyled>}
           </div>
         </PostCompoSyled> : ""}
         {about ? <AboutCompo /> : ""}
-        {friends ? <AllFriendsCompo /> : ""}
+        {friends ? <AllFriendsCompo refreshPage={refreshPage} /> : ""}
         {photos ? <AllPhotosCompo /> : ""}
       </MainPostLayout>
     </UserProfileStyles>
   );
 }
+const UserNotPostingStyled = styled.div`
+width: 100%;
+min-height: 20rem;
+display:flex;
+justify-content: center;
+align-items: center;
+h1{
+  font-size: 2rem;
+}
 
+
+`
 const UserProfileStyles = styled.div`
   .mainProfile {
     width: 100%;
@@ -332,7 +351,7 @@ const UserProfileStyles = styled.div`
 
         height: 3.4rem;
 
-        column-gap: 6px;
+        column-gap: 12px;
 
         align-items: center;
         .specialC {
@@ -344,7 +363,7 @@ const UserProfileStyles = styled.div`
           & > div {
             display: flex;
             justify-content: space-between;
-            width: 7.3rem;
+            width: 8rem;
             padding: 8px;
             align-items: center;
             background-color: var(--primary-color);

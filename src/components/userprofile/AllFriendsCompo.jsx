@@ -4,7 +4,7 @@ import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import { getData } from "../../utils/localStorage";
 import { useState } from "react";
 import { useDispatch } from "react-redux"
-import { getAnotherUser, getUserPosts } from "../../redux/auth/action";
+import { getAnotherUser, getUserPosts, getAnotherUserPosts } from "../../redux/auth/action";
 import { useHistory } from 'react-router-dom'
 import { v4 as uuidv4 } from "uuid";
 function AllFriendsCompo() {
@@ -40,22 +40,18 @@ function AllFriendsCompo() {
               <div className="imageDiv">
                 <img
                   onClick={() => {
-
-                    if (el._id === userData._id) {
-                      dispatch(getUserPosts(el._id))
-                      history.push('/profile')
-                    }
                     dispatch(getAnotherUser(el._id))
+                    dispatch(getAnotherUserPosts(el._id))
                     setTimeout(() => {
-                      dispatch(getUserPosts(el._id))
+
                       history.push(`/facebook/${el._id}`)
-                    }, 1000)
+                    }, 2000)
 
                   }}
                   src={
-                    el.profile
-                      ? el.profile
-                      : "https://scontent.fpnq7-4.fna.fbcdn.net/v/t1.6435-9/35799287_2073684202954764_7545216993050230784_n.jpg?_nc_cat=111&ccb=1-5&_nc_sid=174925&_nc_ohc=_hZCbwLIc6wAX9Gebht&_nc_ht=scontent.fpnq7-4.fna&oh=f56970935bc300864b0c21ee0de0ea95&oe=61791D41"
+                    el.profile === undefined
+                      ? `https://avatars.dicebear.com/api/micah/${el.first_name}.svg`
+                      : el.profile
                   }
                   alt=""
                 />
@@ -63,15 +59,13 @@ function AllFriendsCompo() {
               <div className="nameMutualFrnd">
                 <span onClick={() => {
 
-                  if (el._id === userData._id) {
-                    dispatch(getUserPosts(el._id))
-                    history.push('/profile')
-                  }
                   dispatch(getAnotherUser(el._id))
+                  dispatch(getAnotherUserPosts(el._id))
                   setTimeout(() => {
-                    dispatch(getUserPosts(el._id))
+
                     history.push(`/facebook/${el._id}`)
-                  }, 1000)
+                  }, 2000)
+
 
                 }}>{el.first_name + " " + el.last_name}</span>
                 <span>{getMutual(el.friends, userData)} mutual friends</span>

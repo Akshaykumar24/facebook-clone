@@ -11,12 +11,12 @@ import styled from "styled-components";
 import CloseIcon from "@material-ui/icons/Close";
 import { v4 as uuidv4 } from "uuid";
 import { useDispatch } from "react-redux";
-import { getUser } from "../../redux/auth/action";
-import { useHistory } from "react-router-dom";
+// import { getUser } from "../../redux/auth/action";
+// import { useHistory } from "react-router-dom";
 
 import { updateUser } from "../../redux/auth/action";
-import ErrorModal from '../ErrorPopup/ErrorModal'
-import ConfirmationPopup from '../ErrorPopup/ConfirmationPopup'
+// import ErrorModal from '../ErrorPopup/ErrorModal'
+// import ConfirmationPopup from '../ErrorPopup/ConfirmationPopup'
 // import { shallowEqual, useDispatch, useSelector } from "react-redux";
 const style = {
     position: "absolute",
