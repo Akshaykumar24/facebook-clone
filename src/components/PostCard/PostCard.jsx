@@ -189,7 +189,7 @@ const PostCard = ({ post, user }) => {
                 }
 
 
-              }} alt="R" src={user.profile} />
+              }} alt="R" src={user_id.profile} />
             </Box>
             <Box>
               <Box sx={{ cursor: "pointer" }} > <span onClick={() => {
