@@ -20,8 +20,10 @@ import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { getData } from '../../utils/localStorage'
 import axios from "axios"
+import { useHistory } from "react-router-dom";
 import { url } from "../../utils/url";
 const NavBar = ({ themeToggler, checked, menu, setMenu }) => {
+  const history = useHistory();
   const [account, setAccount] = React.useState(false);
   const [notification, setNotification] = React.useState(false);
 
@@ -108,8 +110,11 @@ const NavBar = ({ themeToggler, checked, menu, setMenu }) => {
           </IconWrapper>
         </div>
         <div className="navBarUserBox flexBox">
-          <div className="userProfileCard flexBox">
+          <div onClick={() => {
+            history.push("/profile")
+          }} className="userProfileCard flexBox">
             <img
+
               src={
                 p.profile === undefined
                   ? `https://avatars.dicebear.com/api/micah/${p.first_name}.svg`

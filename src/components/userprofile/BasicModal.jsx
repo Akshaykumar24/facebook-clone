@@ -190,7 +190,7 @@ export default function BasicModal({ title, btnText, handleClose, open, userData
 
 
                     </UploadProfPicStyled>
-                    {errorModalOpen ? <ErrorModal message={message} handleErrorModalClose={handleErrorModalClose} errorModalOpen={errorModalOpen} /> : ""}
+                    {errorModalOpen ? <ErrorModal refreshPage={refreshPage()} message={message} handleErrorModalClose={handleErrorModalClose} errorModalOpen={errorModalOpen} /> : ""}
 
                     < UpdateProfilePicStyled >
 

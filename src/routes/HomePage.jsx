@@ -1,8 +1,5 @@
 import React from "react";
-import HomePageCenter from "../components/HomePageCenter/HomePageCenter";
-import SideBar from "../components/SideBar/SideBar";
 import styled from "styled-components";
-import Story from "../components/Story/Story";
 import Home from "../components/Active/Pages/Home";
 import { useHistory } from "react-router-dom";
 import { useSelector } from "react-redux";

@@ -13,7 +13,6 @@ import Intro from "./Intro";
 import PhotosComp from "./PhotosComp";
 import FriendsCompo from "./FriendsCompo";
 import { getData } from "../../utils/localStorage";
-import EmojiMart from "../EmojiMart/EmojiMart";
 import { MainPostLayout } from "../../styles/layouts";
 import AboutCompo from "./AboutCompo";
 import AllFriendsCompo from "./AllFriendsCompo";
@@ -24,7 +23,7 @@ import { useDispatch } from 'react-redux'
 import PostCard from '../PostCard/PostCard'
 import { logUser } from "../../redux/auth/action";
 import PostForm from "../PostForm/PostForm";
-import FilterListIcon from '@mui/icons-material/FilterList';
+
 function UserProfile() {
 
   const dispatch = useDispatch();
@@ -97,6 +96,8 @@ function UserProfile() {
     setBio(userData.bio)
 
   }
+
+
   // async function getusersData(id) {
   //   await axios.get(`http://localhost:2424/api/user/${id}`).then(({ data }) => {
   //     handleUserDataContext(data)
@@ -177,6 +178,7 @@ function UserProfile() {
             </div>
             <div className="avatar">
               <img
+                style={{ backgroundColor: "white" }}
                 src={
                   userData.profile === undefined
                     ? `https://avatars.dicebear.com/api/micah/${userData.first_name}.svg`
@@ -318,7 +320,7 @@ function UserProfile() {
               followedBy={userData.friendRequestRecieved.length}
               handleEditProfileOpen={handleEditProfileOpen}
             />
-            <PhotosComp userPosts={mainuserPosts} handleSeeAllPhotos={handleSeeAllPhotos} />
+            <PhotosComp handleSeeAllPhotos={handleSeeAllPhotos} refreshPage={refreshPage} />
             <FriendsCompo handleSeeAllfriends={handleSeeAllfriends} friends={userData.friends} userData={userData} />
           </div>
           <div>
@@ -342,10 +344,9 @@ function UserProfile() {
                 }}>Others</button></div>
               </div>
             </FilterPostsStyled>
-            {userPosts.reverse().map((el) => {
-              return <PostCard post={el} user={userData} />
-            })}
-
+            {userPosts.length >= 1 ? userPosts.map((el) => {
+              return <PostCard post={el} user={el.user_id} />
+            }) : <UserNotPostingStyled><h1>You have not posted yet.</h1></UserNotPostingStyled>}
           </div>
         </PostCompoSyled> : ""}
         {about ? <AboutCompo handleEditProfileOpen={handleEditProfileOpen} /> : ""}
@@ -356,7 +357,18 @@ function UserProfile() {
     </UserProfileStyles>
   );
 }
+const UserNotPostingStyled = styled.div`
+width: 100%;
+min-height: 20rem;
+display:flex;
+justify-content: center;
+align-items: center;
+h1{
+  font-size: 2rem;
+}
 
+
+`
 const FilterPostsStyled = styled.div`
     width: 100%;
     display: grid;

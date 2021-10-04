@@ -9,12 +9,7 @@ import { AiOutlineLike } from "react-icons/ai";
 import styled from 'styled-components'
 import Popover from "@mui/material/Popover";
 
-const MyDiv=styled.div`
-background-color: var(--background-gray-color);
-color:var(--font-dark-color);
-padding:2rem,
 
-`
 
 const getPost = (id) => {
   return axios.get(`${url}/api/posts/${id}`);
@@ -120,7 +115,7 @@ const PostStat = ({
         </Box>
       </Box>
       <LikeBox >
-        {likers.length > 0 &&<Popover
+        {likers.length > 0 && <Popover
           id={idp}
           open={open}
           anchorEl={anchorEl}
@@ -133,7 +128,7 @@ const PostStat = ({
           {
             likers.map((liker) => {
               return (
-                <MyDiv  key={liker._id}>
+                <MyDiv key={liker._id}>
                   <Link to={`/user/${liker._id}`}> {liker.first_name} </Link>
                 </MyDiv>
               );
@@ -156,5 +151,10 @@ const PostStat = ({
     </>
   );
 };
+const MyDiv = styled.div`
+background-color: var(--background-gray-color);
+color:var(--font-dark-color);
+padding:2rem,
 
+`
 export default PostStat;

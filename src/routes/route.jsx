@@ -3,14 +3,11 @@ import { Switch, Route } from "react-router-dom";
 import FriendsAll from "../components/Friends/FriendsAll";
 import SignUp from "../components/Login-Signup/SignUp";
 import HomePage from "./HomePage";
-import FriendsCompo from "../components/userprofile/FriendsCompo";
-import Intro from "../components/userprofile/Intro";
-import PhotosComp from "../components/userprofile/PhotosComp";
+
 import UserProfile from "../components/userprofile/UserProfile";
 import Wall from "../components/Wall/Wall";
 import FriendsProfile from "../components/FriendsProfile/FriendsProfile";
 import NavBar from "../components/navbar/NavBar";
-import Chat from "../components/Socket/Chat";
 import Messenger from "../components/Socket/Messenger";
 
 import UserPage from "./UserPage";
@@ -72,6 +69,7 @@ const Router = () => {
           <UserProfile />
         </Route>
         <Route path="/facebook/:id">
+          <NavBar setMenu={setMenu} menu={setMenu} />
           <FriendsProfile />
         </Route>
         <Route path="/user/:id">

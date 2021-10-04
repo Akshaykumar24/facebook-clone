@@ -28,7 +28,7 @@ const HomePageCenter = () => {
 
   useEffect(() => {
     setIsLoading(true);
-    //setPosts(getData("allUserPosts").posts)
+    // setPosts(getData("allUserPosts").posts)
     getPosts()
       .then(({ data }) => {
         // console.log('data:', data.posts)

@@ -18,15 +18,18 @@ const style = {
     p: 4,
 };
 
-export default function ErrorModal({ message, handleErrorModalClose, errorModalOpen }) {
+export default function ErrorModal({ message, handleErrorModalClose, errorModalOpen, refreshPage }) {
 
-
+    const handleall = () => {
+        refreshPage();
+        handleErrorModalClose()
+    }
     return (
         <div>
 
             <Modal
                 open={errorModalOpen}
-                onClose={handleErrorModalClose}
+                onClose={handleall}
                 aria-labelledby="modal-modal-title"
                 aria-describedby="modal-modal-description"
             >
@@ -35,7 +38,7 @@ export default function ErrorModal({ message, handleErrorModalClose, errorModalO
                         <span>{message}</span>
                     </div>
                     <div>
-                        <Button onClick={handleErrorModalClose} variant="contained">{message === "Image is successfully uploaded" ? "Done" : "Back"}</Button>
+                        <Button onClick={handleall} variant="contained">{message === "Image is successfully uploaded" ? "Done" : "Back"}</Button>
                     </div>
                 </Box>
             </Modal>

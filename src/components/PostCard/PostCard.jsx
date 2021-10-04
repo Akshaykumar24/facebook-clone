@@ -8,7 +8,7 @@ import moment from "moment";
 import styled from "styled-components";
 import { Box, Button, Avatar, Divider } from "@mui/material";
 import { useSelector } from "react-redux";
-
+import { getData } from "../../utils/localStorage";
 import { AiOutlineLike } from "react-icons/ai";
 import { FaRegCommentAlt } from "react-icons/fa";
 import { RiShareForwardLine } from "react-icons/ri";
@@ -17,9 +17,12 @@ import {
   getAllUserPosts,
   getOtherUsersPosts,
   getUserPosts,
+  getAnotherUser,
+  getAnotherUserPosts,
 } from "../../redux/auth/action";
+import { useHistory } from "react-router-dom";
 const updatePost = (id, no_of_likes, liked_by) => {
-  return axios.patch(`${url}/api/posts/${id}`, {
+  return axios.patch(`${url}/api/posts/update/${id}`, {
     no_of_likes,
     liked_by,
   });
@@ -28,7 +31,7 @@ const getPost = async (id) => {
   return axios.get(`${url}/api/posts/${id}`);
 };
 const getCommentOfThisPost = (id) => {
-  return axios.get(`${url}/api/posts/${id}/comments`);
+  return axios.get(`${url}/api/posts/comments/${id}`);
 };
 
 const PostCardWrapper = styled.div`
@@ -39,6 +42,7 @@ const PostCardWrapper = styled.div`
 `;
 
 const PostCard = ({ post, user }) => {
+  const history = useHistory();
   const dispatch = useDispatch();
   console.log("user:", user);
   // console.log('user from post card:', user)
@@ -62,6 +66,11 @@ const PostCard = ({ post, user }) => {
 
   const [duration, setDuration] = useState();
 
+  const [userData, setUserData] = useState(
+    getData("userData").user
+      ? getData("userData").user
+      : getData("userData").userOnline
+  );
   const state = useSelector((state) => state);
   const me = state.auth.user;
   // useEffect(()=>{
@@ -91,7 +100,7 @@ const PostCard = ({ post, user }) => {
         setDuration(Number(momentDur) + " sec");
       }
     }
-  }, [no_of_comments, no_of_likes]);
+  }, [no_of_comments, no_of_likes, time]);
 
   const handleLike = () => {
     getPost(_id)
@@ -162,10 +171,47 @@ const PostCard = ({ post, user }) => {
             }}
           >
             <Box>
-              <Avatar sx={{ m: "0 1rem" }} alt="R" src={user.profile} />
+              <Avatar
+                sx={{ m: "0 1rem", cursor: "pointer" }}
+                onClick={() => {
+                  if (user._id === userData._id) {
+                    history.push(`/profile`);
+
+                    return;
+                  } else {
+                    dispatch(getAnotherUser(user._id));
+                    dispatch(getAnotherUserPosts(user._id));
+                    setTimeout(() => {
+                      history.push(`/facebook/${user._id}`);
+                    }, 2000);
+                  }
+                }}
+                alt="R"
+                src={user_id.profile}
+              />
             </Box>
             <Box>
-              <Box>{user_id.first_name} </Box>
+              <Box sx={{ cursor: "pointer" }}>
+                {" "}
+                <span
+                  onClick={() => {
+                    if (user._id === userData._id) {
+                      history.push(`/profile`);
+
+                      return;
+                    } else {
+                      dispatch(getAnotherUser(user._id));
+                      dispatch(getAnotherUserPosts(user._id));
+                      setTimeout(() => {
+                        history.push(`/facebook/${user._id}`);
+                      }, 2000);
+                    }
+                  }}
+                  style={{ cursor: "pointer" }}
+                >
+                  {user_id.first_name}{" "}
+                </span>
+              </Box>
               <Box>
                 {duration}
                 {/* <LanguageIcon /> */}

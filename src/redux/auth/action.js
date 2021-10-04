@@ -140,7 +140,7 @@ export const getAnotherUser = (id) => (dispatch) => {
   axios
     .get(`${url}/api/user/${id}`)
     .then(({ data }) => {
-      dispatch(getUserPosts(id));
+      dispatch(getAnotherUserPosts(id));
       setData("frndData", data);
       return dispatch(frndSuccess(data));
     })
@@ -152,6 +152,16 @@ export const getUserPosts = (id) => (dispatch) => {
     .get(`${url}/api/posts/user/${id}`)
     .then(({ data }) => {
       setData("userPosts", data);
+      return dispatch(postSuccess(data));
+    })
+    .catch((err) => dispatch(regFail(err)));
+};
+export const getAnotherUserPosts = (id) => (dispatch) => {
+  dispatch(regReq());
+  axios
+    .get(`${url}/api/posts/user/${id}`)
+    .then(({ data }) => {
+      setData("frndsPosts", data);
       return dispatch(postSuccess(data));
     })
     .catch((err) => dispatch(regFail(err)));
