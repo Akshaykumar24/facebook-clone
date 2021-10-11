@@ -1,0 +1,50 @@
+.MainContainer {
+  display: flex;
+  padding: 0 10px;
+
+  height: calc(100vh - 50px);
+  align-items: flex-start;
+}
+.hidden {
+  overflow: auto;
+  position: fixed;
+}
+.right {
+  right: 0;
+}
+.mainPostsContainer {
+  flex-grow: 1;
+  overflow: auto;
+  display: grid;
+  gap: 15px;
+  padding-top: 15px;
+}
+
+.mainRightSidebarContainer {
+  overflow: auto;
+  scrollbar-width: thin;
+}
+
+@media only screen and (max-width: 992px) {
+  .mainLeftSidebarContainer {
+    display: none;
+  }
+}
+@media only screen and (max-width: 768px) {
+  .mainRightSidebarContainer {
+    display: none;
+  }
+}
+
+div[role="presentation"] {
+  top: 50px;
+}
+
+.MuiModal-root > div,
+.MuiDrawer-modal {
+  top: 50px;
+}
+.scroll {
+  overflow: auto;
+  scroll-behavior: smooth;
+}

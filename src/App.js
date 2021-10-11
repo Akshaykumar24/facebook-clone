@@ -1,17 +1,18 @@
-// import "./styles/App.css";
-import UserProfile from "./components/userprofile/UserProfile";
-import Intro from "./components/userprofile/Intro";
-import PhotosComp from "./components/userprofile/PhotosComp";
-import FriendsCompo from "./components/userprofile/FriendsCompo";
+
 import Router from "./routes/route";
+import AboutCompo from "./components/userprofile/AboutCompo";
+import AllFriendsCompo from "./components/userprofile/AllFriendsCompo";
+import AllPhotosCompo from "./components/userprofile/AllPhotosCompo";
+import { useState, useEffect } from "react";
 function App() {
+
   return (
     <div className="App">
-      {/* <UserProfile />
-    <Intro />
-    <PhotosComp />
-    <FriendsCompo /> */}
+
       <Router />
+      {/* <AboutCompo /> */}
+      {/* <AllFriendsCompo /> */}
+      {/* <AllPhotosCompo /> */}
     </div>
   );
 }

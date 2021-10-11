@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-const Login = ({ handleLogin, handleLoginForm, email, password }) => {
+const Login = ({ handleLogin, handleLoginForm, email, password, load }) => {
   return (
     <Logs>
       <input
@@ -18,7 +18,7 @@ const Login = ({ handleLogin, handleLoginForm, email, password }) => {
         name="password"
         onChange={(e) => handleLoginForm(e)}
       />
-      <button onClick={handleLogin}>Log-In</button>
+      <button onClick={handleLogin}>{load ? "loading" : "Log-In"}</button>
     </Logs>
   );
 };
@@ -26,6 +26,10 @@ const Login = ({ handleLogin, handleLoginForm, email, password }) => {
 export default Login;
 
 const Logs = styled.div`
+  * {
+    padding: 0;
+    margin: 0;
+  }
   width: 100%;
   margin: auto;
   text-align: center;
@@ -33,8 +37,8 @@ const Logs = styled.div`
   > input {
     font-size: 17px;
     padding: 14px 16px;
-    width: 330px;
-    height: 22px;
+    width: 360px;
+    height: 48px;
     margin: 7px auto;
     line-height: 1.34;
     border-radius: 5px;
