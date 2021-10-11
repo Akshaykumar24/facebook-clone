@@ -15,7 +15,7 @@ const HomePageCenter = () => {
   const [isError, setIsError] = useState(false);
   const [user, setUser] = useState("");
   const getPosts = () => {
-    return axios.get("http://localhost:2424/api/posts");
+    return axios.get(`${url}api/posts`);
   };
 
   useEffect(() => {
