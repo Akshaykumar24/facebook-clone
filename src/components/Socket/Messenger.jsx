@@ -151,13 +151,22 @@ const Messenger = () => {
             </div>
           </>
         ) : (
-          <div>select Chat</div>
+          <div
+            style={{
+              color: "gray",
+              padding: "100px 125px",
+              fontSize: "28px",
+              margin: "auto",
+            }}
+          >
+            Select Chat to Start a Conversation
+          </div>
         )}
       </Chat>
       <Prof>
         <h1>Find Friends</h1>
-        <input type="text" />
-        <Online />
+        <input type="text" style={{ width: "90%", height: "40px" }} />
+        {/* <Online />
         <Online />
         <Online />
         <button
@@ -167,7 +176,7 @@ const Messenger = () => {
           }}
         >
           Print
-        </button>
+        </button> */}
       </Prof>
     </Mes>
   );

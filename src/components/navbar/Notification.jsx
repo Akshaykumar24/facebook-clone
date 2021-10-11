@@ -14,7 +14,7 @@ function Notifications({ notifications, uid, p, not }) {
   // }, [p._id]);
 
   return (
-    <div className="notificationsContainer">
+    <div className="notificationsContainer" style={{ maxHeight: "700px" }}>
       <div className="notificationsHeader flexBox">
         <h1>Notifications</h1>
         <div className="notificationMenuBox flexBox">

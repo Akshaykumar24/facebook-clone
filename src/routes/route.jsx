@@ -51,13 +51,12 @@ const Router = () => {
           <NavBar setMenu={setMenu} menu={setMenu} />
           <Messenger />
           {/* <Chat /> */}
-          <NavBar
+          {/* <NavBar
             themeToggler={themeToggler}
             checked={checked}
             setMenu={setMenu}
             menu={setMenu}
-          />
-          <Wall />
+          /> */}
         </Route>
         <Route path="/profile">
           <NavBar

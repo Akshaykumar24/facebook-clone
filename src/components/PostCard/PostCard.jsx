@@ -31,7 +31,7 @@ const getPost = async (id) => {
   return axios.get(`${url}/api/posts/${id}`);
 };
 const getCommentOfThisPost = (id) => {
-  return axios.get(`${url}/api/posts/comments/${id}`);
+  return axios.get(`${url}/api/posts/${id}/comments`);
 };
 
 const PostCardWrapper = styled.div`
@@ -134,7 +134,7 @@ const PostCard = ({ post, user }) => {
     setIsComment(true);
     getCommentOfThisPost(_id).then(({ data }) => {
       const commentsArr = data.comments;
-
+      console.log(commentsArr);
       setComments(commentsArr);
     });
   };

@@ -23,7 +23,7 @@ const AccountMenu = ({ themeToggler, checked }) => {
       <div className="AccountMenuUserProfileCard flexBox">
         <img src={"/Images/userProfile_icon.png"} alt="Profile" />
         <div>
-          <p>vaibhav</p>
+          <p>Akshaykumar</p>
           <small>See your profile</small>
         </div>
       </div>
