@@ -46,7 +46,8 @@ You can also take the glimpse of our Project,just follow the below steps:
 - User also can accept friend request, cancel request as well as send request.
 - User can like, comment or share the post and it is totally live.
 - User can message to his friends.
-- 
+- User will recieve notification related to his posts, friend requests etc.
+
 ## SnapShots
 
 <h1>1.Landing Page</h1>
