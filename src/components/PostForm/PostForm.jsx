@@ -4,7 +4,7 @@ import axios from "axios";
 // import {useSelector} from 'react-redux'
 
 import { url } from "../../utils/url";
-import { useDispatch } from 'react-redux'
+import { useDispatch } from "react-redux";
 import { getUserPosts } from "../../redux/auth/action";
 
 import { Box, Button, Divider, Avatar, Modal, TextField } from "@mui/material";
@@ -20,14 +20,23 @@ const modalStyle = {
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -10%)",
+<<<<<<< HEAD
   width: '500px',
   maxHeight: '80vh',
+=======
+  width: "500px",
+  maxHeight: "80vh",
+>>>>>>> 8f1f2392486016a3059f54ef6186def3697d8f15
   bgcolor: "background.paper",
   // border: "2px solid #df1313",
   // boxShadow: 24,
   p: "2rem 1.5rem",
   overflowY: "scroll",
+<<<<<<< HEAD
   borderRadius: '10px',
+=======
+  borderRadius: "10px",
+>>>>>>> 8f1f2392486016a3059f54ef6186def3697d8f15
   boxShadow: `0px 0px 10px var(--font-light-color)`,
   // position: "absolute",
   // top: '50% !important',
@@ -39,7 +48,6 @@ const modalStyle = {
   // boxShadow: `0px 0px 10px var(--font-light-color)`,
   // maxHeight: "35rem",
   // overflowY: "scroll",
-
 };
 
 const PostForm = ({ user }) => {
@@ -60,7 +68,7 @@ const PostForm = ({ user }) => {
 
   const handleChange = (e) => {
     const value = e.target.value;
-    if (value.length > 0 || body_photo !== '') {
+    if (value.length > 0 || body_photo !== "") {
       setButtonDisabled(false);
     }
     setBodyText(value);
@@ -82,10 +90,10 @@ const PostForm = ({ user }) => {
     writePost(body_text, body_photo)
       .then((resp) => {
         console.log(resp);
-        dispatch(getUserPosts(user._id))
+        dispatch(getUserPosts(user._id));
         if (resp.status === 201) {
           console.log("succes");
-          refreshPage();
+          // refreshPage();
           handleClose();
         }
       })
@@ -195,12 +203,22 @@ const PostForm = ({ user }) => {
               />
             </Box>
             <Box></Box>
-            <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', m: '1rem 0' }}>
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+                m: "1rem 0",
+              }}
+            >
               <Box>Add to your post </Box>
 
               <PhotoUploadForm setBody_photo={setBody_photo} />
             </Box>
-            <Box sx={{ textAlign: 'center' }}> <img src={body_photo} height='200px' alt="" /> </Box>
+            <Box sx={{ textAlign: "center" }}>
+              {" "}
+              <img src={body_photo} height="200px" alt="" />{" "}
+            </Box>
             <Box>
               <Button
                 disabled={buttonDisabled}

@@ -9,11 +9,19 @@ import {
   OUT_FAILURE,
   OUT_REQUEST,
   OUT_SUCCESS,
-  POST_SUCCESS
+  POST_SUCCESS,
 } from "./actionTypes";
 
-
-const init = { user: {}, Load: false, user2: {}, Error: false, token: "", reg: false, frndData: {}, postData: [] };
+const init = {
+  user: {},
+  Load: false,
+  user2: {},
+  Error: false,
+  token: "",
+  reg: false,
+  frndData: {},
+  postData: [],
+};
 
 export const authReducer = (state = { ...init }, { type, payload }) => {
   switch (type) {

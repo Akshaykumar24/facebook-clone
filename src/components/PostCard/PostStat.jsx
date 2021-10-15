@@ -6,10 +6,8 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import { LikeBox } from "./PostStat.styles";
 import { AiOutlineLike } from "react-icons/ai";
-import styled from 'styled-components'
+import styled from "styled-components";
 import Popover from "@mui/material/Popover";
-
-
 
 const getPost = (id) => {
   return axios.get(`${url}/api/posts/${id}`);
@@ -104,36 +102,37 @@ const PostStat = ({
               color="inherit"
               onClick={() => handleShowComments()}
             >
-              {noOfComments} comments
+              {noOfComments ? noOfComments : 2} comments
             </Button>
           </Box>
           <Box>
             <Button variant="text" color="inherit">
-              1 shares
+              {/* {postStat.no_of_shares} shares */}1 shares
             </Button>
           </Box>
         </Box>
       </Box>
-      <LikeBox >
-        {likers.length > 0 && <Popover
-          id={idp}
-          open={open}
-          anchorEl={anchorEl}
-          onClose={handleClose}
-          anchorOrigin={{
-            vertical: "bottom",
-            horizontal: "left",
-          }}
-        >
-          {
-            likers.map((liker) => {
+      <LikeBox>
+        {likers.length > 0 && (
+          <Popover
+            id={idp}
+            open={open}
+            anchorEl={anchorEl}
+            onClose={handleClose}
+            anchorOrigin={{
+              vertical: "bottom",
+              horizontal: "left",
+            }}
+          >
+            {likers.map((liker) => {
               return (
                 <MyDiv key={liker._id}>
                   <Link to={`/user/${liker._id}`}> {liker.first_name} </Link>
                 </MyDiv>
               );
             })}
-        </Popover>}
+          </Popover>
+        )}
         {/* <Modal
           open={open}
           onClose={handleClose}
@@ -152,9 +151,8 @@ const PostStat = ({
   );
 };
 const MyDiv = styled.div`
-background-color: var(--background-gray-color);
-color:var(--font-dark-color);
-padding:2rem,
-
-`
+  background-color: var(--background-gray-color);
+  color: var(--font-dark-color);
+  padding: 2rem;
+`;
 export default PostStat;

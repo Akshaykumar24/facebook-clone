@@ -7,68 +7,68 @@ const Story = () => {
       <div className="storyMainContainer flexBox">
         <div
           style={{
-            backgroundImage: `url("https://lh3.googleusercontent.com/a-/AOh14GhRn5Z0k4yIPKiZRdd8cTmkzDbqswy-A1yJjMTMBw=s576-p-rw-no")`,
+            backgroundImage: `url("https://scontent.fblr4-1.fna.fbcdn.net/v/t1.6435-9/183178583_3025711567648497_3531528354227129856_n.jpg?_nc_cat=1&ccb=1-5&_nc_sid=09cbfe&_nc_ohc=aRI34uSAXGAAX99vfW6&_nc_ht=scontent.fblr4-1.fna&oh=6fb052a42ec84fdf01d5b9561e411038&oe=617F6F01")`,
           }}
           className="mainImgContainer"
         >
           <img
             className="imageMainContainer"
-            src="https://lh3.googleusercontent.com/a-/AOh14GhRn5Z0k4yIPKiZRdd8cTmkzDbqswy-A1yJjMTMBw=s576-p-rw-no"
+            src="https://scontent.fblr4-1.fna.fbcdn.net/v/t1.6435-9/183178583_3025711567648497_3531528354227129856_n.jpg?_nc_cat=1&ccb=1-5&_nc_sid=09cbfe&_nc_ohc=aRI34uSAXGAAX99vfW6&_nc_ht=scontent.fblr4-1.fna&oh=6fb052a42ec84fdf01d5b9561e411038&oe=617F6F01"
             alt=""
           />
-          <p className="pMainTag">Vaibhav</p>
+          <p className="pMainTag">Akshay</p>
         </div>
         <div
           style={{
-            backgroundImage: `url("https://drive.google.com/file/d/1qAggj_v8XwQncEqjL_LAoH3kqXz_AgQc/view")`,
+            backgroundImage: `url("https://scontent.fblr4-1.fna.fbcdn.net/v/t1.6435-9/183178583_3025711567648497_3531528354227129856_n.jpg?_nc_cat=1&ccb=1-5&_nc_sid=09cbfe&_nc_ohc=aRI34uSAXGAAX99vfW6&_nc_ht=scontent.fblr4-1.fna&oh=6fb052a42ec84fdf01d5b9561e411038&oe=617F6F01")`,
           }}
           className="mainImgContainer"
         >
           <img
             className="imageMainContainer"
-            src="https://drive.google.com/file/d/1qAggj_v8XwQncEqjL_LAoH3kqXz_AgQc/view"
+            src="https://scontent.fblr4-1.fna.fbcdn.net/v/t1.6435-9/183178583_3025711567648497_3531528354227129856_n.jpg?_nc_cat=1&ccb=1-5&_nc_sid=09cbfe&_nc_ohc=aRI34uSAXGAAX99vfW6&_nc_ht=scontent.fblr4-1.fna&oh=6fb052a42ec84fdf01d5b9561e411038&oe=617F6F01"
             alt=""
           />
           <p className="pMainTag">Ravi Ranjan</p>
         </div>
         <div
           style={{
-            backgroundImage: `url("https://lh3.googleusercontent.com/a-/AOh14GhRn5Z0k4yIPKiZRdd8cTmkzDbqswy-A1yJjMTMBw=s576-p-rw-no")`,
+            backgroundImage: `url("https://scontent.fblr4-1.fna.fbcdn.net/v/t1.6435-9/183178583_3025711567648497_3531528354227129856_n.jpg?_nc_cat=1&ccb=1-5&_nc_sid=09cbfe&_nc_ohc=aRI34uSAXGAAX99vfW6&_nc_ht=scontent.fblr4-1.fna&oh=6fb052a42ec84fdf01d5b9561e411038&oe=617F6F01")`,
           }}
           className="mainImgContainer"
         >
           <img
             className="imageMainContainer"
-            src="https://lh3.googleusercontent.com/a-/AOh14GhRn5Z0k4yIPKiZRdd8cTmkzDbqswy-A1yJjMTMBw=s576-p-rw-no"
+            src="https://scontent.fblr4-1.fna.fbcdn.net/v/t1.6435-9/183178583_3025711567648497_3531528354227129856_n.jpg?_nc_cat=1&ccb=1-5&_nc_sid=09cbfe&_nc_ohc=aRI34uSAXGAAX99vfW6&_nc_ht=scontent.fblr4-1.fna&oh=6fb052a42ec84fdf01d5b9561e411038&oe=617F6F01"
             alt=""
           />
           <p className="pMainTag">Vaibhav</p>
         </div>
         <div
           style={{
-            backgroundImage: `url("https://lh3.googleusercontent.com/a-/AOh14GhRn5Z0k4yIPKiZRdd8cTmkzDbqswy-A1yJjMTMBw=s576-p-rw-no")`,
+            backgroundImage: `url("https://scontent.fblr4-1.fna.fbcdn.net/v/t1.6435-9/183178583_3025711567648497_3531528354227129856_n.jpg?_nc_cat=1&ccb=1-5&_nc_sid=09cbfe&_nc_ohc=aRI34uSAXGAAX99vfW6&_nc_ht=scontent.fblr4-1.fna&oh=6fb052a42ec84fdf01d5b9561e411038&oe=617F6F01")`,
           }}
           className="mainImgContainer"
         >
           <img
             className="imageMainContainer"
-            src="https://lh3.googleusercontent.com/a-/AOh14GhRn5Z0k4yIPKiZRdd8cTmkzDbqswy-A1yJjMTMBw=s576-p-rw-no"
+            src="https://scontent.fblr4-1.fna.fbcdn.net/v/t1.6435-9/183178583_3025711567648497_3531528354227129856_n.jpg?_nc_cat=1&ccb=1-5&_nc_sid=09cbfe&_nc_ohc=aRI34uSAXGAAX99vfW6&_nc_ht=scontent.fblr4-1.fna&oh=6fb052a42ec84fdf01d5b9561e411038&oe=617F6F01"
             alt=""
           />
-          <p className="pMainTag">Vaibhav</p>
+          <p className="pMainTag">Omkar</p>
         </div>
         <div
           style={{
-            backgroundImage: `url("https://lh3.googleusercontent.com/a-/AOh14GhRn5Z0k4yIPKiZRdd8cTmkzDbqswy-A1yJjMTMBw=s576-p-rw-no")`,
+            backgroundImage: `url("https://scontent.fblr4-1.fna.fbcdn.net/v/t1.6435-9/183178583_3025711567648497_3531528354227129856_n.jpg?_nc_cat=1&ccb=1-5&_nc_sid=09cbfe&_nc_ohc=aRI34uSAXGAAX99vfW6&_nc_ht=scontent.fblr4-1.fna&oh=6fb052a42ec84fdf01d5b9561e411038&oe=617F6F01")`,
           }}
           className="mainImgContainer"
         >
           <img
             className="imageMainContainer"
-            src="https://lh3.googleusercontent.com/a-/AOh14GhRn5Z0k4yIPKiZRdd8cTmkzDbqswy-A1yJjMTMBw=s576-p-rw-no"
+            src="https://scontent.fblr4-1.fna.fbcdn.net/v/t1.6435-9/183178583_3025711567648497_3531528354227129856_n.jpg?_nc_cat=1&ccb=1-5&_nc_sid=09cbfe&_nc_ohc=aRI34uSAXGAAX99vfW6&_nc_ht=scontent.fblr4-1.fna&oh=6fb052a42ec84fdf01d5b9561e411038&oe=617F6F01"
             alt=""
           />
-          <p className="pMainTag">Vaibhav</p>
+          <p className="pMainTag">Masai School</p>
         </div>
       </div>
     </>
