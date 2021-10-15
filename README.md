@@ -59,7 +59,7 @@ You can also take the glimpse of our Project,just follow the below steps:
 <img style="width:100%" src="https://i.ibb.co/3p2XJM4/notification.png" width="400"/>
 
 <h1>2.Profile Page</h1>
-<h4>This user profile page </h4>
+<h4>This is user profile page </h4>
 <img style="width:100%" src="https://i.ibb.co/4jgdFdz/profile.png" width="400"/>
 
 <h4>About section </h4>
