@@ -1,0 +1,65 @@
+.sideBarContainer {
+  min-width: 200px;
+  max-width: 320px;
+  position: relative;
+  top: 50px;
+  width: 25vw;
+  height: 100vh;
+  padding: 10px;
+}
+
+.sideBarContentLink {
+  padding: 7px;
+  margin-left: 0.5%;
+  text-decoration: none;
+  color: var(--primary-text);
+  border-radius: 4px;
+  cursor: pointer;
+  justify-content: left;
+  transition: all 0.3s ease-in-out;
+}
+
+.sideBarContentLink:hover {
+  background: var(--hover-overlay);
+}
+
+.sideBarContentImage {
+  width: 35px;
+  height: 35px;
+  margin: auto;
+  border-radius: 100%;
+}
+
+.sideBarContentLabel {
+  font-size: 15px;
+  line-height: 19.9995px;
+  font-weight: 500;
+  margin: 10px;
+}
+
+.downBarHeading {
+  color: var(--secondary-icon);
+  margin: 10px 0 10px 10px;
+  font-weight: bold;
+}
+
+/* active contact side */
+.activeContactHeader {
+  display: flex;
+  justify-content: space-between;
+  margin: 10px;
+}
+.sideBarContainer .searchIcon {
+  width: 19px;
+  height: 19px;
+  opacity: 0.6;
+  vertical-align: middle;
+  fill: var(--primary-icon);
+}
+
+@media only screen and (max-width: 768px) {
+  .sideBarContainer {
+    min-width: 100vw;
+    padding: 0;
+  }
+}

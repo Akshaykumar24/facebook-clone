@@ -1,7 +1,6 @@
 import * as React from "react";
-import { useState } from "react";
+import { useEffect } from "react";
 import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
 import Modal from "@mui/material/Modal";
 import TextField from "@mui/material/TextField";
 import InputLabel from "@mui/material/InputLabel";
@@ -10,11 +9,18 @@ import Select from "@mui/material/Select";
 import FormControl from "@mui/material/FormControl";
 import styled from "styled-components";
 import CloseIcon from "@material-ui/icons/Close";
+import { v4 as uuidv4 } from "uuid";
+import { useDispatch } from "react-redux";
+// import { getUser } from "../../redux/auth/action";
+// import { useHistory } from "react-router-dom";
 
-
+import { updateUser } from "../../redux/auth/action";
+// import ErrorModal from '../ErrorPopup/ErrorModal'
+// import ConfirmationPopup from '../ErrorPopup/ConfirmationPopup'
+// import { shallowEqual, useDispatch, useSelector } from "react-redux";
 const style = {
     position: "absolute",
-    top: "50%",
+    top: '50% !important',
     left: "50%",
     transform: "translate(-50%, -50%)",
     width: "30rem",
@@ -28,56 +34,51 @@ const style = {
     p: 4,
 };
 
-export default function EditProfieModal({ handleEditProfileClose, editProfileOpen }) {
+export default function EditProfieModal({
+    handleEditProfileClose,
+    editProfileOpen,
+    userData,
+    refreshPage
+}) {
+    const dispatch = useDispatch();
 
 
-    const [workData, setWorkData] = useState([
-        { work: "Babasaheb Ambedkar Technological University" },
-    ]);
-    const [educationData, setEducationData] = useState([{ education: "kjdhf" }])
-    const [work1, setWork1] = useState(workData.length > 0 ? workData[0].work : "")
-    const [work2, setWork2] = useState(workData.length > 1 ? workData[1].work : "")
-    const [work3, setWork3] = useState(workData.length > 2 ? workData[2].work : "")
-    const [education1, setEducation1] = useState(educationData.length > 0 ? educationData[0].education : "")
-    const [education2, setEducation2] = useState(educationData.length > 1 ? educationData[1].education : "")
-    const [education3, setEducation3] = useState(educationData.length > 2 ? educationData[2].education : "")
+    const initValues = {
+        first_name: userData.first_name ? userData.first_name : "",
+        last_name: userData.last_name ? userData.last_name : "",
+        email: userData.email ? userData.email : "",
+        password: "",
 
+        dob: userData.dob ? userData.dob : "",
+        gender: userData.gender ? userData.gender : "",
 
-    const [gender, setGender] = useState("");
+        bio: userData.bio ? userData.bio : "",
+        education1: userData.education1 ? userData.education1 : "",
+        education2: userData.education2 ? userData.education2 : "",
+        city1: userData.city1 ? userData.city1 : "",
+        city2: userData.city2 ? userData.city2 : "",
+        country: userData.country ? userData.country : "",
 
+        work1: userData.work1 ? userData.work1 : "",
+        work2: userData.work2 ? userData.work2 : "",
+
+        relationship: userData.relationship ? userData.relationship : "",
+        mobile: userData.mobile ? userData.mobile : "",
+    };
+
+    let payload2 = initValues;
     const handleChange = (e) => {
-        setGender(e.target.value);
+        const { name, value } = e.target;
+        payload2 = {
+            ...payload2,
+            [name]: value,
+        };
     };
 
 
-    const handleWorkChange1 = (e) => {
-        setWork1(e.target.value)
-    };
-
-    const handleWorkChange2 = (e) => {
-        setWork2(e.target.value)
-
-    };
-
-    const handleWorkChange3 = (e) => {
-        setWork3(e.target.value)
-
-    };
-
-    const handleEducationChange1 = (e) => {
-        setEducation1(e.target.value)
-    }
-    const handleEducationChange2 = (e) => {
-        setEducation2(e.target.value)
-    }
-    const handleEducationChange3 = (e) => {
-        setEducation3(e.target.value)
-    }
-
-
+    useEffect(() => { }, [dispatch]);
     return (
         <EditProfieModalStyled>
-
             <Modal
                 open={editProfileOpen}
                 onClose={handleEditProfileClose}
@@ -88,59 +89,84 @@ export default function EditProfieModal({ handleEditProfileClose, editProfileOpe
                     <EditDetailsStyled>
                         <div>Edit Details</div>
                         <div>
-                            <span onClick={handleEditProfileClose}>
-                                <CloseIcon />
-                            </span>
+
+                            <CloseIcon onClick={handleEditProfileClose} />
+
                         </div>
                     </EditDetailsStyled>
                     <div>
                         <TextField
+                            key={uuidv4()}
                             fullWidth
                             type="text"
-                            defaultValue="omkar"
-                            id="outlined-basic"
+                            name="first_name"
+
+                            defaultValue={userData.first_name}
                             label="First Name"
                             variant="outlined"
+                            onChange={handleChange}
                         />
                     </div>
                     <div>
                         <TextField
                             fullWidth
                             type="text"
-                            id="outlined-basic"
+
                             label="Last Name"
+                            name="last_name"
                             variant="outlined"
+                            defaultValue={userData.last_name}
+                            key={uuidv4()}
+                            onChange={handleChange}
                         />
                     </div>
                     <div>
                         <TextField
                             fullWidth
                             type="email"
-                            id="outlined-basic"
+
                             label="Email"
+                            name="email"
                             variant="outlined"
+                            defaultValue={userData.email}
+                            // value={email}
+                            onChange={handleChange}
+                            key={uuidv4()}
                         />
                     </div>
                     <div>
                         <TextField
                             fullWidth
                             type="password"
-                            id="outlined-basic"
+
+                            name="password"
+                            onChange={handleChange}
                             label="Password"
+                            defaultValue=""
                             variant="outlined"
+                            key={uuidv4()}
                         />
                     </div>
                     <div>
-                        <TextField required id="outlined-required" type="date" fullWidth />
+                        <TextField
+                            onChange={handleChange}
+                            defaultValue={userData.dob}
+                            name="dob"
+                            id="outlined-required"
+                            type="date"
+                            fullWidth
+                            key={uuidv4()}
+                        />
                     </div>
                     <div>
-                        <FormControl fullWidth>
+                        <FormControl key={uuidv4()} fullWidth>
                             <InputLabel id="demo-simple-select-label">Gender</InputLabel>
                             <Select
                                 labelId="demo-simple-select-label"
                                 id="demo-simple-select"
-                                value={gender}
+                                defaultValue={userData.gender}
                                 label="Gender"
+                                name="gender"
                                 onChange={handleChange}
                             >
                                 <MenuItem value="Male">Male</MenuItem>
@@ -156,7 +182,14 @@ export default function EditProfieModal({ handleEditProfileClose, editProfileOpe
                             label="Bio"
                             multiline
                             rows={4}
-                            defaultValue="Default Value"
+                            name="bio"
+                            inputProps={{
+                                maxLength: 100
+                            }}
+                            defaultValue={userData.bio}
+                            onChange={handleChange}
+                            key={uuidv4()}
+                        // value={bio}
                         />
                     </div>
                     <WorkTextStyled>
@@ -167,36 +200,28 @@ export default function EditProfieModal({ handleEditProfileClose, editProfileOpe
                             <TextField
                                 fullWidth
                                 type="text"
-                                defaultValue={work1}
-                                id="outlined-basic"
-                                value={work1}
+                                defaultValue={userData.work1}
+
+                                // value={work1}
                                 label="Work-1"
                                 variant="outlined"
-                                onChange={handleWorkChange1}
+                                name="work1"
+                                onChange={handleChange}
+                                key={uuidv4()}
                             />
                         </div>
                         <div>
                             <TextField
                                 fullWidth
                                 type="text"
-                                defaultValue={work2}
-                                id="outlined-basic"
+                                defaultValue={userData.work2}
+
                                 label="Work-2"
+                                name="work2"
                                 variant="outlined"
-                                value={work3}
-                                onChange={handleWorkChange2}
-                            />
-                        </div>
-                        <div>
-                            <TextField
-                                fullWidth
-                                type="text"
-                                defaultValue={work3}
-                                id="outlined-basic"
-                                label="Work-3"
-                                variant="outlined"
-                                value={work3}
-                                onChange={handleWorkChange3}
+                                // value={work3}
+                                onChange={handleChange}
+                                key={uuidv4()}
                             />
                         </div>
                     </WorkInputsStyled>
@@ -204,20 +229,40 @@ export default function EditProfieModal({ handleEditProfileClose, editProfileOpe
                         <TextField
                             fullWidth
                             type="text"
-                            id="outlined-basic"
-                            label="City"
+
+                            label="Lives In"
+                            name="city1"
                             variant="outlined"
-                            defaultValue=""
+                            defaultValue={userData.city1}
+                            // value={city1}
+                            onChange={handleChange}
+                            key={uuidv4()}
                         />
                     </div>
                     <div>
                         <TextField
                             fullWidth
                             type="text"
-                            defaultValue="omkar"
-                            id="outlined-basic"
-                            label="Country"
+
+                            label="City"
+                            name="city2"
                             variant="outlined"
+                            defaultValue={userData.city2}
+                            onChange={handleChange}
+                            key={uuidv4()}
+                        />
+                    </div>
+                    <div>
+                        <TextField
+                            fullWidth
+                            type="text"
+                            name="country"
+
+                            defaultValue={userData.country}
+                            label="Country"
+                            key={uuidv4()}
+                            variant="outlined"
+                            onChange={handleChange}
                         />
                     </div>
                     <WorkTextStyled>
@@ -228,52 +273,47 @@ export default function EditProfieModal({ handleEditProfileClose, editProfileOpe
                             <TextField
                                 fullWidth
                                 type="text"
-                                defaultValue={education1}
-                                value={education1}
-                                id="outlined-basic"
+                                defaultValue={userData.education1}
+                                key={uuidv4()}
+
                                 label="Education-1"
+                                name="education1"
                                 variant="outlined"
-                                onChange={handleEducationChange1}
+                                onChange={handleChange}
                             />
                         </div>
                         <div>
                             <TextField
                                 fullWidth
                                 type="text"
-                                defaultValue={education2}
-                                value={education2}
-                                id="outlined-basic"
+                                defaultValue={userData.education2}
+
                                 label="Education-2"
                                 variant="outlined"
-                                onChange={handleEducationChange2}
-                            />
-                        </div>
-                        <div>
-                            <TextField
-                                fullWidth
-                                type="text"
-                                defaultValue={education3}
-                                value={education3}
-                                id="outlined-basic"
-                                label="Education-3"
-                                variant="outlined"
-                                onChange={handleEducationChange3}
+                                name="education2"
+                                key={uuidv4()}
+                                onChange={handleChange}
                             />
                         </div>
                     </WorkInputsStyled>
+
                     <div>
                         <FormControl fullWidth>
-                            <InputLabel id="demo-simple-select-label">Gender</InputLabel>
+                            <InputLabel id="demo-simple-select-label">
+                                Relationship
+                            </InputLabel>
                             <Select
                                 labelId="demo-simple-select-label"
                                 id="demo-simple-select"
-                                value={gender}
+                                name="relationship"
                                 label="Relationship"
                                 onChange={handleChange}
+                                defaultValue={userData.relationship}
+                                key={uuidv4()}
                             >
-                                <MenuItem value="Male">Male</MenuItem>
-                                <MenuItem value="Female">Female</MenuItem>
-                                <MenuItem value="Others">Others</MenuItem>
+                                <MenuItem value="Married">Married</MenuItem>
+                                <MenuItem value="Unmarried">Unmarried</MenuItem>
+                                <MenuItem value="Doesn't matter">Doesn't matter</MenuItem>
                             </Select>
                         </FormControl>
                     </div>
@@ -281,14 +321,37 @@ export default function EditProfieModal({ handleEditProfileClose, editProfileOpe
                         <TextField
                             fullWidth
                             type="number"
-                            defaultValue="omkar"
-                            id="outlined-basic"
+                            name="mobile"
+                            id={uuidv4()}
+                            onChange={handleChange}
                             label="Mobile No."
+                            key={uuidv4()}
+                            defaultValue={userData.mobile}
                             variant="outlined"
                         />
                     </div>
                     <UpdateBtnStyled className="updateBtnDiv">
-                        <button className="updateDetailsBtn">Update</button>
+                        <button
+                            onClick={() => {
+                                if (payload2.password === "") {
+                                    delete payload2.password;
+                                }
+                                dispatch(updateUser(payload2, userData._id));
+                                // dispatch(getUser(userData._id));
+                                console.log(payload2, "from update");
+                                setTimeout(() => {
+                                    refreshPage()
+                                    handleEditProfileClose()
+                                }, 2000)
+
+
+
+
+                            }}
+                            className="updateDetailsBtn"
+                        >
+                            Update
+                        </button>
                     </UpdateBtnStyled>
                 </Box>
             </Modal>
@@ -311,7 +374,7 @@ const UpdateBtnStyled = styled.div`
     align-items: center;
     justify-content: center;
     background-color: var(--primary-color);
-    color: var(--primary-background-color);
+    color: var(--ofont-color2);
     cursor: pointer;
     font-weight: bold;
     outline: none;
@@ -335,24 +398,15 @@ const EditDetailsStyled = styled.div`
   & > div:nth-child(2) {
     padding-left: 7rem;
 
-    span {
-      width: 5rem;
-      height: 5rem;
-      border-radius: 50%;
-      background-color: var(--primary-background-color);
-      border: 1px solid var(--background-gray-color);
+  svg{
       cursor: pointer;
-
-      :hover {
-        background-color: var(--background-gray-color);
-      }
-    }
+  }
   }
 `;
 
 const WorkTextStyled = styled.div`
   span {
-    color: var(--font-dark-color);
+    color: var(--ofont-dark-color);
     font-size: 16px;
     font-weight: bold;
     display: flex;
@@ -361,11 +415,8 @@ const WorkTextStyled = styled.div`
   }
 `;
 const WorkInputsStyled = styled.div`
-display: grid;
-grid-template-columns: 1fr;
-grid-gap: 1rem;
-margin-bottom:1rem;
-
-
-
-`
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-gap: 1rem;
+  margin-bottom: 1rem;
+`;

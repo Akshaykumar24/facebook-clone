@@ -3,6 +3,11 @@ import axios from "axios";
 import { url } from "../../utils/url";
 import Login from "./Login";
 import styled from "styled-components";
+import { setData } from "../../utils/localStorage";
+import { useHistory } from "react-router-dom";
+
+import { useDispatch, useSelector } from "react-redux";
+import { logUser, regUser } from "../../redux/auth/action";
 
 const initFormSignup = {
   first_name: "",
@@ -16,7 +21,7 @@ const initFormLogin = {
   password: "",
 };
 function SignUp() {
-  const [isCreateClick, setIsCreateClick] = useState(true);
+  const [isCreateClick, setIsCreateClick] = useState(false);
   const [signUpForm, setSignUpForm] = React.useState(initFormSignup);
   const [logInForm, setLogInForm] = React.useState(initFormLogin);
 
@@ -27,6 +32,13 @@ function SignUp() {
   const [mon, setMon] = useState("June");
   const [year, setYear] = useState("1950");
   //   const [reset, setReset] = useState(false);
+  const history = useHistory();
+  // From Redux
+  const state = useSelector((state) => state);
+  const all = state.auth;
+  const load = state.auth.Load;
+  console.log(all);
+  const dispatch = useDispatch();
 
   const handleSignUpForm = (e) => {
     const { value, name } = e.target;
@@ -54,25 +66,30 @@ function SignUp() {
 
   const handleSingUp = () => {
     setSignUpForm({ ...signUpForm, dob: dob });
-    axios
-      .post(`${url}/api/register`, signUpForm)
-      .then((res) => console.log(res))
-      .then(setSignUpForm({}));
+    dispatch(regUser(signUpForm));
+    // axios
+    //   .post(`${url}/api/register`, signUpForm)
+    //   .then((res) => console.log(res))
+    //   .then(setSignUpForm({}));
   };
 
   const handleLogin = () => {
     console.log(logInForm);
-    axios
-      .post(`${url}/api/login`, logInForm)
-      .then((res) => console.log(res))
-      .then(setLogInForm({}));
+    setData("login", logInForm);
+    dispatch(logUser(logInForm));
   };
-
+  if (all.reg && !all.Load && !all.Error) {
+    setData("userId", all.user._id);
+    history.push("/profile");
+  } else if (all.token !== "") {
+    setData("userId", all.user._id);
+    history.push("/");
+  }
   const handleCreateClick = () => {
     setIsCreateClick(true);
   };
   const handleCloseClick = () => {
-    console.log(signUpForm, dob);
+    //console.log(signUpForm, dob);
     setIsCreateClick(false);
   };
 
@@ -111,8 +128,9 @@ function SignUp() {
             handleLoginForm={handleLoginForm}
             email={logInForm.email}
             password={logInForm.password}
+            load={load}
           />
-          <a href="#">Forgotten Password ?</a>
+          <a href="/">Forgotten Password ?</a>
           <br />
           <hr />
           <br />
@@ -250,8 +268,8 @@ function SignUp() {
 export default SignUp;
 
 const Cont = styled.div`
-  width: 90vw;
-  height: 87vh;
+  width: 100vw;
+  height: 100vh;
   padding: 6% 5% 0;
   background-color: rgb(240, 242, 245);
 `;
@@ -335,9 +353,21 @@ const Sign = styled.div`
     border-radius: 8px;
     box-shadow: 0 2px 4px rgb(0 0 0 / 25%), 0 8px 16px rgb(0 0 0 / 25%);
 
+    > :nth-child(4) {
+      > input {
+        font-size: 14px;
+        padding: 8px 16px;
+        width: 50%;
+        height: 36px;
+        margin: 7px 5px;
+        border-radius: 5px;
+        background-color: rgb(238, 238, 238);
+        border: 1px solid rgb(190, 190, 190);
+      }
+    }
     > h2 {
       font-size: 32px;
-      font-family: SFProDisplay-Bold, Helvetica, Arial, sans-serif;
+      font-family: Helvetica, Arial, sans-serif;
       line-height: 38px;
       margin: 0 10px;
       font-weight: 650;
@@ -345,8 +375,8 @@ const Sign = styled.div`
     input {
       font-size: 14px;
       padding: 8px 16px;
-      width: 90%;
-      height: 18px;
+      width: 98%;
+      height: 36px;
       margin: 7px 5px;
       border-radius: 5px;
       background-color: rgb(238, 238, 238);
@@ -358,7 +388,7 @@ const Sign = styled.div`
     > p {
       font-size: 12px;
       line-height: 16px;
-      padding: 0 10px;
+      padding: 10px 10px;
     }
     > :nth-child(2) {
       font-size: 15px;

@@ -1,40 +1,51 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
-import PostCard from "../components/PostCard/PostCard";
-import PostForm from "../components/PostForm/PostForm";
+import React from "react";
+import styled from "styled-components";
+import Home from "../components/Active/Pages/Home";
+import { useHistory } from "react-router-dom";
+import { useSelector } from "react-redux";
+
 const HomePage = () => {
-  const [posts, setPosts] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
-  const [isError, setIsError] = useState(false);
-  
-
-  const getPosts = () => {
-    return axios.get("http://localhost:2424/api/posts");
-  };
-
-  useEffect(() => {
-    setIsLoading(true);
-    getPosts().then(({ data }) => {
-      setPosts(data.posts);
-      setIsLoading(false);
-    }).catch((err) => {
-      setIsError(true);
-      console.log(err);
-    });;
-  }, []);
-
+  const history = useHistory();
+  const select = useSelector((state) => state);
+  if (select.auth.token === "") {
+    history.push("/login");
+  }
   return (
-    <div>
-      <PostForm />
-      {isLoading
-        ? "Loading posts"
-        : isError
-        ? "Some errors"
-        : posts.map((post) => {
-            return <PostCard post={post} />;
-          })}
-    </div>
+    // <Container>
+    //   <SideBar />
+    //   <Cent>
+    //     <Story />
+    //     <HomePageCenter />
+    //   </Cent>
+    //   <div></div>
+    // </Container>
+    <Home />
   );
 };
 
 export default HomePage;
+
+const Cent = styled.div`
+  display: flex;
+  flex-direction: column;
+  flex: 2;
+  > :last-child {
+    width: 45%;
+    margin: auto;
+  }
+`;
+
+const Container = styled.div`
+  display: flex;
+  align-items: center;
+  > :last-child {
+    flex: 0.7;
+    position: fixed;
+    top: 50px;
+  }
+  > :first-child {
+    flex: 1;
+    position: fixed;
+    top: 50px;
+  }
+`;
