@@ -21,13 +21,13 @@ const modalStyle = {
   left: "50%",
   transform: "translate(-50%, -10%)",
   width: '500px',
-  maxHeight:'80vh',
+  maxHeight: '80vh',
   bgcolor: "background.paper",
   // border: "2px solid #df1313",
   // boxShadow: 24,
   p: "2rem 1.5rem",
   overflowY: "scroll",
-  borderRadius:'10px',
+  borderRadius: '10px',
   boxShadow: `0px 0px 10px var(--font-light-color)`,
   // position: "absolute",
   // top: '50% !important',
@@ -106,7 +106,11 @@ const PostForm = ({ user }) => {
       }}
     >
       <Box sx={{ display: "flex", alignItems: "center", margin: "1rem 0" }}>
-        <Avatar sx={{ m: "0 1rem 0 0" }} alt="R" src={body_photo} />
+        <Avatar sx={{ m: "0 1rem 0 0" }} alt="R" src={
+          user.profile === undefined
+            ? `https://avatars.dicebear.com/api/micah/${user.first_name}.svg`
+            : user.profile
+        } />
         <Button
           fullWidth
           sx={{
@@ -168,7 +172,11 @@ const PostForm = ({ user }) => {
             <Divider />
             <Box sx={{ display: "flex", alignItems: "center", m: "1rem 0" }}>
               <Box>
-                <Avatar sx={{ m: "0 1rem 0 0" }} alt="R" src={body_photo} />
+                <Avatar sx={{ m: "0 1rem 0 0" }} alt="R" src={
+                  user.profile === undefined
+                    ? `https://avatars.dicebear.com/api/micah/${user.first_name}.svg`
+                    : user.profile
+                } />
               </Box>
               <Box>
                 {/* <Box>{user.first_name}</Box> */}

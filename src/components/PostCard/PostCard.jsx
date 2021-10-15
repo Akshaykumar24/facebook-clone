@@ -85,8 +85,12 @@ const PostCard = ({ post, user }) => {
 
     const momentDur = moment.utc(moment(new Date()).diff(moment(time), 'seconds'))
 
+    if (Math.floor(Number(momentDur) / 3600) >= 24) {
 
-    if (Math.floor(Number(momentDur) / 3600) >= 1) {
+      setDuration(Math.floor(Math.floor(Number(momentDur) / 3600) / 24) + " day")
+
+    }
+    else if (Math.floor(Number(momentDur) / 3600) >= 1) {
       setDuration(Math.floor(Number(momentDur) / 3600) + " hr")
     } else if (Math.floor(Number(momentDur) / 60) >= 1) {
       setDuration(Math.floor(Number(momentDur) / 60) + " min")
@@ -171,7 +175,7 @@ const PostCard = ({ post, user }) => {
             <Box>
               <Avatar sx={{ m: "0 1rem", cursor: "pointer" }} onClick={() => {
 
-                if (user._id === userData._id) {
+                if (user_id._id === userData._id) {
 
 
 
@@ -180,11 +184,11 @@ const PostCard = ({ post, user }) => {
 
                   return
                 } else {
-                  dispatch(getAnotherUser(user._id))
-                  dispatch(getAnotherUserPosts(user._id))
+                  dispatch(getAnotherUser(user_id._id))
+                  dispatch(getAnotherUserPosts(user_id._id))
                   setTimeout(() => {
 
-                    history.push(`/facebook/${user._id}`)
+                    history.push(`/facebook/${user_id._id}`)
 
                   }, 2000)
                 }
@@ -195,7 +199,7 @@ const PostCard = ({ post, user }) => {
             <Box>
               <Box sx={{ cursor: "pointer" }} > <span onClick={() => {
 
-                if (user._id === userData._id) {
+                if (user_id._id === userData._id) {
 
 
 
@@ -204,11 +208,11 @@ const PostCard = ({ post, user }) => {
 
                   return
                 } else {
-                  dispatch(getAnotherUser(user._id))
-                  dispatch(getAnotherUserPosts(user._id))
+                  dispatch(getAnotherUser(user_id._id))
+                  dispatch(getAnotherUserPosts(user_id._id))
                   setTimeout(() => {
 
-                    history.push(`/facebook/${user._id}`)
+                    history.push(`/facebook/${user_id._id}`)
 
                   }, 2000)
                 }
@@ -223,7 +227,7 @@ const PostCard = ({ post, user }) => {
         {/* post body */}
         <Box sx={{ margin: "1rem" }}>{body_text}</Box>
         <Box sx={{ margin: "0" }}>
-          <img style={{ maxWidth: "100%" }} src={body_photo} alt="" />
+          <img style={{ maxWidth: "100%", width: "100%" }} src={body_photo} alt="" />
         </Box>
         {/* post stat */}
         <Box>

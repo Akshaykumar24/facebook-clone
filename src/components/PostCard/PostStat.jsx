@@ -109,7 +109,7 @@ const PostStat = ({
           </Box>
           <Box>
             <Button variant="text" color="inherit">
-              {postStat.no_of_shares} shares
+              1 shares
             </Button>
           </Box>
         </Box>
