@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import SideBar from "../../SideBar/SideBar";
 import ActiveContacts from "../../SideBar/ActiveContacts";
 import "../../../styles/Home/Home.css";
@@ -6,13 +6,12 @@ import Story from "../../Story/Story";
 import Navbar from "../../navbar/NavBar";
 import Drawer from "@mui/material/Drawer";
 import HomePageCenter from "../../HomePageCenter/HomePageCenter";
-import axios from "axios";
-import { url } from "../../../utils/url";
+
 import { getData } from "../../../utils/localStorage";
 
 const Home = () => {
-  const [menu, setMenu] = React.useState(false);
-  const [data, setData] = useState([]);
+  const [menu, setMenu] = useState(false);
+
   const id = getData("userId");
 
   return (

@@ -9,7 +9,6 @@ const ActiveContacts = ({ id }) => {
   const [data, setData] = React.useState([true]);
   useEffect(() => {
     axios.get(`${url}/api/user/all/${id}`).then(({ data }) => {
-      console.log(data, "Here");
       return setData(data.user);
     });
   }, [id]);

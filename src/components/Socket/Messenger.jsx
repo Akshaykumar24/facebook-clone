@@ -21,7 +21,6 @@ const Messenger = () => {
   const [onlineUsers, setOnlineUsers] = useState([]);
   const [emoji, setEmoji] = useState(false);
   const socket = useRef();
-  console.log(currentChat, "Curr");
   const scrollRef = useRef();
   const state = useSelector((state) => state);
   let user = state.auth.user;
@@ -29,7 +28,6 @@ const Messenger = () => {
   useEffect(() => {
     socket.current = io("ws://localhost:5000");
     socket.current.on("getMessage", async (data) => {
-      console.log("HERE");
       setArrivalMessage({
         sender: data.senderId,
         message: data.text,
@@ -49,7 +47,6 @@ const Messenger = () => {
   useEffect(() => {
     socket.current.emit("addUser", user._id);
     socket.current.on("getUsers", (users) => {
-      console.log(users);
       setOnlineUsers(users);
     });
   }, [user, socket.current]);
@@ -87,7 +84,6 @@ const Messenger = () => {
       conversationId: currentChat._id,
     };
     // const currentCon = conversate.find((t) => t._id === currentChat);
-    console.log(currentChat);
     const recieverId = currentChat?.members.find((m) => m !== user._id);
     socket.current.emit("sendMessage", {
       senderId: user._id,
@@ -100,7 +96,6 @@ const Messenger = () => {
       setMessages([...messages, res.data.msg]);
       setNewMessage("");
     } catch (err) {
-      console.log(err);
     }
   };
 

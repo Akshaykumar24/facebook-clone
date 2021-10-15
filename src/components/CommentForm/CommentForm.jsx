@@ -32,7 +32,6 @@ const CommentForm = ({
   user,
   sendCommentNotification,
 }) => {
-  console.log("user from coment form:", user);
   const [body, setBody] = useState("Write a comment...");
   const [body_photo, setBody_photo] = useState("");
   const handleChange = (e) => {

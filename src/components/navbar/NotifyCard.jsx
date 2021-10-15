@@ -1,11 +1,10 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { format } from "timeago.js";
 import { url } from "../../utils/url";
 
 const NotifyCard = ({ p }) => {
-  console.log(p, "at NotifyCard");
   const [n, setN] = useState(p.read);
   const readMe = () => {
     axios.patch(`${url}/api/notification/${p._id}`).then(setN(true));

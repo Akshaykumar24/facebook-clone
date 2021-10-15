@@ -47,11 +47,12 @@ function AllFriendsCompo({ refreshPage }) {
                   onClick={() => {
 
 
-                    if (el._id === userData._id) {
-
+                    if (el._id === mainuser._id) {
 
 
                       history.push(`/profile`)
+
+
 
 
                       return
@@ -76,11 +77,12 @@ function AllFriendsCompo({ refreshPage }) {
               </div>
               <div className="nameMutualFrnd">
                 <span onClick={() => {
-                  if (el._id === userData._id) {
-
+                  if (el._id === mainuser._id) {
 
 
                     history.push(`/profile`)
+
+
 
 
                     return

@@ -45,7 +45,6 @@ const FriendsAll = () => {
   useEffect(() => {
     socket.current.emit("addUser", user._id);
     socket.current.on("getUsers", (users) => {
-      console.log(users);
     });
   }, [user]);
   // end of socket  notification
@@ -78,7 +77,6 @@ const FriendsAll = () => {
   useEffect(() => {
     if (sentRequest) {
       axios.get(`${url}/api/user/sent/${id}`).then(({ data }) => {
-        console.log(data);
         return setData(data.user);
       });
     }
@@ -87,7 +85,6 @@ const FriendsAll = () => {
   useEffect(() => {
     if (pendingRequest) {
       axios.get(`${url}/api/user/request/${id}`).then(({ data }) => {
-        console.log(data);
         return setData(data.user);
       });
     }
@@ -96,7 +93,6 @@ const FriendsAll = () => {
   useEffect(() => {
     if (find) {
       axios.get(`${url}/api/user/friends/${id}`).then(({ data }) => {
-        console.log(data);
         return setData(data.user);
       });
     }

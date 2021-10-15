@@ -44,7 +44,6 @@ const PostCardWrapper = styled.div`
 const PostCard = ({ post, user }) => {
   const history = useHistory();
   const dispatch = useDispatch();
-  console.log("user:", user);
   // console.log('user from post card:', user)
   // console.log('post:', post)
   const {
@@ -137,7 +136,6 @@ const PostCard = ({ post, user }) => {
     setIsComment(true);
     getCommentOfThisPost(_id).then(({ data }) => {
       const commentsArr = data.comments;
-      console.log(commentsArr);
       setComments(commentsArr);
     });
   };

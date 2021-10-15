@@ -1,7 +1,5 @@
-import axios from "axios";
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { ReactComponent as DotsIcon } from "../../Icons/dots.svg";
-import { url } from "../../utils/url";
 import NotifyCard from "./NotifyCard";
 
 function Notifications({ notifications, uid, p, not }) {

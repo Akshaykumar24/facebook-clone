@@ -44,7 +44,6 @@ const recieverId = currentChat?.members.find((m) => m !== user._id);
   };
   const remove = () => {
     update(data, p._id);
-    console.log(data, p._id);
   };
   const cancelReq = () => [
     axios

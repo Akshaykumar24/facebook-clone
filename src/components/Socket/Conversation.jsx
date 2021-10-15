@@ -14,7 +14,6 @@ const Conversation = ({ c, me }) => {
           return setUser(data.user);
         });
       } catch (err) {
-        console.log(err);
       }
     };
     getUser();
@@ -26,9 +25,8 @@ const Conversation = ({ c, me }) => {
         src={
           user?.profile
             ? user.profile
-            : `https://avatars.dicebear.com/api/micah/${
-                user ? user.first_name : "rushi"
-              }.svg`
+            : `https://avatars.dicebear.com/api/micah/${user ? user.first_name : "rushi"
+            }.svg`
         }
         alt="prof"
       />

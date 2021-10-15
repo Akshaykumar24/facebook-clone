@@ -97,7 +97,6 @@ export const regUser = (data) => (dispatch) => {
     .catch((err) => dispatch(regFail(err)));
 };
 export const updateUser = (data, id) => (dispatch) => {
-  console.log(data, "hjskdfhkioju");
   dispatch(regReq());
   axios
     .patch(`${url}/api/user/${id}`, data)

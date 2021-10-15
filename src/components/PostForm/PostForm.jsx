@@ -55,9 +55,6 @@ const PostForm = ({ user }) => {
   const [buttonDisabled, setButtonDisabled] = useState(true);
   const [body_photo, setBody_photo] = useState("");
 
-  const refreshPage = () => {
-    window.location.reload();
-  };
 
   const handleChange = (e) => {
     const value = e.target.value;
@@ -82,16 +79,13 @@ const PostForm = ({ user }) => {
   const handleSubmit = () => {
     writePost(body_text, body_photo)
       .then((resp) => {
-        console.log(resp);
         dispatch(getUserPosts(user._id));
         if (resp.status === 201) {
-          console.log("succes");
           // refreshPage();
           handleClose();
         }
       })
       .catch((err) => {
-        console.log(err);
       });
   };
   // if (loading) {

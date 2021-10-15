@@ -2,7 +2,6 @@ import React from "react";
 import ActiveDot from "./ActiveDot";
 
 function SideBarContent({ src, label, active }) {
-  console.log(active);
 
   return (
     <div className="sideBarContentContainer flexBox"  >

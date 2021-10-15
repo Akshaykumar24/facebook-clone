@@ -10,7 +10,6 @@ const FriendMessageCard = ({ p, id }) => {
 
   useEffect(() => {
     axios.get(`${url}/api/conversation/${id}/${p._id}`).then((res) => {
-      console.log(res, p.first_name);
       return setChat(res.data);
     });
   }, [p.first_name, id, p._id]);
@@ -25,7 +24,6 @@ const FriendMessageCard = ({ p, id }) => {
           recieverId: id,
         })
         .then((res) => {
-          console.log(res, p.first_name);
           return setChat(res.data);
         })
         .then(history.push("/messenger"));
