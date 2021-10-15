@@ -4,6 +4,7 @@ import { url } from "../../utils/url";
 import { getData } from "../../utils/localStorage";
 import PostCard from "../PostCard/PostCard";
 import PostForm from "../PostForm/PostForm";
+import LoadingAnimation from "../LoadingIo/LoadingAnimation";
 import {
   Wrapper,
   FormContainer,
@@ -55,7 +56,7 @@ const HomePageCenter = () => {
       </FormContainer>
       <PostsContainer>
         {isLoading
-          ? "Loading posts"
+          ? <LoadingAnimation />
           : isError
             ? "Some errors"
             : posts.map((post) => {

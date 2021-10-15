@@ -18,7 +18,7 @@ const Login = ({ handleLogin, handleLoginForm, email, password, load }) => {
         name="password"
         onChange={(e) => handleLoginForm(e)}
       />
-      <button onClick={handleLogin}>{load ? "loading" : "Log-In"}</button>
+      <button onClick={handleLogin}>{load ? "Loading..." : "Log-In"}</button>
     </Logs>
   );
 };

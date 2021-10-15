@@ -31,14 +31,15 @@ const Router = () => {
   return (
     <div className="theme">
       <Switch>
-        <Route path="/login">
-          <SignUp />
-        </Route>
         <Route exact path="/">
           {/* <NavBar setMenu={setMenu} menu={setMenu} /> */}
           <HomePage />
         </Route>
-        <Route path="/friends">
+        <Route exact path="/login">
+          <SignUp />
+        </Route>
+
+        <Route exact path="/friends">
           <NavBar
             themeToggler={themeToggler}
             checked={checked}
@@ -47,7 +48,7 @@ const Router = () => {
           />
           <FriendsAll />
         </Route>
-        <Route path="/messenger">
+        <Route exact path="/messenger">
           <NavBar setMenu={setMenu} menu={setMenu} />
           <Messenger />
           {/* <Chat /> */}
@@ -58,7 +59,7 @@ const Router = () => {
             menu={setMenu}
           /> */}
         </Route>
-        <Route path="/profile">
+        <Route exact path="/profile">
           <NavBar
             themeToggler={themeToggler}
             checked={checked}
@@ -67,11 +68,11 @@ const Router = () => {
           />
           <UserProfile />
         </Route>
-        <Route path="/facebook/:id">
+        <Route exact path="/facebook/:id">
           <NavBar setMenu={setMenu} menu={setMenu} />
           <FriendsProfile />
         </Route>
-        <Route path="/user/:id">
+        <Route exact path="/user/:id">
           <UserPage />
         </Route>
       </Switch>

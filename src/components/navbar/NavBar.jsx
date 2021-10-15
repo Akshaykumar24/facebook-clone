@@ -22,6 +22,7 @@ import { getData } from '../../utils/localStorage'
 import axios from "axios"
 import { useHistory } from "react-router-dom";
 import { url } from "../../utils/url";
+import PostForm from "../PostForm/PostForm";
 const NavBar = ({ themeToggler, checked, menu, setMenu }) => {
   const history = useHistory();
   const [account, setAccount] = React.useState(false);
@@ -142,6 +143,7 @@ const NavBar = ({ themeToggler, checked, menu, setMenu }) => {
       </div>
       {account && <AccountMenu themeToggler={themeToggler} checked={checked} />}
       {notification && <Notification p={p} not={not} />}
+
     </>
   );
 };

@@ -37,7 +37,6 @@ function SignUp() {
   const state = useSelector((state) => state);
   const all = state.auth;
   const load = state.auth.Load;
-  console.log(all);
   const dispatch = useDispatch();
 
   const handleSignUpForm = (e) => {
@@ -80,10 +79,10 @@ function SignUp() {
   };
   if (all.reg && !all.Load && !all.Error) {
     setData("userId", all.user._id);
-    history.push("/profile");
+    history.push("/");
   } else if (all.token !== "") {
     setData("userId", all.user._id);
-    history.push("/");
+    history.push("/login");
   }
   const handleCreateClick = () => {
     setIsCreateClick(true);

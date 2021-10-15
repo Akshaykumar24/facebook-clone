@@ -47,6 +47,7 @@ const PostForm = ({ user }) => {
   const dispatch = useDispatch();
   // modal control
   const [open, setOpen] = useState(false);
+
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   // text form control
