@@ -33,17 +33,14 @@ const HomePageCenter = () => {
     getPosts()
       .then(({ data }) => {
         // console.log('data:', data.posts)
-        console.log(data, "posts data")
 
         setPosts(data.posts);
-        console.log(posts)
         setIsLoading(false);
         setIsError(false);
 
       })
       .catch((err) => {
         setIsError(true);
-        console.log("err:", err);
       });
   }, []);
 
