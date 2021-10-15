@@ -153,7 +153,9 @@ const PostCard = ({ post, user }) => {
 
   return (
     <PostCardWrapper>
-      <Box sx={{ padding: "0 ", margin: "1.5rem 0" }}>
+      <Box sx={{
+        padding: "0 ", margin: "1.5rem 0", boxShadow: "0 0 4px var(--icons-gray-color)"
+      }}>
         {/* header */}
         <Box
           sx={{
@@ -195,7 +197,11 @@ const PostCard = ({ post, user }) => {
                 }
 
 
-              }} alt="R" src={user_id.profile} />
+              }} alt="R" src={
+                user_id.profile === undefined
+                  ? `https://avatars.dicebear.com/api/micah/${user_id.first_name}.svg`
+                  : user_id.profile
+              } />
             </Box>
             <Box>
               <Box sx={{ cursor: "pointer" }} > <span onClick={() => {

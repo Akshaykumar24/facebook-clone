@@ -17,26 +17,18 @@ import { FaTimes } from "react-icons/fa";
 // import { getData } from "../../utils/localStorage";
 const modalStyle = {
   position: "absolute",
-  top: "50%",
+  top: "25% !important",
   left: "50%",
   transform: "translate(-50%, -10%)",
-<<<<<<< HEAD
   width: '500px',
   maxHeight: '80vh',
-=======
-  width: "500px",
-  maxHeight: "80vh",
->>>>>>> 8f1f2392486016a3059f54ef6186def3697d8f15
   bgcolor: "background.paper",
   // border: "2px solid #df1313",
   // boxShadow: 24,
   p: "2rem 1.5rem",
+
   overflowY: "scroll",
-<<<<<<< HEAD
   borderRadius: '10px',
-=======
-  borderRadius: "10px",
->>>>>>> 8f1f2392486016a3059f54ef6186def3697d8f15
   boxShadow: `0px 0px 10px var(--font-light-color)`,
   // position: "absolute",
   // top: '50% !important',
@@ -111,6 +103,7 @@ const PostForm = ({ user }) => {
         backgroundColor: "#FFFFFF",
         padding: "1rem 2rem",
         margin: "1rem 0",
+        boxShadow: "0 0 4px var(--icons-gray-color)"
       }}
     >
       <Box sx={{ display: "flex", alignItems: "center", margin: "1rem 0" }}>

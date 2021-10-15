@@ -15,7 +15,7 @@ const HomePageCenter = () => {
   const [isError, setIsError] = useState(false);
   const [user, setUser] = useState("");
   const getPosts = () => {
-    return axios.get(`${url}api/posts`);
+    return axios.get(`${url}/api/posts`);
   };
 
   useEffect(() => {
@@ -32,9 +32,13 @@ const HomePageCenter = () => {
     getPosts()
       .then(({ data }) => {
         // console.log('data:', data.posts)
+        console.log(data, "posts data")
 
         setPosts(data.posts);
+        console.log(posts)
         setIsLoading(false);
+        setIsError(false);
+
       })
       .catch((err) => {
         setIsError(true);
@@ -53,8 +57,8 @@ const HomePageCenter = () => {
         {isLoading
           ? "Loading posts"
           : isError
-          ? "Some errors"
-          : posts.map((post) => {
+            ? "Some errors"
+            : posts.map((post) => {
               return <PostCard key={post._id} user={user} post={post} />;
             })}
       </PostsContainer>

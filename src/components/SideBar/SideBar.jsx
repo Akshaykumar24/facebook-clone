@@ -18,6 +18,7 @@ function SideBar() {
         <div className="sideBarLinksContainer">
           <Link className="flexBox sideBarContentLink" to="/profile">
             <SideBarContent
+
               src={
                 user.profile === undefined
                   ? `https://avatars.dicebear.com/api/micah/${user.first_name}.svg`
