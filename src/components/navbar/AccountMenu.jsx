@@ -5,7 +5,7 @@ import { ReactComponent as SettingIcon } from "../../Icons/setting.svg";
 import Switch from "@mui/material/Switch";
 import "../../styles/SideBar/SideBar.css";
 import { useHistory } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { outUser } from "../../redux/auth/action";
 
 const AccountMenu = ({ themeToggler, checked }) => {

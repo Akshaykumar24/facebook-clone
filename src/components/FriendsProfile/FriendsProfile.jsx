@@ -27,7 +27,6 @@ import { getAnotherUserPosts } from "../../redux/auth/action";
 function FriendsProfile() {
   const dispatch = useDispatch();
   const { id } = useParams();
-  console.log(id);
 
   // console.log(user)
   const [posts, setPosts] = useState(true);

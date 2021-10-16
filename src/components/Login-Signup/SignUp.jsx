@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
-import { url } from "../../utils/url";
+
 import Login from "./Login";
 import styled from "styled-components";
 import { setData } from "../../utils/localStorage";
@@ -73,7 +72,6 @@ function SignUp() {
   };
 
   const handleLogin = () => {
-    console.log(logInForm);
     setData("login", logInForm);
     dispatch(logUser(logInForm));
   };

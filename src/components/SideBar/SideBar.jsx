@@ -27,7 +27,7 @@ function SideBar() {
               label={user.first_name ? user.first_name : "User"}
             />
           </Link>
-          <Link className="flexBox sideBarContentLink" to="/friends/new">
+          <Link className="flexBox sideBarContentLink" to="/friends">
             <SideBarContent src={"/Images/friends_icon.png"} label="Friends" />
           </Link>
           <Link className="flexBox sideBarContentLink" to="/">
