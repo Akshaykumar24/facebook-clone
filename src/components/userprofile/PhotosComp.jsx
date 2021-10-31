@@ -22,7 +22,7 @@ function PhotosComp({ handleSeeAllPhotos, refreshPage }) {
         <div onClick={handleSeeAllPhotos}>See All Photos</div>
       </div>
       <div className="photosGrid">
-        {photos.length > 0 ? photos.map((el) => {
+        {photos.length > 0 ? photos.slice(0, 9).map((el) => {
 
           return <img src={el.body_photo} alt="" />;
         }) : "No photos to show"}
