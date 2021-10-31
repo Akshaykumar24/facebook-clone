@@ -34,7 +34,7 @@ function FriendsCompo({ friends, refreshPage, handleSeeAllfriends }) {
                 <div onClick={handleSeeAllfriends}>See All Friends</div>
             </div>
             <div className="photosGrid">
-                {friends.map((el) => {
+                {friends.slice(0, 9).map((el) => {
                     return <div>
                         <img onClick={() => {
 
